@@ -27,3 +27,4 @@ profiles:
               helm: {}
             artifactOverrides:
               image: eshepelyuk/cmak-operator-cli
+
