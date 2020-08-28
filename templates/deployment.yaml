@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "common.name" . }}
+  name: {{ include "cmak.name" . }}
   labels:
-    {{- include "common.labels" . | nindent 4 }}
+    {{- include "cmak.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      {{- include "common.selectorLabels" . | nindent 6 }}
+      {{- include "cmak.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "common.labels" . | nindent 8 }}
+        {{- include "cmak.labels" . | nindent 8 }}
     spec:
       containers:
         - name: zk
@@ -23,7 +23,7 @@ spec:
             protocol: TCP
           env:
           - name: ZOO_SERVERS
-            value: "server.1={{ include "common.name" . }}.{{ .Release.Namespace }}:2888:3888;2181"
+            value: "server.1={{ include "cmak.name" . }}.{{ .Release.Namespace }}:2888:3888;2181"
           - name: ZOO_4LW_COMMANDS_WHITELIST
             value: "ruok,stat"
           livenessProbe:

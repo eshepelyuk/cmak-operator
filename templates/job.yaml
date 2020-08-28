@@ -1,10 +1,10 @@
-{{- $nm := include "common.name" . -}}
+{{- $nm := include "cmak.name" . -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ $nm }}-clusters
   labels:
-    {{- include "common.labels" . | nindent 4 }}
+    {{- include "cmak.labels" . | nindent 4 }}
 spec:
   backoffLimit: 4
   ttlSecondsAfterFinished: 180

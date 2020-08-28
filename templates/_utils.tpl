@@ -1,17 +1,17 @@
-{{- define "common.name" -}}
+{{- define "cmak.name" -}}
 cmak
 {{- end -}}
 
-{{- define "common.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "common.name" . | quote }}
+{{- define "cmak.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "cmak.name" . | quote }}
 app.kubernetes.io/instance: {{ .Release.Name | quote }}
 {{- end -}}
 
-{{- define "common.labels" -}}
+{{- define "cmak.labels" -}}
 app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote }}
-{{ include "common.selectorLabels" . }}
+{{ include "cmak.selectorLabels" . }}
 {{- end -}}
 
 
