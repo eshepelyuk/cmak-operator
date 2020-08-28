@@ -1,5 +1,3 @@
-image: eshepelyuk/cmak-operator-cli:latest
-
 cmak:
   clustersCommon:
     curatorConfig:
@@ -40,4 +38,3 @@ cmak:
     saslMechanism: null
     jaasConfig: null  
   
-  clusters: [] 

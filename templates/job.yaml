@@ -1,5 +1,6 @@
 {{ if .Values.cmak.clusters }}
 {{- $nm := include "cmak.name" . -}}
+{{- $version := get (default (dict "tag" .Chart.Version) .Values.image) "tag" -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -20,8 +21,8 @@ spec:
             name: {{ $nm }}-clusters
       containers:
         - name: setup
-          image: {{ $.Values.image | quote }}
-          command: ['python3', './cmak_cluster.py']
+          image: "eshepelyuk/cmak-operator-cli:{{ $version }}"
+          command: ['python3', './json2zk.py']
           args: 
             - '{{ $nm }}.{{ $.Release.Namespace }}:2181'
             - '/kafka-manager/configs'
