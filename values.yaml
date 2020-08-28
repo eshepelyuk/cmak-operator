@@ -1,4 +1,4 @@
-image: registry.newage.io/eshepelyuk/cmak-operator-cli:latest
+image: eshepelyuk/cmak-operator-cli:latest
 
 cmak:
   clustersCommon:
@@ -7,15 +7,16 @@ cmak:
       baseSleepTimeMs: 100
       maxSleepTimeMs: 1000
     enabled: true
-    kafkaVersion: "2.0.0"
+    kafkaVersion: "2.2.0"
     jmxEnabled: false
+    jmxUser: null
+    jmxPass: null
     jmxSsl: false
     pollConsumers: true
     filterConsumers: false
     logkafkaEnabled: false
     activeOffsetCacheEnabled: true
     displaySizeEnabled: false
-    securityProtocol: "PLAINTEXT"
     tuning:
       brokerViewUpdatePeriodSeconds: 30
       clusterManagerThreadPoolSize: 10
@@ -35,4 +36,8 @@ cmak:
       kafkaManagedOffsetMetadataCheckMillis: 30000
       kafkaManagedOffsetGroupCacheSize: 1000000
       kafkaManagedOffsetGroupExpireDays: 7
+    securityProtocol: PLAINTEXT
+    saslMechanism: null
+    jaasConfig: null  
+  
   clusters: [] 
