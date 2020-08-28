@@ -27,5 +27,3 @@ profiles:
               helm: {}
             artifactOverrides:
               image: eshepelyuk/cmak-operator-cli
-            valuesFiles:
-              - ../hrzn-values.yaml
