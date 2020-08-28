@@ -1,3 +1,4 @@
+{{ if .Values.cmak.clusters }}
 {{- $nm := include "cmak.name" . -}}
 apiVersion: batch/v1
 kind: Job
@@ -30,3 +31,6 @@ spec:
             - name: {{ $nm }}-clusters
               mountPath: /opt/clusters
         {{- end }}
+{{ else }}
+# .Values.cmak.clusters is empty, no configuration created in ZooKeeper.
+{{ end }}

@@ -35,14 +35,4 @@ cmak:
       kafkaManagedOffsetMetadataCheckMillis: 30000
       kafkaManagedOffsetGroupCacheSize: 1000000
       kafkaManagedOffsetGroupExpireDays: 7
-  
-  clusters: 
-    - name: "hrzn01-dev"
-      curatorConfig:
-        zkConnect: "hrzn01-dev-kafka01.nas.local:2181,hrzn01-dev-kafka02.nas.local:2181,hrzn01-dev-kafka03.nas.local:2181"
-    - name: "hrzn01-stage"
-      curatorConfig:
-        zkConnect: "hrzn01-stage-kafka01.hrzn.stage:2181,hrzn01-stage-kafka02.hrzn.stage:2181,hrzn01-stage-kafka03.hrzn.stage:2181"
-    - name: "hrzn05-stage"
-      curatorConfig:
-        zkConnect: "hrzn05-stage-kafka01.hrzn.stage:2181,hrzn05-stage-kafka02.hrzn.stage:2181,hrzn05-stage-kafka03.hrzn.stage:2181"
+  clusters: [] 
