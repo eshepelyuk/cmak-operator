@@ -19,18 +19,16 @@ spec:
           configMap:
             name: {{ $nm }}-clusters
       containers:
-        {{- range .Values.cmak.clusters }}
-        - name: {{ .name | quote }}
+        - name: setup
           image: {{ $.Values.image | quote }}
           command: ['python3', './cmak_cluster.py']
           args: 
             - '{{ $nm }}.{{ $.Release.Namespace }}:2181'
-            - '/kafka-manager/configs/{{ .name }}'
-            - '/opt/clusters/{{ .name }}.json'
+            - '/kafka-manager/configs'
+            - '/opt/clusters'
           volumeMounts:
             - name: {{ $nm }}-clusters
               mountPath: /opt/clusters
-        {{- end }}
 {{ else }}
 # .Values.cmak.clusters is empty, no configuration created in ZooKeeper.
 {{ end }}

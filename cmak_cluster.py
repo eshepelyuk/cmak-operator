@@ -10,19 +10,21 @@ logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 @click.command()
 @click.argument("zk_url", type=str)
-@click.argument("path", type=str)
-@click.argument("config_file", type=click.File())
-def create_cmak_cluster(zk_url, path, config_file):
+@click.argument("zk_root", type=str)
+@click.argument('json_dir', type=click.Path(exists=True, dir_okay=True, file_okay=False))
+def create_cmak_cluster(zk_url, zk_root, json_dir):
 
     zk = KazooClient(hosts=zk_url)
     zk.start()
 
-    logging.info(f"Setting {path} from {config_file.name}.")
+    for json_file in Path(json_dir).glob("*.json"):
+        dst = f"{zk_root}/{json_file.stem}"
+        logging.info(f"Setting {dst} from {json_file}.")
 
-    if zk.exists(path):
-        zk.set(path, config_file.read().encode())
-    else:
-        zk.create(path, config_file.read().encode(), makepath=True)
+        if zk.exists(dst):
+            zk.set(dst, json_file.read_bytes())
+        else:
+            zk.create(dst, json_file.read_bytes(), makepath=True)
 
     zk.stop()
 
