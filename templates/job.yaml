@@ -1,0 +1,32 @@
+{{- $nm := include "common.name" . -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $nm }}-clusters
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  backoffLimit: 4
+  ttlSecondsAfterFinished: 180
+  template:
+    spec:
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: newage-registry
+      volumes:
+        - name: {{ $nm }}-clusters
+          configMap:
+            name: {{ $nm }}-clusters
+      containers:
+        {{- range .Values.cmak.clusters }}
+        - name: {{ .name | quote }}
+          image: {{ $.Values.image | quote }}
+          command: ['python3', './cmak_cluster.py']
+          args: 
+            - '{{ $nm }}.{{ $.Release.Namespace }}:2181'
+            - '/kafka-manager/configs/{{ .name }}'
+            - '/opt/clusters/{{ .name }}.json'
+          volumeMounts:
+            - name: {{ $nm }}-clusters
+              mountPath: /opt/clusters
+        {{- end }}

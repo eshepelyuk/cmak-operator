@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "common.name" . }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "common.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: zk
+          image: "zookeeper:3.6.1"
+          imagePullPolicy: IfNotPresent
+          ports:
+          - name: zk
+            containerPort: 2181
+            protocol: TCP
+          env:
+          - name: ZOO_SERVERS
+            value: "server.1={{ include "common.name" . }}.{{ .Release.Namespace }}:2888:3888;2181"
+          - name: ZOO_4LW_COMMANDS_WHITELIST
+            value: "ruok,stat"
+          livenessProbe:
+            exec:
+              command: ['sh', '-c', '[ "$(echo ruok | nc 127.0.0.1 2181)" = "imok" ]']
+            initialDelaySeconds: 20
+            periodSeconds: 30
+            timeoutSeconds: 15
+        - name: ui
+          image: "hlebalbau/kafka-manager:{{ .Chart.AppVersion }}"
+          imagePullPolicy: IfNotPresent
+          ports:
+          - name: http
+            containerPort: 9000
+            protocol: TCP
+          env:
+          - name: ZK_HOSTS
+            value: "127.0.0.1:2181"
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            failureThreshold: 7
+            initialDelaySeconds: 45
+            timeoutSeconds: 15
+            periodSeconds: 30

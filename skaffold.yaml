@@ -1,0 +1,27 @@
+apiVersion: skaffold/v2beta6
+kind: Config
+metadata:
+  name: cmak-operator
+build:
+  artifacts:
+    - image: registry.newage.io/eshepelyuk/cmak-operator-cli
+  local:
+    push: true
+profiles:
+  - name: local
+    activation:
+      - command: dev
+    portForward:
+      - resourceType: Service
+        resourceName: cmak
+        port: 2181
+      - resourceType: Service
+        resourceName: cmak
+        port: 9000
+    deploy:
+      helm:
+        releases:
+          - name: cmak-operator
+            chartPath: .
+            artifactOverrides:
+              image: registry.newage.io/eshepelyuk/cmak-operator-cli

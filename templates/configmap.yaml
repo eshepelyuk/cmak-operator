@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "common.name" . }}-clusters
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+data:
+  {{- range .Values.cmak.clusters }}
+  {{ .name }}.json: |-
+    {{- mergeOverwrite (deepCopy $.Values.cmak.clustersCommon) . | toJson | nindent 4 }}
+  {{- end }}
+
