@@ -1,3 +1,126 @@
 = CMAK operator
+:toc: macro
+:icons: font
 
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+image:https://img.shields.io/github/v/tag/eshepelyuk/cmak-operator?sort=semver&style=for-the-badge[GitHub tag (latest SemVer)] image:https://img.shields.io/github/license/eshepelyuk/cmak-operator?logo=github&style=for-the-badge[GitHub, link="https://opensource.org/licenses/MIT", window="_blank"]
+
+toc::[]
+
+CMAK operator is a Helm chart and set of tools that allows to install
+and configure https://github.com/yahoo/CMAK[CMAK (ex Kafka Manager)] into Kubernetes cluster.
+
+https://github.com/yahoo/CMAK[CMAK (ex. Kafka Manager)] is well-known and mature tool for minitoring and managing https://kafka.apache.org/[Apache Kafka] clusters.
+
+It's extremely easy to configure multiple clusters in CMAK,
+as well as connection settings and enable optional authorization
+using https://helm.sh/docs/chart_template_guide/values_files/[Helm values files]
+
+== Prerequisites
+
+CMAK operator creates https://kubernetes.io/docs/concepts/workloads/controllers/job/[Kubernetes Jobs] for configuring CMAK.
+Kubernetes Jobs are not automatically garbage collected.
+To enable cleanup it is required to enable `TTLAfterFinished` https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[feature gate].
+
+== Installation with Helm
+
+It's recommended to install CMAK operator into a dedicated namespace.
+
+[source]
+----
+$ git clone https://github.com/eshepelyuk/cmak-operator.git
+$ helm install --create-namespace --namespace cmak-ns cmak ./cmak-operator
+----
+
+
+=== Check installation
+
+[IMPORTANT]
+.Exposing CMAK UI
+====
+Currently, CMAK operator doesn't create any `Ingress` or similar resources to expose UI via HTTP.
+A users of CMAK operator should take care of this by themselves.
+====
+
+The simpliest test is to port forward CMAK UI HTTP port and access it from browser via localhost.
+
+[source]
+----
+$ kubectl port-forward -n cmak-ns service/cmak 9000:9000
+----
+
+Then, navigate to http://localhost:9000.
+
+
+== Configuration
+
+Check `values.yaml` for all available options.
+
+. Minimal values.yaml configuration for adding a several Kafka clusters to CMAK.
+[source,yaml]
+----
+cmak:
+  clusters:
+    - name: "cluster-stage"
+      curatorConfig:
+        zkConnect: "kafka01.stage:2181,kafka02.stage:2181"
+    - name: "cluster-prod"
+      curatorConfig:
+        zkConnect: "kafka01.prod:2181,kafka02.prod:2181,kafka03.prod:2181"
+----
+
+Connection settings could be configured for all clusters at once or per dedicated cluster.
+
+.Configuring connection settings
+[source,yaml]
+----
+cmak:
+  commonClusters:
+    curatorConfig:
+      zkMaxRetry: 100 <1>
+  clusters:
+    - name: "cluster-stage"
+      kafkaVersion: "2.5.0" <2>
+      curatorConfig:
+        zkConnect: "kafka01.stage:2181,kafka02.stage:2181"
+    - name: "cluster-prod"
+      kafkaVersion: "2.1.0" <3>
+      curatorConfig:
+        zkConnect: "kafka01.prod:2181,kafka02.prod:2181,kafka03.prod:2181"
+----
+<1> this setting is applied to both clusters.
+<2> applied only to `cluster-stage`.
+<3> applied only to `cluster-prod`.
+
+Configuration should be passed to helm via command line during installation or upgrade.
+
+[source]
+----
+helm install --create-namespace --namespace cmak-ns -f cmak-values.yaml cmak ./cmak-operator
+----
+
+== Troubleshooting
+
+Cluster settings are not applied after changing values.yaml.::
+
+Try to remove a K8S job and re-apply changes via `helm upgrade`.
+
+[source]
+----
+$ kubectl delete job cmak-cluster -n cmak-ns
+$ helm upgrade ...
+----
+
+// == Design choices
+// === Why own Zookeeper
+// === Why not cURL
+
+// == Roadmap
 
