@@ -42,6 +42,14 @@ spec:
           env:
           - name: ZK_HOSTS
             value: "127.0.0.1:2181"
+          {{- with .Values.cmak.basicAuth }}
+          - name: KAFKA_MANAGER_AUTH_ENABLED
+            value: {{ .enabled | quote }}
+          - name: KAFKA_MANAGER_USERNAME
+            value: {{ .username | quote }}
+          - name: KAFKA_MANAGER_PASSWORD
+            value: {{ .password | quote }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /api/health

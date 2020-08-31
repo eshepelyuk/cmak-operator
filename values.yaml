@@ -1,4 +1,10 @@
 cmak:
+
+  basicAuth:
+    enabled: false
+    username: ""
+    password: ""
+
   clustersCommon:
     curatorConfig:
       zkMaxRetry: 100
@@ -36,5 +42,6 @@ cmak:
       kafkaManagedOffsetGroupExpireDays: 7
     securityProtocol: PLAINTEXT
     saslMechanism: null
-    jaasConfig: null  
-  
+    jaasConfig: null
+
+  clusters: []

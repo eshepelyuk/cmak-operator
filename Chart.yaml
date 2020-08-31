@@ -3,6 +3,6 @@ name: cmak-operator
 description: CMAK operator for K8S.
 type: application
 
-version: 0.5.0
+version: 0.6.0
 appVersion: 3.0.0.5
 
