@@ -1,0 +1,22 @@
+name: "Changelog"
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build_docker_job:
+    name: "Changelog"
+    runs-on: ubuntu-18.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: detect version
+        run: echo "::set-env name=CMAK_VERSION::${GITHUB_REF:11}"
+      - name: generate changelog
+        id: generageChangelog
+        uses: scottbrenner/generate-changelog-action@master
+        env:
+          REPO: ${{ github.repository }}
+      - name: print changelog
+        run: echo "@@@${{ steps.generageChangelog.outputs.changelog }}@@@"
+

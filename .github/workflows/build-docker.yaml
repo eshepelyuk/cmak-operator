@@ -17,9 +17,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: detect version
         run: echo "::set-env name=CMAK_VERSION::${GITHUB_REF:10}"
-      - name: skaffold build
+      - name: publish docker image
         uses: hiberbee/github-action-skaffold@latest
         with:
           command: build
           tag: ${{ env.CMAK_VERSION }}
-
