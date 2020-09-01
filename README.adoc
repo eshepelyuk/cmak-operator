@@ -1,4 +1,5 @@
 = CMAK operator
+:cmak-v: 0.2.1
 :toc: macro
 :icons: font
 
@@ -17,7 +18,8 @@ toc::[]
 CMAK operator is a Helm chart and set of tools that allows to install
 and configure https://github.com/yahoo/CMAK[CMAK (ex Kafka Manager)] into Kubernetes cluster.
 
-https://github.com/yahoo/CMAK[CMAK (ex. Kafka Manager)] is well-known and mature tool for minitoring and managing https://kafka.apache.org/[Apache Kafka] clusters.
+https://github.com/yahoo/CMAK[CMAK (ex. Kafka Manager)] is well-known
+and mature tool for monitoring and managing https://kafka.apache.org/[Apache Kafka] clusters.
 
 It's extremely easy to configure multiple clusters in CMAK,
 as well as connection settings and enable optional authorization
@@ -34,9 +36,10 @@ To enable cleanup it is required to enable `TTLAfterFinished` https://kubernetes
 It's recommended to install CMAK operator into a dedicated namespace.
 
 [source]
+[subs="attributes"]
 ----
-$ git clone https://github.com/eshepelyuk/cmak-operator.git
-$ helm install --create-namespace --namespace cmak-ns cmak ./cmak-operator
+$ helm install --create-namespace --namespace cmak-ns cmak \
+    https://github.com/eshepelyuk/cmak-operator/releases/download/{cmak-v}/cmak-operator-{cmak-v}.tgz
 ----
 
 
@@ -102,8 +105,10 @@ cmak:
 Configuration should be passed to helm via command line during installation or upgrade.
 
 [source]
+[subs="attributes"]
 ----
-helm install --create-namespace --namespace cmak-ns -f cmak-values.yaml cmak ./cmak-operator
+$ helm install --create-namespace --namespace cmak-ns -f cmak-values.yaml cmak \
+    https://github.com/eshepelyuk/cmak-operator/releases/download/{cmak-v}/cmak-operator-{cmak-v}.tgz
 ----
 
 == Troubleshooting
