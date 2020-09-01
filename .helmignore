@@ -24,3 +24,10 @@
 
 venv
 *.tgz
+.github
+*.py
+*.adoc
+*.txt
+*.json
+skaffold.yaml
+
