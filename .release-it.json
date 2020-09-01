@@ -1,7 +1,11 @@
 {
   "git": {
+    "commitMessage": "chore: release ${version}",
+    "tagAnnotation": "chore: release ${version}",
+    "requireCleanWorkingDir": true,
     "requireCommits": true,
-    "commit": false,
+    "requireBranch": "master",
+    "commit": true,
     "push": true,
     "tag": true
   },
@@ -16,7 +20,10 @@
 
   "plugins": {
     "@release-it/conventional-changelog": {
-      "preset": "angular"
+      "preset": "conventionalcommits"
+    },
+    "@release-it/bumper": {
+      "out": "Chart.yaml"
     }
   }
 }

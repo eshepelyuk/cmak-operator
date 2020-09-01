@@ -1,11 +1,11 @@
-name: Build and publish docker image
+name: Release Helm chart and Docker image
 on:
   push:
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
 jobs:
   build_docker_job:
-    name: Build and publish
+    name: Helm chart and Docker image
     runs-on: ubuntu-18.04
     steps:
       - name: checkout
@@ -17,8 +17,22 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: detect version
         run: echo "::set-env name=CMAK_VERSION::${GITHUB_REF:10}"
+      - uses: azure/setup-helm@v1
+      - name: package helm chart
+        run: helm package .
       - name: publish docker image
         uses: hiberbee/github-action-skaffold@latest
         with:
           command: build
           tag: ${{ env.CMAK_VERSION }}
+      - name: attach helm chart to release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "cmak-operator-${{ env.CMAK_VERSION }}.tgz"
+          allowUpdates: true
+          omitBody: true
+          omitBodyDuringUpdate: true
+          omitName: true
+          omitNameDuringUpdate: true
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
