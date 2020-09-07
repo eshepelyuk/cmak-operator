@@ -1,38 +1,70 @@
-name: Release Helm chart and Docker image
+name: Release CMAK operator
+
 on:
-  push:
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch
+
 jobs:
   build_docker_job:
-    name: Helm chart and Docker image
+    name: Docker image
     runs-on: ubuntu-18.04
     steps:
       - name: checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: nodejs 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm install release-it@14.0.2 @release-it/conventional-changelog@2.0.0
+      - name: releaseIt
+        run: |
+          git config user.email "eshepelyuk@github"
+          git config user.name "Ievgenii Shepeliuk"
+          npx release-it --ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: cmak version
+        id: cmakVersion
+        run: |
+          cat /tmp/cmak.version
+          echo "::set-env name=CMAK_VERSION::$(cat /tmp/cmak.version)"
+      - uses: azure/setup-helm@v1
+      - run: helm package . --version $CMAK_VERSION
+      - name: upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: "helm"
+          path: "cmak-operator-${{ env.CMAK_VERSION }}.tgz"
       - name: docker login
         uses: docker/login-action@v1
         with:
           username: eshepelyuk
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: detect version
-        run: echo "::set-env name=CMAK_VERSION::${GITHUB_REF:10}"
-      - uses: azure/setup-helm@v1
-      - name: package helm chart
-        run: helm package .
       - name: publish docker image
         uses: hiberbee/github-action-skaffold@latest
         with:
           command: build
           tag: ${{ env.CMAK_VERSION }}
-      - name: attach helm chart to release
-        uses: ncipollo/release-action@v1
+
+  publish_chart_job:
+    needs: build_docker_job
+    name: Helm chart
+    runs-on: ubuntu-18.04
+    steps:
+      - name: checkout gh-pages
+        uses: actions/checkout@v2
         with:
-          artifacts: "cmak-operator-${{ env.CMAK_VERSION }}.tgz"
-          allowUpdates: true
-          omitBody: true
-          omitBodyDuringUpdate: true
-          omitName: true
-          omitNameDuringUpdate: true
-          replacesArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: gh-pages
+      - name: download artifact
+        uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: helm
+      - uses: azure/setup-helm@v1
+      - run: helm repo index .
+      - name: publish
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages

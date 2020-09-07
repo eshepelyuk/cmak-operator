@@ -1,5 +1,4 @@
 = CMAK operator
-:cmak-v: 0.2.1
 :toc: macro
 :icons: font
 
@@ -11,60 +10,93 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-image:https://img.shields.io/github/v/tag/eshepelyuk/cmak-operator?sort=semver&style=for-the-badge[GitHub tag (latest SemVer)] image:https://img.shields.io/github/license/eshepelyuk/cmak-operator?logo=github&style=for-the-badge[GitHub, link="https://opensource.org/licenses/MIT", window="_blank"]
+image:https://img.shields.io/github/v/tag/eshepelyuk/cmak-operator?sort=semver&style=for-the-badge&label=current[Release,
+link="https://github.com/eshepelyuk/cmak-operator/releases/latest"]
+image:https://img.shields.io/docker/pulls/eshepelyuk/cmak-operator-cli?style=for-the-badge[Docker Hub,
+link="https://hub.docker.com/repository/docker/eshepelyuk/cmak-operator-cli"]
+image:https://img.shields.io/github/license/eshepelyuk/cmak-operator?logo=github&style=for-the-badge[MIT licence,
+link="https://opensource.org/licenses/MIT", window="_blank"]
 
 toc::[]
 
-CMAK operator is a Helm chart and set of tools that allows to install
+CMAK operator is a set of tools package as Helm chart, that allows to install
 and configure https://github.com/yahoo/CMAK[CMAK (ex Kafka Manager)] into Kubernetes cluster.
 
 https://github.com/yahoo/CMAK[CMAK (ex. Kafka Manager)] is well-known
 and mature tool for monitoring and managing https://kafka.apache.org/[Apache Kafka] clusters.
 
-It's extremely easy to configure multiple clusters in CMAK,
-as well as connection settings and enable optional authorization
-using https://helm.sh/docs/chart_template_guide/values_files/[Helm values files]
 
 == Prerequisites
 
-CMAK operator creates https://kubernetes.io/docs/concepts/workloads/controllers/job/[Kubernetes Jobs] for configuring CMAK.
+CMAK operator creates
+https://kubernetes.io/docs/concepts/workloads/controllers/job/[Kubernetes Jobs]
+for configuring CMAK.
 Kubernetes Jobs are not automatically garbage collected.
-To enable cleanup it is required to enable `TTLAfterFinished` https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[feature gate].
+To enable cleanup it is required to enable `TTLAfterFinished`
+https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[feature gate].
 
-== Installation with Helm
+== Installation
+
+CMAK operator could be installed only using Helm 3.
+Helm chart is published to public Helm repository, hosted by GitHub.
 
 It's recommended to install CMAK operator into a dedicated namespace.
 
 [source]
-[subs="attributes"]
+.Add Helm repository
 ----
-$ helm install --create-namespace --namespace cmak-ns cmak \
-    https://github.com/eshepelyuk/cmak-operator/releases/download/{cmak-v}/cmak-operator-{cmak-v}.tgz
+$ helm repo add cmak https://eshepelyuk.github.io/cmak-operator
+$ helm repo update
 ----
 
+[source]
+.Install latest version
+----
+$ helm install --create-namespace -n cmak-ns mycmak cmak/cmak-operator
+----
+
+[source]
+.Seach for available versions
+----
+$ helm search repo cmak-operator --versions
+NAME                    CHART VERSION   APP VERSION     DESCRIPTION
+cmak/cmak-operator      0.2.1           3.0.0.5         CMAK operator for K8S.
+cmak/cmak-operator      0.2.0           3.0.0.5         CMAK operator for K8S.
+----
+
+[source]
+.Install specific version
+----
+$ helm install --create-namespace -n cmak-ns --version 0.2.1 mycmak cmak/cmak-operator
+----
 
 === Check installation
 
 [IMPORTANT]
 .Exposing CMAK UI
 ====
-Currently, CMAK operator doesn't create any `Ingress` or similar resources to expose UI via HTTP.
-A users of CMAK operator should take care of this by themselves.
+Currently, CMAK operator doesn't create neither `Ingress`
+nor any other K8S resources to expose UI via HTTP.
+Users of CMAK operator should take care of this by themselves.
 ====
 
-The simpliest test is to port forward CMAK UI HTTP port and access it from browser via localhost.
+The simpliest test is to port forward CMAK UI HTTP port and access it from browser .
 
 [source]
 ----
 $ kubectl port-forward -n cmak-ns service/cmak 9000:9000
 ----
 
-Then, navigate to http://localhost:9000.
-
+Then, open http://localhost:9000 in your browser.
 
 == Configuration
 
-Check `values.yaml` for all available options.
+It's extremely easy to configure multiple clusters in CMAK,
+starting from cluster setup, connection settings and ending with authorization
+using https://helm.sh/docs/chart_template_guide/values_files/[Helm values files].
+
+Check https://helm.sh/docs/chart_template_guide/values_files/[Helm values files]
+for all available options and their description.
 
 . Minimal values.yaml configuration for adding a several Kafka clusters to CMAK.
 [source,yaml]
@@ -107,8 +139,7 @@ Configuration should be passed to helm via command line during installation or u
 [source]
 [subs="attributes"]
 ----
-$ helm install --create-namespace --namespace cmak-ns -f cmak-values.yaml cmak \
-    https://github.com/eshepelyuk/cmak-operator/releases/download/{cmak-v}/cmak-operator-{cmak-v}.tgz
+$ helm install --create-namespace -n cmak-ns -f cmak-values.yaml mycmak cmak/cmak-operator
 ----
 
 == Troubleshooting

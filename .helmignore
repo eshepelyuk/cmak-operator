@@ -31,3 +31,4 @@ venv
 *.json
 skaffold.yaml
 
+node_modules

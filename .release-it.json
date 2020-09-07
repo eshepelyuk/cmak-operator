@@ -1,29 +1,21 @@
 {
+  "ci": true,
   "git": {
-    "commitMessage": "chore: release ${version}",
-    "tagAnnotation": "chore: release ${version}",
-    "requireCleanWorkingDir": true,
-    "requireCommits": true,
     "requireBranch": "master",
-    "commit": true,
-    "push": true,
-    "tag": true
+    "commit": false,
+    "tagAnnotation": "chore: release ${version}"
   },
-
-  "npm": {
-    "publish": false
-  },
-
+  "npm": false,
   "github": {
-    "release": true
+    "release": true,
+    "assets": ["cmak-operator*.tgz"]
   },
-
   "plugins": {
     "@release-it/conventional-changelog": {
       "preset": "conventionalcommits"
-    },
-    "@release-it/bumper": {
-      "out": "Chart.yaml"
     }
+  },
+  "hooks": {
+    "after:release": "echo ${version} > /tmp/cmak.version"
   }
 }
