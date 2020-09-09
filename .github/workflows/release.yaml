@@ -16,6 +16,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+
+      - name: cache node_modules
+        id: nodeCache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./node_modules
+            ./package-lock.json
+          key: node-modules-14-0-2--2.0.0
       - run: npm install release-it@14.0.2 @release-it/conventional-changelog@2.0.0
       - name: releaseIt
         run: |

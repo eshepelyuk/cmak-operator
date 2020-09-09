@@ -2,6 +2,7 @@
   "ci": true,
   "git": {
     "requireBranch": "master",
+    "requireCommits": true,
     "commit": false,
     "tagAnnotation": "chore: release ${version}"
   },
