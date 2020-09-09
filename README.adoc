@@ -1,6 +1,7 @@
 = CMAK operator
 :toc: macro
 :icons: font
+:toclevels: 1
 
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -19,10 +20,10 @@ link="https://opensource.org/licenses/MIT", window="_blank"]
 
 toc::[]
 
-CMAK operator is a set of tools package as Helm chart, that allows to install
-and configure https://github.com/yahoo/CMAK[CMAK (ex Kafka Manager)] into Kubernetes cluster.
+CMAK operator is a set of tools packaged as Helm chart, that allows to install
+and configure https://github.com/yahoo/CMAK[CMAK] (ex Kafka Manager) into Kubernetes cluster.
 
-https://github.com/yahoo/CMAK[CMAK (ex. Kafka Manager)] is well-known
+https://github.com/yahoo/CMAK[CMAK] (ex. Kafka Manager) is well-known
 and mature tool for monitoring and managing https://kafka.apache.org/[Apache Kafka] clusters.
 
 
@@ -37,8 +38,8 @@ https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/
 
 == Installation
 
-CMAK operator could be installed only using Helm 3.
-Helm chart is published to public Helm repository, hosted by GitHub.
+CMAK operator could be installed only with https://helm.sh/docs/[Helm 3].
+Helm chart is published to public Helm repository, hosted on GitHub itself.
 
 It's recommended to install CMAK operator into a dedicated namespace.
 
@@ -70,7 +71,7 @@ cmak/cmak-operator      0.2.0           3.0.0.5         CMAK operator for K8S.
 $ helm install --create-namespace -n cmak-ns --version 0.2.1 mycmak cmak/cmak-operator
 ----
 
-=== Check installation
+=== Verify installation
 
 [IMPORTANT]
 .Exposing CMAK UI
@@ -95,7 +96,7 @@ It's extremely easy to configure multiple clusters in CMAK,
 starting from cluster setup, connection settings and ending with authorization
 using https://helm.sh/docs/chart_template_guide/values_files/[Helm values files].
 
-Check https://helm.sh/docs/chart_template_guide/values_files/[Helm values files]
+Check https://github.com/eshepelyuk/cmak-operator/blob/master/values.yaml[CMAK operator values]
 for all available options and their description.
 
 . Minimal values.yaml configuration for adding a several Kafka clusters to CMAK.
@@ -113,7 +114,7 @@ cmak:
 
 Connection settings could be configured for all clusters at once or per dedicated cluster.
 
-.Configuring connection settings
+. Configuring connection settings
 [source,yaml]
 ----
 cmak:
@@ -144,7 +145,7 @@ $ helm install --create-namespace -n cmak-ns -f cmak-values.yaml mycmak cmak/cma
 
 == Troubleshooting
 
-Cluster settings are not applied after changing values.yaml.::
+Cluster settings are not applied after changing values file.::
 
 Try to remove a K8S job and re-apply changes via `helm upgrade`.
 
