@@ -29,6 +29,7 @@ venv
 *.adoc
 *.txt
 *.json
+*.adoc
 skaffold.yaml
 
 node_modules
