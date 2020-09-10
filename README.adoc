@@ -11,11 +11,13 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-image:https://img.shields.io/github/v/tag/eshepelyuk/cmak-operator?sort=semver&style=for-the-badge&label=current[Release,
+image:https://img.shields.io/github/v/tag/eshepelyuk/cmak-operator?logo=github&sort=semver&style=for-the-badge&label=current[Release,
 link="https://github.com/eshepelyuk/cmak-operator/releases/latest"]
-image:https://img.shields.io/docker/pulls/eshepelyuk/cmak-operator-cli?style=for-the-badge[Docker Hub,
+image:https://img.shields.io/docker/pulls/eshepelyuk/cmak-operator-cli?logo=docker&style=for-the-badge[Docker Hub,
 link="https://hub.docker.com/repository/docker/eshepelyuk/cmak-operator-cli"]
-image:https://img.shields.io/github/license/eshepelyuk/cmak-operator?logo=github&style=for-the-badge[MIT licence,
+image:https://img.shields.io/endpoint?style=for-the-badge&url=https://artifacthub.io/badge/repository/cmak-operator[Artifact
+HUB, link="https://artifacthub.io/packages/helm/cmak-operator/cmak-operator"]
+image:https://img.shields.io/github/license/eshepelyuk/cmak-operator?logo=mit&style=for-the-badge[MIT licence,
 link="https://opensource.org/licenses/MIT", window="_blank"]
 
 toc::[]
