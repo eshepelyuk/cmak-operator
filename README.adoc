@@ -146,6 +146,30 @@ Configuration should be passed to helm via command line during installation or u
 $ helm install --create-namespace -n cmak-ns -f cmak-values.yaml mycmak cmak/cmak-operator
 ----
 
+== Internals
+
+CMAK operator comprises following components:
+
+* https://github.com/yahoo/CMAK/[CMAK],
+  powered by https://hub.docker.com/r/hlebalbau/kafka-manager/[Docker image]
+  from https://github.com/hleb-albau/kafka-manager-docker[@hleb-albau].
+* https://zookeeper.apache.org/[Apache ZooKeeper],
+  powered by https://hub.docker.com/_/zookeeper/[official Docker image].
+* https://kubernetes.io/docs/concepts/workloads/controllers/job/[K8S Job]
+  used to configure Kafka clusters,
+  powered by
+  https://hub.docker.com/repository/docker/eshepelyuk/cmak-operator-cli[custom Docker image].
+
+== Design choices
+
+=== Using own version of Zookeeper.
+
+TO BE DEFINED.
+
+=== Do not using REST for configuring clusters.
+
+TO BE DEFINED
+
 == Troubleshooting
 
 Cluster settings are not applied after changing values file.::
@@ -157,10 +181,3 @@ Try to remove a K8S job and re-apply changes via `helm upgrade`.
 $ kubectl delete job cmak-cluster -n cmak-ns
 $ helm upgrade ...
 ----
-
-// == Design choices
-// === Why own Zookeeper
-// === Why not cURL
-
-// == Roadmap
-
