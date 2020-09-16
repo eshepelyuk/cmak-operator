@@ -3,7 +3,7 @@ name: cmak-operator
 description: Manage and vizualize Kafka clusters with CMAK (previously Kafka Manager).
 type: application
 version: 0.0.0 # actual chart version is managed by git tags
-appVersion: master-7e7a22e
+appVersion: 3.0.0.5-7e7a22e
 
 home: https://github.com/eshepelyuk/cmak-operator
 
