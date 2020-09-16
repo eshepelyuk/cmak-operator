@@ -71,17 +71,11 @@ jobs:
         with:
           name: helm
           path: /tmp/cmak
-      - run: |
-          ls -la
-          cat index.yaml
       - uses: azure/setup-helm@v1
       - name: update index
         run: |
           helm repo index /tmp/cmak --merge ./index.yaml
           mv -f /tmp/cmak/* .
-      - run: |
-          ls -la
-          cat index.yaml
       - name: publish
         uses: actions-js/push@master
         with:
