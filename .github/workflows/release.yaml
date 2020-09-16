@@ -7,6 +7,8 @@ jobs:
   build_docker_job:
     name: Docker image
     runs-on: ubuntu-18.04
+    outputs:
+      cmakVersion: ${{ steps.cmakVersion.outputs.cmakVersion }}
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -16,7 +18,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-
       - name: cache node_modules
         id: nodeCache
         uses: actions/cache@v2
@@ -38,6 +39,7 @@ jobs:
         run: |
           cat /tmp/cmak.version
           echo "::set-env name=CMAK_VERSION::$(cat /tmp/cmak.version)"
+          echo "::set-output name=cmakVersion::$(cat /tmp/cmak.version)"
       - uses: azure/setup-helm@v1
       - run: helm package . --version $CMAK_VERSION
       - name: upload artifact
@@ -57,9 +59,9 @@ jobs:
           tag: ${{ env.CMAK_VERSION }}
 
   publish_chart_job:
-    needs: build_docker_job
     name: Helm chart
     runs-on: ubuntu-18.04
+    needs: build_docker_job
     steps:
       - name: checkout gh-pages
         uses: actions/checkout@v2
@@ -81,3 +83,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
+      - name: twitter
+        run: |
+          echo "****************************************************"
+          echo ""
+          echo "Released #CMAKOperator ${{ needs.build_docker_job.outputs.cmakVersion }} for #Kubernetes and #Kafka"
+          echo "See changelog https://github.com/eshepelyuk/cmak-operator/releases/tag/${{ needs.build_docker_job.outputs.cmakVersion }}"
+          echo ""
+          echo "****************************************************"
