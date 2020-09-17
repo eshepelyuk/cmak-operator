@@ -1,4 +1,3 @@
-{{ if .Values.cmak.clusters }}
 {{- $nm := include "cmak.name" . -}}
 {{- $version := get (default (dict "tag" .Chart.Version) .Values.image) "tag" -}}
 apiVersion: batch/v1
@@ -23,13 +22,10 @@ spec:
         - name: setup
           image: "eshepelyuk/cmak-operator-cli:{{ $version }}"
           command: ['python3', './json2zk.py']
-          args: 
+          args:
             - '{{ $nm }}.{{ $.Release.Namespace }}:2181'
             - '/kafka-manager/configs'
             - '/opt/clusters'
           volumeMounts:
             - name: {{ $nm }}-clusters
               mountPath: /opt/clusters
-{{ else }}
-# .Values.cmak.clusters is empty, no configuration created in ZooKeeper.
-{{ end }}

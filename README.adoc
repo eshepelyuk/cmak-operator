@@ -123,14 +123,14 @@ Connection settings could be configured for all clusters at once or per dedicate
 cmak:
   commonClusters:
     curatorConfig:
-      zkMaxRetry: 100 <1>
+      zkMaxRetry: 100 # <1>
   clusters:
     - name: "cluster-stage"
-      kafkaVersion: "2.5.0" <2>
+      kafkaVersion: "2.5.0" # <2>
       curatorConfig:
         zkConnect: "kafka01.stage:2181,kafka02.stage:2181"
     - name: "cluster-prod"
-      kafkaVersion: "2.1.0" <3>
+      kafkaVersion: "2.1.0" # <3>
       curatorConfig:
         zkConnect: "kafka01.prod:2181,kafka02.prod:2181,kafka03.prod:2181"
 ----

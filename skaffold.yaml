@@ -23,6 +23,8 @@ profiles:
         releases:
           - name: cmak-operator
             chartPath: .
+            valuesFiles:
+              - values-dev.yaml
             imageStrategy:
               helm: {}
             artifactOverrides:
