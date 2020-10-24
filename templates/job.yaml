@@ -12,8 +12,6 @@ spec:
   template:
     spec:
       restartPolicy: Never
-      imagePullSecrets:
-        - name: newage-registry
       volumes:
         - name: {{ $nm }}-clusters
           configMap:
