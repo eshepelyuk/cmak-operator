@@ -28,7 +28,7 @@ venv
 *.py
 *.adoc
 *.txt
-*.json
+.release-it.json
 *.adoc
 skaffold.yaml
 values-lint.yaml
