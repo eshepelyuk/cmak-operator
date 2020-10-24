@@ -41,11 +41,9 @@ jobs:
           echo "::set-env name=CMAK_VERSION::$(cat /tmp/cmak.version)"
           echo "::set-output name=cmakVersion::$(cat /tmp/cmak.version)"
       - uses: azure/setup-helm@v1
-      - name: helm lint
-        run: |
-          helm lint . --strict
-          helm lint . --strict -f values-lint.yaml
-        run: helm package . --version $CMAK_VERSION
+        with:
+          version: "3.3.4"
+      - run: helm package . --version $CMAK_VERSION
       - name: upload artifact
         uses: actions/upload-artifact@v2
         with:

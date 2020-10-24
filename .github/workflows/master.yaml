@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - master
+
+jobs:
+  ci_job:
+    name: Continous integration
+    runs-on: ubuntu-18.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+        with:
+          version: "3.3.4"
+      - name: helm lint
+        run: |
+          helm lint . --strict
+          helm lint . --strict -f values-lint.yaml
