@@ -30,15 +30,6 @@ https://github.com/yahoo/CMAK[CMAK] (previously Kafka Manager)
 is well-known and mature tool for monitoring and managing
 https://kafka.apache.org/[Apache Kafka] clusters.
 
-== Prerequisites
-
-CMAK operator creates
-https://kubernetes.io/docs/concepts/workloads/controllers/job/[Kubernetes Jobs]
-for configuring CMAK.
-Kubernetes Jobs are not automatically garbage collected.
-To enable cleanup it is required to enable `TTLAfterFinished`
-https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[feature gate].
-
 == Installation
 
 CMAK operator could be installed only with https://helm.sh/docs/[Helm 3].
@@ -155,29 +146,21 @@ CMAK operator comprises following components:
   from https://github.com/hleb-albau/kafka-manager-docker[@hleb-albau].
 * https://zookeeper.apache.org/[Apache ZooKeeper],
   powered by https://hub.docker.com/_/zookeeper/[official Docker image].
-* https://kubernetes.io/docs/concepts/workloads/controllers/job/[K8S Job]
+* https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/[K8S CronJob]
   used to configure Kafka clusters,
   powered by
   https://hub.docker.com/repository/docker/eshepelyuk/cmak-operator-cli[custom Docker image].
 
 == Design choices
 
-=== Using own version of Zookeeper.
+=== Dedicated Zookeeper instance.
 
 TO BE DEFINED.
 
-=== Do not using REST for configuring clusters.
+=== Not using REST for configuring CMAK clusters.
 
-TO BE DEFINED
+TO BE DEFINED.
 
-== Troubleshooting
+=== Reconciliation with CronJob.
 
-Cluster settings are not applied after changing values file.::
-
-Try to remove a K8S job and re-apply changes via `helm upgrade`.
-
-[source]
-----
-$ kubectl delete job cmak-cluster -n cmak-ns
-$ helm upgrade ...
-----
+TO BE DEFINED.
