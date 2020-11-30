@@ -45,3 +45,9 @@ cmak:
     jaasConfig: null
 
   clusters: []
+
+reconcile:
+  schedule: "*/2 * * * *"
+  overwriteZk: true
+  # successfulJobsHistoryLimit:
+  # failedJobsHistoryLimit:
