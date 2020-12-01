@@ -137,6 +137,13 @@ Configuration should be passed to helm via command line during installation or u
 $ helm install --create-namespace -n cmak-ns -f cmak-values.yaml mycmak cmak/cmak-operator
 ----
 
+== Troubleshooting
+
+CMAK doesn't configure clusters from Helm values::
++
+* CMAK settings are not applied immediately, but only after `reconcile.schedule` period had passed.
+* Check logs of cron job to see if there's no connection failure to ZK.
+
 == Internals
 
 CMAK operator comprises following components:
