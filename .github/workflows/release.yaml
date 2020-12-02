@@ -38,17 +38,16 @@ jobs:
         id: cmakVersion
         run: |
           cat /tmp/cmak.version
-          echo "::set-env name=CMAK_VERSION::$(cat /tmp/cmak.version)"
           echo "::set-output name=cmakVersion::$(cat /tmp/cmak.version)"
       - uses: azure/setup-helm@v1
         with:
           version: "3.3.4"
-      - run: helm package . --version $CMAK_VERSION
+      - run: helm package . --version ${{ steps.cmakVersion.outputs.cmakVersion }}
       - name: upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: "helm"
-          path: "cmak-operator-${{ env.CMAK_VERSION }}.tgz"
+          path: "cmak-operator-${{ steps.cmakVersion.outputs.cmakVersion }}.tgz"
       - name: docker login
         uses: docker/login-action@v1
         with:
@@ -58,7 +57,7 @@ jobs:
         uses: hiberbee/github-action-skaffold@latest
         with:
           command: build
-          tag: ${{ env.CMAK_VERSION }}
+          tag: ${{ steps.cmakVersion.outputs.cmakVersion }}
 
   publish_chart_job:
     name: Helm chart

@@ -8,8 +8,7 @@
   },
   "npm": false,
   "github": {
-    "release": true,
-    "assets": ["cmak-operator*.tgz"]
+    "release": true
   },
   "plugins": {
     "@release-it/conventional-changelog": {
