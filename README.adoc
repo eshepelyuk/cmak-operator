@@ -112,7 +112,7 @@ Connection settings could be configured for all clusters at once or per dedicate
 [source,yaml]
 ----
 cmak:
-  commonClusters:
+  clustersCommon:
     curatorConfig:
       zkMaxRetry: 100 # <1>
   clusters:
@@ -122,6 +122,7 @@ cmak:
         zkConnect: "kafka01.stage:2181,kafka02.stage:2181"
     - name: "cluster-prod"
       kafkaVersion: "2.1.0" # <3>
+      enabled: false
       curatorConfig:
         zkConnect: "kafka01.prod:2181,kafka02.prod:2181,kafka03.prod:2181"
 ----

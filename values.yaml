@@ -49,5 +49,5 @@ cmak:
 reconcile:
   schedule: "*/2 * * * *"
   overwriteZk: true
-  # successfulJobsHistoryLimit:
-  # failedJobsHistoryLimit:
+  successfulJobsHistoryLimit: null
+  failedJobsHistoryLimit: null

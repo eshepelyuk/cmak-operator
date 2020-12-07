@@ -1,13 +1,15 @@
 cmak:
-  commonClusters:
+  clustersCommon:
     curatorConfig:
       zkMaxRetry: 100
+
   clusters:
     - name: "cluster-stage"
       kafkaVersion: "2.5.0"
       curatorConfig:
         zkConnect: "kafka01.stage:2181,kafka02.stage:2181"
     - name: "cluster-prod"
+      enabled: false
       kafkaVersion: "2.1.0"
       curatorConfig:
         zkConnect: "kafka01.prod:2181,kafka02.prod:2181,kafka03.prod:2181"

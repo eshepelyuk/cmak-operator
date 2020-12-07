@@ -1,75 +1,102 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "https://github.com/eshepelyuk/cmak-operator/",
-  "type": "object",
   "title": "CMAK operator Helm values",
-  "required": [
-    "cmak",
-    "reconcile"
-  ],
-  "properties": {
-    "reconcile": {
-      "type": "object",
-      "required": [
-        "schedule"
-      ],
-      "properties": {
-        "schedule": {
-          "type": "string",
-          "title": "cron expression for periodic reconciliation"
-        },
-        "overwriteZk": {
-          "type": "boolean",
-          "title": "allow overwrite Zookeeper settings of CMAK",
-          "default": true
-        },
-        "successfulJobsHistoryLimit": {
-          "type": "integer",
-          "title": "how many completed jobs should be kept"
-        },
-        "failedJobsHistoryLimit": {
-          "type": "integer",
-          "title": "how many failed jobs should be kept"
-        }
 
-      },
-      "additionalProperties": false
-    },
-    "cmak": {
-      "$id": "#/properties/cmak",
+  "definitions": {
+    "curatorConfigCommon": {
       "type": "object",
-      "required": [
-        "basicAuth"
-      ],
       "properties": {
-        "basicAuth": {
-          "$id": "#/properties/cmak/properties/basicAuth",
-          "type": "object",
-          "required": [
-            "enabled"
-          ],
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "title": "enable Basic auth",
-              "default": false
-            },
-            "username": {
-              "type": "string",
-              "title": "username for Basic auth",
-              "default": ""
-            },
-            "password": {
-              "type": "string",
-              "title": "password for Basic auth",
-              "default": ""
-            }
-          },
-          "additionalProperties": false
+        "zkMaxRetry": { "type": "integer", "default": 100 },
+        "baseSleepTimeMs": { "type": "integer", "default": 100 },
+        "maxSleepTimeMs": { "type": "integer", "default": 1000 }
+      }
+    },
+    "curatorConfig": {
+      "type": "object", "required": ["zkConnect"],
+      "allOf": [
+        { "$ref": "#/definitions/curatorConfigCommon" },
+        { "properties": {
+            "zkConnect": { "type": "string" }
+          }
         }
-      },
-      "additionalProperties": true
+      ]
+    },
+    "clusterConfigShared": {
+      "type": "object",
+      "properties": {
+        "kafkaVersion": { "type": "string", "default": "2.2.0" }
+      }
+    },
+    "clusterConfigCommon": {
+      "type": "object", "required": ["curatorConfig"],
+      "allOf": [
+        { "$ref": "#/definitions/clusterConfigShared" },
+        { "properties": {
+            "curatorConfig": { "$ref": "#/definitions/curatorConfigCommon" }
+          }
+        }
+      ]
+    },
+    "clusterConfig": {
+      "type": "object", "required": ["name", "curatorConfig"],
+      "allOf": [
+        { "$ref": "#/definitions/clusterConfigShared" },
+        { "properties": {
+            "name": { "type": "string" },
+            "enabled": { "type": "boolean", "default": true },
+            "curatorConfig": { "$ref": "#/definitions/curatorConfig" }
+          }
+        }
+      ]
     }
   },
-  "additionalProperties": true
+
+  "type": "object", "additionalProperties": false,
+  "required": ["cmak", "reconcile"],
+
+  "properties": {
+    "reconcile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schedule"],
+      "properties": {
+        "schedule": {
+          "type": "string", "title": "cron expression for periodic reconciliation"
+        },
+        "overwriteZk": {
+          "type": "boolean", "default": true, "title": "allow overwrite Zookeeper settings of CMAK"
+        },
+        "successfulJobsHistoryLimit": {
+          "type": ["null", "integer"], "default": null, "title": "how many completed jobs should be kept"
+        },
+        "failedJobsHistoryLimit": {
+          "type": ["null", "integer"], "default": null, "title": "how many failed jobs should be kept"
+        }
+      }
+    },
+    "cmak": {
+      "type": "object", "additionalProperties": false,
+      "required": ["basicAuth", "clustersCommon", "clusters"],
+      "properties": {
+        "basicAuth": {
+          "type": "object", "additionalProperties": false, "required": ["enabled"],
+          "properties": {
+            "enabled": {
+              "type": "boolean", "default": false, "title": "enable Basic auth"
+            },
+            "username": {
+              "type": "string", "default": "", "title": "username for Basic auth"
+            },
+            "password": {
+              "type": "string", "default": "", "title": "password for Basic auth"
+            }
+          }
+        },
+        "clustersCommon": { "$ref": "#/definitions/clusterConfigCommon" },
+        "clusters": {
+          "type": "array", "items": { "$ref": "#/definitions/clusterConfig" }
+        }
+      }
+    }
+  }
 }
