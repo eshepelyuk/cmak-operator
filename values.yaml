@@ -10,7 +10,6 @@ cmak:
       zkMaxRetry: 100
       baseSleepTimeMs: 100
       maxSleepTimeMs: 1000
-    enabled: true
     kafkaVersion: "2.2.0"
     jmxEnabled: false
     jmxUser: null

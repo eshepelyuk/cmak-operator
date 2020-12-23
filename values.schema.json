@@ -1,11 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/eshepelyuk/cmak-operator/",
   "title": "CMAK operator Helm values",
 
   "definitions": {
     "curatorConfigCommon": {
-      "type": "object",
+      "type": "object", "title": "curator framework settings for zookeeper",
       "properties": {
         "zkMaxRetry": { "type": "integer", "default": 100 },
         "baseSleepTimeMs": { "type": "integer", "default": 100 },
@@ -17,7 +17,10 @@
       "allOf": [
         { "$ref": "#/definitions/curatorConfigCommon" },
         { "properties": {
-            "zkConnect": { "type": "string" }
+            "zkConnect": {
+              "type": "string", "title": "zookeeper connection string",
+              "description": "Zookeeper addresses joined by , host1:port,host2:port,host3:port"
+            }
           }
         }
       ]
@@ -25,11 +28,20 @@
     "clusterConfigShared": {
       "type": "object",
       "properties": {
-        "kafkaVersion": { "type": "string", "default": "2.2.0" }
+        "kafkaVersion": { "type": "string", "default": "2.2.0" },
+        "jmxEnabled": { "type": "boolean", "default": false },
+        "jmxUser": { "type": ["null", "string"], "default": null },
+        "jmxPass": { "type": ["null", "string"], "default": null },
+        "jmxSsl": { "type": "boolean", "default": false },
+        "pollConsumers": { "type": "boolean", "default": true },
+        "filterConsumers": { "type": "boolean", "default": false },
+        "logkafkaEnabled": { "type": "boolean", "default": false },
+        "activeOffsetCacheEnabled": { "type": "boolean", "default": true },
+        "displaySizeEnabled": { "type": "boolean", "default": false }
       }
     },
     "clusterConfigCommon": {
-      "type": "object", "required": ["curatorConfig"],
+      "type": "object", "required": ["curatorConfig"], "title": "common config for all declared clusters",
       "allOf": [
         { "$ref": "#/definitions/clusterConfigShared" },
         { "properties": {
@@ -39,12 +51,12 @@
       ]
     },
     "clusterConfig": {
-      "type": "object", "required": ["name", "curatorConfig"],
+      "type": "object", "required": ["name", "curatorConfig"], "title": "config for particular cluster",
       "allOf": [
         { "$ref": "#/definitions/clusterConfigShared" },
         { "properties": {
-            "name": { "type": "string" },
-            "enabled": { "type": "boolean", "default": true },
+            "name": { "type": "string", "title": "display name for the cluster" },
+            "enabled": { "type": "boolean", "default": true, "title": "either the cluster enabled" },
             "curatorConfig": { "$ref": "#/definitions/curatorConfig" }
           }
         }
@@ -58,43 +70,46 @@
   "properties": {
     "reconcile": {
       "type": "object", "additionalProperties": false,
-      "required": ["schedule"],
+      "required": ["schedule"], "title": "reconciliation job config",
       "properties": {
         "schedule": {
-          "type": "string", "title": "cron expression for periodic reconciliation"
+          "type": "string", "default": "*/2 * * * *", "title": "cron expression for periodic reconciliation"
         },
         "overwriteZk": {
           "type": "boolean", "default": true, "title": "allow overwrite Zookeeper settings of CMAK"
         },
         "successfulJobsHistoryLimit": {
-          "type": ["null", "integer"], "default": null, "title": "how many completed jobs should be kept"
+          "type": ["null", "integer"], "default": null, "title": "number of completed jobs to keep"
         },
         "failedJobsHistoryLimit": {
-          "type": ["null", "integer"], "default": null, "title": "how many failed jobs should be kept"
+          "type": ["null", "integer"], "default": null, "title": "number of failed jobs to keep"
         }
       }
     },
     "cmak": {
-      "type": "object", "additionalProperties": false,
+      "type": "object", "additionalProperties": false, "title": "cmak instance settings",
+      "description": "Those settings are mirroring CMAK UI preferences.",
       "required": ["basicAuth", "clustersCommon", "clusters"],
       "properties": {
         "basicAuth": {
           "type": "object", "additionalProperties": false, "required": ["enabled"],
+          "title": "basic auth settings",
           "properties": {
             "enabled": {
-              "type": "boolean", "default": false, "title": "enable Basic auth"
+              "type": "boolean", "default": false, "title": "enable basic auth"
             },
             "username": {
-              "type": "string", "default": "", "title": "username for Basic auth"
+              "type": ["null", "string"], "default": null, "title": "basic auth username"
             },
             "password": {
-              "type": "string", "default": "", "title": "password for Basic auth"
+              "type": ["null", "string"], "default": null, "title": "basic auth password"
             }
           }
         },
         "clustersCommon": { "$ref": "#/definitions/clusterConfigCommon" },
         "clusters": {
-          "type": "array", "items": { "$ref": "#/definitions/clusterConfig" }
+          "type": "array", "title": "list of configured clusters",
+          "items": { "$ref": "#/definitions/clusterConfig" }
         }
       }
     }
