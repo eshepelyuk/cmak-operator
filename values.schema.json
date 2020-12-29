@@ -64,7 +64,7 @@
     }
   },
 
-  "type": "object", "additionalProperties": false,
+  "type": "object", "additionalProperties": true,
   "required": ["cmak", "reconcile"],
 
   "properties": {
