@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/eshepelyuk/test/",
+  "title": "test helm values",
+
+  "type": "object", "additionalProperties": true,
+  "required": ["propStr"],
+
+  "properties": {
+    "propStr": { "type": "string" },
+    "propBool": { "type": "boolean" }
+  }
+}
