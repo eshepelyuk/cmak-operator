@@ -1,0 +1,8 @@
+cmak-operator:
+  cmak:
+    clusters: []
+
+propStr: "true"
+
+global:
+  globalStr: "false"

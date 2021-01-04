@@ -1,0 +1,10 @@
+apiVersion: v2
+name: test
+type: application
+version: 0.0.0
+appVersion: 0.0.0
+
+dependencies:
+- name: cmak-operator
+  version: 0.0.0
+  repository: file://../..
