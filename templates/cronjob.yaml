@@ -26,7 +26,7 @@ spec:
                 name: {{ $nm }}-clusters
           containers:
             - name: setup
-              image: "eshepelyuk/cmak-operator-cli:{{ $version }}"
+              image: {{ printf "%s/eshepelyuk/cmak-operator-cli:%s" .Values.imageRegistry $version | quote }}
               command: ['python3', './json2zk.py']
               args:
                 - '{{ .Values.reconcile.overwriteZk | ternary "--" "--no-" }}overwrite-zk'

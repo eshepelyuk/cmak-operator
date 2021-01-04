@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: zk
-          image: "zookeeper:3.6.1"
+          image: {{ printf "%s/zookeeper:%s" .Values.imageRegistry "3.6.1" | quote }}
           imagePullPolicy: IfNotPresent
           ports:
           - name: zk
@@ -33,7 +33,7 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 15
         - name: ui
-          image: "hlebalbau/kafka-manager:{{ .Chart.AppVersion }}"
+          image: {{ printf "%s/hlebalbau/kafka-manager:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
           imagePullPolicy: IfNotPresent
           ports:
           - name: http
