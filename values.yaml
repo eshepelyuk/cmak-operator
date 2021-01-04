@@ -1,3 +1,5 @@
+imageRegistry: docker.io
+
 cmak:
 
   basicAuth:

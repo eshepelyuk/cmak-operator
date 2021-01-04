@@ -69,6 +69,8 @@
 
   "properties": {
     "global": { "type": "object", "additionalProperties": true, "title": "placeholder for usage as a subchart" },
+    "image": { "type": "object", "additionalProperties": true, "title": "skaffold compatibility" },
+    "imageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for all images of the chart" },
     "reconcile": {
       "type": "object", "additionalProperties": false,
       "required": ["schedule"], "title": "reconciliation job config",
