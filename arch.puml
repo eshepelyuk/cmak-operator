@@ -1,0 +1,31 @@
+@startuml
+skinparam componentStyle uml2
+
+cloud "Kubernetes cluster" {
+  component "CronJob\ncontroller" as cron <<K8S>>
+  () "CMAK UI" as ui <<ServicePort>>
+  package "CMAK namespace" as ns {
+    frame "CMAK" as pod <<Pod>> {
+      component CMAK as cmak <<Container>>
+      component Zookeeper as zk <<Container>>
+      cmak -r(0- zk : CMAK settings\nstored in ZK
+    }
+    frame "Reconciliation" as cronPod <<CronJob>> {
+      component script <<Container>> [
+        yaml2zk
+        ====
+        1. compare ConfigMap to ZK
+        2. optionally update ZK
+      ]
+      component "Kafka settings" as cm <<ConfigMap>>
+      script .r.> cm : reads data
+    }
+  }
+
+  cron .l.> cronPod : periodically\nschedules
+  script .d.> zk : upserts ZK nodes
+
+  ui -r- cmak
+}
+
+@enduml

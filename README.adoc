@@ -145,7 +145,15 @@ CMAK doesn't configure clusters from Helm values::
 * CMAK settings are not applied immediately, but only after `reconcile.schedule` period had passed.
 * Check logs of cron job to see if there's no connection failure to ZK.
 
-== Internals
+== Architecture
+
+ifndef::env-github[]
+plantuml::arch.puml[]
+endif::env-github[]
+
+ifdef::env-github[]
+image::http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/eshepelyuk/cmak-operator/master/arch.puml[Component diagram]
+endif::env-github[]
 
 CMAK operator comprises following components:
 
@@ -159,7 +167,7 @@ CMAK operator comprises following components:
   powered by
   https://hub.docker.com/repository/docker/eshepelyuk/cmak-operator-cli[custom Docker image].
 
-== Design choices
+Following desing choices were made.
 
 === Dedicated Zookeeper instance.
 
