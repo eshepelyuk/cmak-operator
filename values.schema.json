@@ -61,6 +61,53 @@
           }
         }
       ]
+    },
+    "zk": {
+      "type": "object", "required": ["resources"], "title": "config for zookeeper",
+      "anyOf": [
+        { "$ref": "#/definitions/resources" }
+      ]
+    },
+    "ui": {
+      "type": "object", "required": ["resources", "service"], "title": "config for ui",
+      "anyOf": [
+        { "$ref": "#/definitions/resources" },
+        { "service": {
+            "port": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "resources": {
+      "type": "object",
+      "title": "Required Resources",
+      "description": "Configure resource requests",
+      "form": true,
+      "properties": {
+        "requests": {
+          "type": "object",
+          "properties": {
+            "memory": {
+              "type": "string",
+              "form": true,
+              "render": "slider",
+              "title": "Memory Request",
+              "sliderMin": 10,
+              "sliderMax": 2048,
+              "sliderUnit": "Mi"
+            },
+            "cpu": {
+              "type": "string",
+              "form": true,
+              "render": "slider",
+              "title": "CPU Request",
+              "sliderMin": 10,
+              "sliderMax": 2000,
+              "sliderUnit": "m"
+            }
+          }
+        }
+      }
     }
   },
 
@@ -113,6 +160,39 @@
         "clusters": {
           "type": "array", "title": "list of configured clusters",
           "items": { "$ref": "#/definitions/clusterConfig" }
+        },
+        "zk": { "$ref": "#/definitions/zk" },
+        "ui": { "$ref": "#/definitions/ui" }
+      }
+    },
+    "ingress": {
+      "type": "object",
+      "form": true,
+      "title": "Ingress Configuration",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "form": true,
+          "title": "Use a custom hostname",
+          "description": "Enable the ingress resource that allows you to access the WordPress installation."
+        },
+        "hostname": {
+          "type": "string",
+          "form": true,
+          "title": "Hostname",
+          "hidden": {
+            "value": false,
+            "path": "ingress/enabled"
+          }
+        },
+        "tls": {
+          "type": "boolean",
+          "form": true,
+          "title": "Create a TLS secret",
+          "hidden": {
+            "value": false,
+            "path": "ingress/enabled"
+          }
         }
       }
     }

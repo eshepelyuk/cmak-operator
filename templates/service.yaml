@@ -12,7 +12,7 @@ spec:
       targetPort: zk
       protocol: TCP
     - name: http
-      port: 9000
+      port: {{ .Values.cmak.ui.service.port }}
       targetPort: http
       protocol: TCP
   selector:

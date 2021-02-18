@@ -32,6 +32,9 @@ spec:
             initialDelaySeconds: 20
             periodSeconds: 30
             timeoutSeconds: 15
+          {{- if .Values.cmak.zk.resources }}
+          resources: {{- toYaml .Values.cmak.zk.resources | nindent 12 }}
+          {{- end }}
         - name: ui
           image: {{ printf "%s/hlebalbau/kafka-manager:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
           imagePullPolicy: IfNotPresent
@@ -58,3 +61,6 @@ spec:
             initialDelaySeconds: 45
             timeoutSeconds: 15
             periodSeconds: 30
+          {{- if .Values.cmak.ui.resources }}
+          resources: {{- toYaml .Values.cmak.ui.resources | nindent 12 }}
+          {{- end }}
