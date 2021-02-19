@@ -5,14 +5,14 @@ metadata:
   labels:
     {{- include "cmak.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ .Values.service.type }}
   ports:
     - name: zk
       port: 2181
       targetPort: zk
       protocol: TCP
     - name: http
-      port: 9000
+      port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
   selector:

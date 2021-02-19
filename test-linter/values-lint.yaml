@@ -13,3 +13,10 @@ cmak:
       kafkaVersion: "2.1.0"
       curatorConfig:
         zkConnect: "kafka01.prod:2181,kafka02.prod:2181,kafka03.prod:2181"
+
+service:
+  type: ClusterIP
+  port: 9000
+
+ingress:
+  enabled: false

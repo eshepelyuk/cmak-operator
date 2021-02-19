@@ -115,6 +115,50 @@
           "items": { "$ref": "#/definitions/clusterConfig" }
         }
       }
+    },
+    "service": {
+      "type": "object",
+      "form": true,
+      "title": "Service Configuration",
+      "properties": {
+        "type": {
+          "type": "string",
+          "form": true,
+          "title": "Service Type",
+          "description": "Allowed values: \"ClusterIP\", \"NodePort\" and \"LoadBalancer\""
+        }
+      }
+    },
+    "ingress": {
+      "type": "object",
+      "form": true,
+      "title": "Ingress Configuration",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "form": true,
+          "title": "Use a custom hostname",
+          "description": "Enable the ingress resource that allows you to access the WordPress installation."
+        },
+        "host": {
+          "type": "string",
+          "form": true,
+          "title": "Host",
+          "hidden": {
+            "value": false,
+            "path": "ingress/enabled"
+          }
+        },
+        "tls": {
+          "type": "boolean",
+          "form": true,
+          "title": "Create a TLS secret",
+          "hidden": {
+            "value": false,
+            "path": "ingress/enabled"
+          }
+        }
+      }
     }
   }
 }
