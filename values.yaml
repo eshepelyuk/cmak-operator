@@ -55,5 +55,25 @@ ui:
   extraArgs: []
   #- "-DbasicAuthentication.enabled=false"
 
-# K8S related settings for ZK container
-zk: {}
+  ## resource requests and limits
+  ## http://kubernetes.io/docs/user-guide/compute-resources/
+  resources:
+    limits: {}
+    #   cpu: 100m
+    #   memory: 128Mi
+    requests: {}
+    #   cpu: 100m
+    #   memory: 128Mi
+
+# K8S related settings for Zookeeper container
+zk:
+  ## resource requests and limits
+  ## http://kubernetes.io/docs/user-guide/compute-resources/
+  resources:
+    limits: {}
+    #   cpu: 100m
+    #   memory: 128Mi
+    requests: {}
+    #   cpu: 100m
+    #   memory: 128Mi
+
