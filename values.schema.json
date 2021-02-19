@@ -61,6 +61,37 @@
           }
         }
       ]
+    },
+    "resources": {
+      "type": "object",
+      "title": "Required Resources",
+      "description": "Configure resource requests",
+      "form": true,
+      "properties": {
+        "requests": {
+          "type": "object",
+          "properties": {
+            "memory": {
+              "type": "string",
+              "form": true,
+              "render": "slider",
+              "title": "Memory Request",
+              "sliderMin": 10,
+              "sliderMax": 2048,
+              "sliderUnit": "Mi"
+            },
+            "cpu": {
+              "type": "string",
+              "form": true,
+              "render": "slider",
+              "title": "CPU Request",
+              "sliderMin": 10,
+              "sliderMax": 2000,
+              "sliderUnit": "m"
+            }
+          }
+        }
+      }
     }
   },
 
@@ -115,6 +146,18 @@
           "items": { "$ref": "#/definitions/clusterConfig" }
         }
       }
+    },
+    "zk": {
+      "type": "object", "required": ["resources"], "title": "config for zookeeper",
+      "anyOf": [
+        { "$ref": "#/definitions/resources" }
+      ]
+    },
+    "ui": {
+      "type": "object", "required": ["resources"], "title": "config for ui",
+      "anyOf": [
+        { "$ref": "#/definitions/resources" }
+      ]
     }
   }
 }

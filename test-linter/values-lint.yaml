@@ -13,3 +13,21 @@ cmak:
       kafkaVersion: "2.1.0"
       curatorConfig:
         zkConnect: "kafka01.prod:2181,kafka02.prod:2181,kafka03.prod:2181"
+
+zk:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+
+ui:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
