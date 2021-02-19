@@ -74,7 +74,7 @@
   },
 
   "type": "object", "additionalProperties": false,
-  "required": ["cmak", "reconcile"],
+  "required": ["cmak", "reconcile", "ui", "zk"],
 
   "properties": {
     "global": { "type": "object", "additionalProperties": true, "title": "placeholder for usage as a subchart" },
@@ -121,6 +121,17 @@
       "type": "object", "title": "zk container k8s settings",
       "properties": {
         "resources": { "$ref":  "#/definitions/resources" }
+      }
+    },
+    "ingress": {
+      "type": ["null", "object"], "title": "ingress configuration", "default": null, "additionalProperties": false,
+      "description": "If object not null, then Ingress resources will be created.",
+      "required": ["host", "path"],
+      "properties": {
+        "host": { "type": "string", "title": "ingress host" },
+        "path": { "type": "string", "title": "ingress path" },
+        "tls": { "type": "boolean", "title": "use TLS secret", "default": false },
+        "annotations": { "type": "object", "title": "optional ingress annotations", "default": {}}
       }
     }
   }
