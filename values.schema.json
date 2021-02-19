@@ -61,6 +61,15 @@
           }
         }
       ]
+    },
+    "resources": {
+      "type": "object", "title": "resource requests and limits", "additionalProperties": false,
+      "required": ["limits", "requests"],
+      "description": "See https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+      "properties": {
+        "limits": { "type": "object", "title": "resource limits", "default": {} },
+        "requests": { "type": "object", "title": "resource requests", "default": {} }
+      }
     }
   },
 
@@ -104,9 +113,15 @@
     "ui": {
       "type": "object", "title": "ui container k8s settings",
       "properties": {
-        "extraArgs": { "type": "array", "title": "command line arguments", "items": { "type": "string" }, "default": [] }
+        "extraArgs": { "type": "array", "title": "extra cmd line arguments", "items": { "type": "string" }, "default": [] },
+        "resources": { "$ref":  "#/definitions/resources" }
       }
     },
-    "zk": { "type": "object", "title": "zk container k8s settings", "default": {} }
+    "zk": {
+      "type": "object", "title": "zk container k8s settings",
+      "properties": {
+        "resources": { "$ref":  "#/definitions/resources" }
+      }
+    }
   }
 }
