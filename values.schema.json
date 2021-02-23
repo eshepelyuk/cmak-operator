@@ -73,8 +73,7 @@
     }
   },
 
-  "type": "object", "additionalProperties": false,
-  "required": ["cmak", "reconcile", "ui", "zk"],
+  "type": "object", "required": ["cmak", "reconcile", "ui", "zk"],
 
   "properties": {
     "global": { "type": "object", "additionalProperties": true, "title": "placeholder for usage as a subchart" },

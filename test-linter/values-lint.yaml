@@ -1,3 +1,5 @@
+arbitraryValue: "qwerty"
+
 cmak:
   clustersCommon:
     curatorConfig:
