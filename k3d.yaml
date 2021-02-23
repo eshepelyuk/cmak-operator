@@ -1,0 +1,14 @@
+apiVersion: k3d.io/v1alpha2
+kind: Simple
+name: k3d
+volumes:
+  - volume: /etc/resolv.conf:/etc/resolv.conf
+    nodeFilters:
+      - all
+options:
+  k3d:
+    wait: true
+    disableLoadbalancer: true
+  k3s:
+    extraServerArgs:
+    - "--disable=metrics-server,servicelb,traefik"

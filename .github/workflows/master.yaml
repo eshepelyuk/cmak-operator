@@ -23,3 +23,16 @@ jobs:
           helm lint . --strict
           helm lint . --strict -f test-linter/values-lint.yaml
           helm dep up test-linter/subchart && helm lint test-linter/subchart --strict
+      - uses: AbsaOSS/k3d-action@v1.2.0
+        name: "Create Single Cluster"
+        with:
+          cluster-name: "k3d"
+          args: >-
+            --config ./k3d.yaml
+      - name: Nodes
+        run: |
+          docker ps -a
+          sleep 20
+          kubectl config use-context k3d-k3d
+          kubectl get nodes -o wide
+          kubectl get ns
