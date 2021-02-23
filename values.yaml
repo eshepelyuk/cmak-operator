@@ -1,12 +1,7 @@
 imageRegistry: docker.io
 
+# those settings are mirroring CMAK UI preferences.
 cmak:
-
-  basicAuth:
-    enabled: false
-    username: ""
-    password: ""
-
   clustersCommon:
     curatorConfig:
       zkMaxRetry: 100
@@ -53,3 +48,12 @@ reconcile:
   overwriteZk: true
   successfulJobsHistoryLimit: null
   failedJobsHistoryLimit: null
+
+# K8S related settings for CMAK UI container
+ui:
+  # additional command line arguments
+  extraArgs: []
+  #- "-DbasicAuthentication.enabled=false"
+
+# K8S related settings for ZK container
+zk: {}
