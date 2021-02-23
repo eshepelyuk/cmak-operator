@@ -61,6 +61,15 @@
           }
         }
       ]
+    },
+    "resources": {
+      "type": "object", "title": "resource requests and limits", "additionalProperties": false,
+      "required": ["limits", "requests"],
+      "description": "See https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+      "properties": {
+        "limits": { "type": "object", "title": "resource limits", "default": {} },
+        "requests": { "type": "object", "title": "resource requests", "default": {} }
+      }
     }
   },
 
@@ -92,23 +101,8 @@
     "cmak": {
       "type": "object", "additionalProperties": false, "title": "cmak instance settings",
       "description": "Those settings are mirroring CMAK UI preferences.",
-      "required": ["basicAuth", "clustersCommon", "clusters"],
+      "required": ["clustersCommon", "clusters"],
       "properties": {
-        "basicAuth": {
-          "type": "object", "additionalProperties": false, "required": ["enabled"],
-          "title": "basic auth settings",
-          "properties": {
-            "enabled": {
-              "type": "boolean", "default": false, "title": "enable basic auth"
-            },
-            "username": {
-              "type": ["null", "string"], "default": null, "title": "basic auth username"
-            },
-            "password": {
-              "type": ["null", "string"], "default": null, "title": "basic auth password"
-            }
-          }
-        },
         "clustersCommon": { "$ref": "#/definitions/clusterConfigCommon" },
         "clusters": {
           "type": "array", "title": "list of configured clusters",
@@ -116,6 +110,7 @@
         }
       }
     },
+
     "service": {
       "type": "object",
       "form": true,
@@ -158,6 +153,17 @@
             "path": "ingress/enabled"
           }
         }
+    "ui": {
+      "type": "object", "title": "ui container k8s settings",
+      "properties": {
+        "extraArgs": { "type": "array", "title": "extra cmd line arguments", "items": { "type": "string" }, "default": [] },
+        "resources": { "$ref":  "#/definitions/resources" }
+      }
+    },
+    "zk": {
+      "type": "object", "title": "zk container k8s settings",
+      "properties": {
+        "resources": { "$ref":  "#/definitions/resources" }
       }
     }
   }

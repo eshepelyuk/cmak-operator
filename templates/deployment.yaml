@@ -32,6 +32,15 @@ spec:
             initialDelaySeconds: 20
             periodSeconds: 30
             timeoutSeconds: 15
+          {{- if or (.Values.zk.resources.limits | empty | not) (.Values.zk.resources.requests | empty | not) }}
+          resources:
+            {{- with .Values.zk.resources.requests }}
+            requests: {{ . | toYaml | nindent 14 }}
+            {{- end }}
+            {{- with .Values.zk.resources.limits }}
+            limits: {{ . | toYaml | nindent 14 }}
+            {{- end }}
+          {{- end }}
         - name: ui
           image: {{ printf "%s/hlebalbau/kafka-manager:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
           imagePullPolicy: IfNotPresent
@@ -39,16 +48,10 @@ spec:
           - name: http
             containerPort: 9000
             protocol: TCP
-          env:
-          - name: ZK_HOSTS
-            value: "127.0.0.1:2181"
-          {{- with .Values.cmak.basicAuth }}
-          - name: KAFKA_MANAGER_AUTH_ENABLED
-            value: {{ .enabled | quote }}
-          - name: KAFKA_MANAGER_USERNAME
-            value: {{ .username | quote }}
-          - name: KAFKA_MANAGER_PASSWORD
-            value: {{ .password | quote }}
+          args:
+          - "-Dcmak.zkhosts=127.0.0.1:2181"
+          {{- range .Values.ui.extraArgs }}
+          - {{ . | quote }}
           {{- end }}
           livenessProbe:
             httpGet:
@@ -58,3 +61,12 @@ spec:
             initialDelaySeconds: 45
             timeoutSeconds: 15
             periodSeconds: 30
+          {{- if or (.Values.ui.resources.limits | empty | not) (.Values.ui.resources.requests | empty | not) }}
+          resources:
+            {{- with .Values.ui.resources.requests }}
+            requests: {{ . | toYaml | nindent 14 }}
+            {{- end }}
+            {{- with .Values.ui.resources.limits }}
+            limits: {{ . | toYaml | nindent 14 }}
+            {{- end }}
+          {{- end }}

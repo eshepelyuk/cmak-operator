@@ -1,12 +1,7 @@
 imageRegistry: docker.io
 
+# those settings are mirroring CMAK UI preferences.
 cmak:
-
-  basicAuth:
-    enabled: false
-    username: ""
-    password: ""
-
   clustersCommon:
     curatorConfig:
       zkMaxRetry: 100
@@ -99,3 +94,31 @@ ingress:
   ##   key:
   ##   certificate:
   ##
+
+# K8S related settings for CMAK UI container
+ui:
+  # additional command line arguments
+  extraArgs: []
+  #- "-DbasicAuthentication.enabled=false"
+
+  ## resource requests and limits
+  ## http://kubernetes.io/docs/user-guide/compute-resources/
+  resources:
+    limits: {}
+    #   cpu: 100m
+    #   memory: 128Mi
+    requests: {}
+    #   cpu: 100m
+    #   memory: 128Mi
+
+# K8S related settings for Zookeeper container
+zk:
+  ## resource requests and limits
+  ## http://kubernetes.io/docs/user-guide/compute-resources/
+  resources:
+    limits: {}
+    #   cpu: 100m
+    #   memory: 128Mi
+    requests: {}
+    #   cpu: 100m
+    #   memory: 128Mi

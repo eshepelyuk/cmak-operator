@@ -86,11 +86,32 @@ Then, open http://localhost:9000 in your browser.
 
 == Configuration
 
+=== CMAK application
+
+CMAK uses configuration file
+https://github.com/yahoo/CMAK/blob/master/conf/application.conf[/cmak/conf/application.conf].
+Every parameter could be overriden via JVM system property, i.e. `-DmyProp=myVal`.
+Properties are passed to CMAK container via `values.yaml`.
+
+For example to enable basic auth add following
+
+[source,yaml]
+.values.yaml
+----
+ui:
+  extraArgs:
+  - "-DbasicAuthentication.enabled=true"
+  - "-DbasicAuthentication.username=admin"
+  - "-DbasicAuthentication.password=password"
+----
+
+=== Kafka clusters
+
 It's extremely easy to configure multiple clusters in CMAK,
 starting from cluster setup, connection settings and ending with authorization
 using https://helm.sh/docs/chart_template_guide/values_files/[Helm values files].
 
-Check https://github.com/eshepelyuk/cmak-operator/blob/master/values.yaml[CMAK operator values]
+Check https://artifacthub.io/packages/helm/cmak-operator/cmak-operator?modal=values-schema[CMAK operator values]
 for all available options and their description.
 
 . Minimal values.yaml configuration for adding a several Kafka clusters to CMAK.

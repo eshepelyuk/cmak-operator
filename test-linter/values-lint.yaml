@@ -14,9 +14,19 @@ cmak:
       curatorConfig:
         zkConnect: "kafka01.prod:2181,kafka02.prod:2181,kafka03.prod:2181"
 
-service:
-  type: ClusterIP
+zk:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+ui:
   port: 9000
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
 
 ingress:
   enabled: false
+
