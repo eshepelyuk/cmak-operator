@@ -92,29 +92,21 @@
     "cmak": {
       "type": "object", "additionalProperties": false, "title": "cmak instance settings",
       "description": "Those settings are mirroring CMAK UI preferences.",
-      "required": ["basicAuth", "clustersCommon", "clusters"],
+      "required": ["clustersCommon", "clusters"],
       "properties": {
-        "basicAuth": {
-          "type": "object", "additionalProperties": false, "required": ["enabled"],
-          "title": "basic auth settings",
-          "properties": {
-            "enabled": {
-              "type": "boolean", "default": false, "title": "enable basic auth"
-            },
-            "username": {
-              "type": ["null", "string"], "default": null, "title": "basic auth username"
-            },
-            "password": {
-              "type": ["null", "string"], "default": null, "title": "basic auth password"
-            }
-          }
-        },
         "clustersCommon": { "$ref": "#/definitions/clusterConfigCommon" },
         "clusters": {
           "type": "array", "title": "list of configured clusters",
           "items": { "$ref": "#/definitions/clusterConfig" }
         }
       }
-    }
+    },
+    "ui": {
+      "type": "object", "title": "ui container k8s settings",
+      "properties": {
+        "extraArgs": { "type": "array", "title": "command line arguments", "items": { "type": "string" }, "default": [] }
+      }
+    },
+    "zk": { "type": "object", "title": "zk container k8s settings", "default": {} }
   }
 }
