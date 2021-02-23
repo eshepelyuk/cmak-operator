@@ -23,7 +23,7 @@ cloud "Kubernetes cluster" {
   }
 
   cron .l.> cronPod : periodically\nschedules
-  script .d.> zk : upserts ZK nodes
+  script .d.> zk : upserts settings to ZK nodes
 
   ui -r- cmak
 }
