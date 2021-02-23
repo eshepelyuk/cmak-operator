@@ -87,7 +87,7 @@ ingress: null
   # path: /
 
   ## Enable TLS configuration for the hostname defined at ingress.host
-  ## secret name will be "${ingress.host.replace(".", "-")}-tls"
+  ## secret name will be "${ingress.host.replace(".", "-")}"
   # tls: false
 
   ## optional ingress annotations
