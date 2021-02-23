@@ -70,9 +70,8 @@ $ helm install --create-namespace -n cmak-ns --version 0.2.1 mycmak cmak/cmak-op
 [IMPORTANT]
 .Exposing CMAK UI
 ====
-Currently, CMAK operator doesn't create neither `Ingress`
+By default, CMAK operator doesn't create neither `Ingress`
 nor any other K8S resources to expose UI via HTTP.
-Users of CMAK operator should take care of this by themselves.
 ====
 
 The simpliest test is to port forward CMAK UI HTTP port and access it from browser .
