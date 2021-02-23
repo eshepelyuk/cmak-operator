@@ -31,4 +31,6 @@ ui:
 ingress:
   host: "cmak"
   path: "/"
+  labels:
+    my.label: "my.value"
 

@@ -130,7 +130,8 @@
         "host": { "type": "string", "title": "ingress host" },
         "path": { "type": "string", "title": "ingress path" },
         "tls": { "type": "boolean", "title": "use TLS secret", "default": false },
-        "annotations": { "type": "object", "title": "optional ingress annotations", "default": {}}
+        "labels": { "type": "object", "title": "optional ingress labels", "default": {} },
+        "annotations": { "type": "object", "title": "optional ingress annotations", "default": {} }
       }
     }
   }
