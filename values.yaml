@@ -51,7 +51,7 @@ reconcile:
 
 # K8S related settings for CMAK UI container
 ui:
-  port: 9090
+  port: 9000
   # additional command line arguments
   extraArgs: []
   #- "-DbasicAuthentication.enabled=false"
