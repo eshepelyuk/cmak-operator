@@ -1,32 +1,33 @@
-apiVersion: skaffold/v2beta6
+apiVersion: skaffold/v2beta12
 kind: Config
 metadata:
   name: cmak-operator
 build:
   artifacts:
-    - image: eshepelyuk/cmak-operator-cli
+  - image: eshepelyuk/json2zk
   local:
     push: true
 profiles:
-  - name: local
-    activation:
-      - command: dev
-    portForward:
-      - resourceType: Service
-        resourceName: cmak
-        port: 2181
-      - resourceType: Service
-        resourceName: cmak
-        port: 9000
-    deploy:
-      helm:
-        releases:
-          - name: cmak-operator
-            chartPath: .
-            valuesFiles:
-              - values-dev.yaml
-            imageStrategy:
-              helm: {}
-            artifactOverrides:
-              image: eshepelyuk/cmak-operator-cli
-
+- name: local
+  activation:
+  - command: run
+  - command: dev
+  deploy:
+    helm:
+      releases:
+      - name: cmak-operator
+        chartPath: .
+        wait: true
+        valuesFiles:
+        - values-dev.yaml
+        artifactOverrides:
+          image: eshepelyuk/json2zk
+        imageStrategy:
+          helm: {}
+  portForward:
+  - resourceType: Service
+    resourceName: cmak
+    port: 2181
+  - resourceType: Service
+    resourceName: cmak
+    port: 9000
