@@ -1,5 +1,6 @@
 {{- $nm := include "cmak.name" . -}}
-{{- $version := get (default (dict "tag" .Chart.Version) .Values.image) "tag" -}}
+{{- $dict := .Values.image | default (dict "tag" .Chart.Version "repository" (printf "%s/eshepelyuk/json2zk" .Values.imageRegistry)) -}}
+{{- $image := printf "%s:%s" $dict.repository $dict.tag -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -26,7 +27,7 @@ spec:
                 name: {{ $nm }}-clusters
           containers:
             - name: setup
-              image: {{ printf "%s/eshepelyuk/cmak-operator-cli:%s" .Values.imageRegistry $version | quote }}
+              image: {{ $image | quote }}
               command: ['python3', './json2zk.py']
               args:
                 - '{{ .Values.reconcile.overwriteZk | ternary "--" "--no-" }}overwrite-zk'

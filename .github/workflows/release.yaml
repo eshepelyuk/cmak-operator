@@ -40,8 +40,6 @@ jobs:
           cat /tmp/cmak.version
           echo "::set-output name=cmakVersion::$(cat /tmp/cmak.version)"
       - uses: azure/setup-helm@v1
-        with:
-          version: "3.3.4"
       - run: helm package . --version ${{ steps.cmakVersion.outputs.cmakVersion }}
       - name: upload artifact
         uses: actions/upload-artifact@v2
