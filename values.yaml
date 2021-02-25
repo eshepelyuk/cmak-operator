@@ -68,6 +68,7 @@ ui:
 
 # K8S related settings for Zookeeper container
 zk:
+  version: "3.6.1"
   ## resource requests and limits
   ## http://kubernetes.io/docs/user-guide/compute-resources/
   resources:
