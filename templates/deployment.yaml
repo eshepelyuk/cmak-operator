@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: zk
-          image: {{ printf "%s/zookeeper:%s" .Values.imageRegistry "3.6.1" | quote }}
+          image: {{ printf "%s/zookeeper:%s" .Values.imageRegistry .Values.zk.version | quote }}
           imagePullPolicy: IfNotPresent
           ports:
           - name: zk
