@@ -12,7 +12,7 @@ cloud "Kubernetes cluster" {
     }
     frame "Reconciliation" as cronPod <<CronJob>> {
       component script <<Container>> [
-        yaml2zk
+        json2zk
         ====
         1. compare ConfigMap to ZK
         2. optionally update ZK
