@@ -6,3 +6,7 @@ propStr: "true"
 
 global:
   globalStr: "false"
+
+image:
+  tag: xxx
+  repository: yyy

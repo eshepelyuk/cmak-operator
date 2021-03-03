@@ -12,6 +12,7 @@ profiles:
   activation:
   - command: run
   - command: dev
+  - command: delete
   deploy:
     helm:
       releases:
@@ -24,10 +25,16 @@ profiles:
           image: eshepelyuk/json2zk
         imageStrategy:
           helm: {}
-  portForward:
-  - resourceType: Service
-    resourceName: cmak
-    port: 2181
-  - resourceType: Service
-    resourceName: cmak
-    port: 9000
+- name: e2e
+  deploy:
+    helm:
+      releases:
+      - name: cmak-operator
+        chartPath: .
+        wait: true
+        valuesFiles:
+        - test/e2e/values-e2e.yaml
+        artifactOverrides:
+          image: eshepelyuk/json2zk
+        imageStrategy:
+          helm: {}

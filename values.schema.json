@@ -90,7 +90,7 @@
       "required": ["schedule"], "title": "reconciliation job config",
       "properties": {
         "schedule": {
-          "type": "string", "default": "*/2 * * * *", "title": "cron expression for periodic reconciliation"
+          "type": "string", "default": "*/3 * * * *", "title": "cron expression for periodic reconciliation"
         },
         "overwriteZk": {
           "type": "boolean", "default": true, "title": "allow overwrite Zookeeper settings of CMAK"
