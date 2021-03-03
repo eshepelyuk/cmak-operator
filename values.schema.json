@@ -70,6 +70,12 @@
         "limits": { "type": "object", "title": "resource limits", "default": {} },
         "requests": { "type": "object", "title": "resource requests", "default": {} }
       }
+    },
+    "tls": {
+      "type": ["null", "object"], "title": "use TLS secret", "default": null,
+      "properties": {
+        "secret": { "type": "string", "title": "Secret name to attach to the ingress object" }
+      }
     }
   },
 
@@ -131,7 +137,7 @@
       "properties": {
         "host": { "type": "string", "title": "ingress host" },
         "path": { "type": "string", "title": "ingress path" },
-        "tls": { "type": "boolean", "title": "use TLS secret", "default": false },
+        "tls": { "$ref": "#/definitions/tls" },
         "labels": { "type": "object", "title": "optional ingress labels", "default": {} },
         "annotations": { "type": "object", "title": "optional ingress annotations", "default": {} }
       }
