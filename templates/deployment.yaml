@@ -54,6 +54,14 @@ spec:
           {{- range .Values.ui.extraArgs }}
           - {{ . | quote }}
           {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            failureThreshold: 7
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 15
           livenessProbe:
             httpGet:
               path: /api/health
