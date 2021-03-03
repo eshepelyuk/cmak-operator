@@ -52,9 +52,8 @@ jobs:
           username: eshepelyuk
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: publish docker image
-        uses: hiberbee/github-action-skaffold@latest
+        uses: hiberbee/github-action-skaffold@1.5.0
         with:
-          skaffold-version: 1.17.1
           command: build
           tag: ${{ steps.cmakVersion.outputs.cmakVersion }}
         env:
