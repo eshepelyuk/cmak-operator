@@ -1,0 +1,9 @@
+cmak:
+  clusters:
+  - name: cluster
+    curatorConfig:
+      zkConnect: kafka1.local
+  - name: cluster-disabled
+    enabled: false
+    curatorConfig:
+      zkConnect: kafka2.local

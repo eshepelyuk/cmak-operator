@@ -1,0 +1,33 @@
+{{- $nm := include "cmak.name" . -}}
+{{- $dict := .Values.image | default (dict "tag" .Chart.Version "repository" (printf "%s/eshepelyuk/json2zk" .Values.imageRegistry)) -}}
+{{- $image := printf "%s:%s" $dict.repository $dict.tag -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $nm }}-setup
+  labels:
+    {{- include "cmak.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: {{ $nm }}-clusters
+          configMap:
+            name: {{ $nm }}-clusters
+      containers:
+        - name: setup
+          image: {{ $image | quote }}
+          command: ['python3', './json2zk.py']
+          args:
+            - '{{ .Values.reconcile.overwriteZk | ternary "--" "--no-" }}overwrite-zk'
+            - '{{ $nm }}.{{ $.Release.Namespace }}:2181'
+            - '/kafka-manager/configs'
+            - '/opt/clusters'
+          volumeMounts:
+            - name: {{ $nm }}-clusters
+              mountPath: /opt/clusters

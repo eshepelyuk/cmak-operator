@@ -1,0 +1,23 @@
+{{- $nm := include "cmak.name" . -}}
+{{- $uiUrl := printf "http://%v.%v:%v/api/status/clusters" $nm .Release.Namespace .Values.ui.port -}}
+{{- $dict := .Values.image | default (dict "tag" .Chart.Version "repository" (printf "%s/eshepelyuk/json2zk" .Values.imageRegistry)) -}}
+{{- $image := printf "%s:%s" $dict.repository $dict.tag -}}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ $nm }}-values-clusters
+  annotations:
+    "helm.sh/hook": test
+spec:
+  restartPolicy: Never
+  containers:
+  - name: values-clusters
+    image: {{ $image | quote }}
+    command:
+    - '/bin/sh'
+    - '-c'
+    - |
+      set -x
+      set -e
+      [ "$(curl -s {{ $uiUrl }} | jq '.clusters.active | length')" -eq 2 ]
+      curl -s {{ $uiUrl }} | jq '.clusters.active[].name'

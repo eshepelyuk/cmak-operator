@@ -44,7 +44,7 @@ cmak:
   clusters: []
 
 reconcile:
-  schedule: "*/2 * * * *"
+  schedule: "*/3 * * * *"
   overwriteZk: true
   successfulJobsHistoryLimit: null
   failedJobsHistoryLimit: null

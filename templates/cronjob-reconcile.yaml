@@ -4,7 +4,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {{ $nm }}-clusters
+  name: {{ $nm }}-reconcile
   labels:
     {{- include "cmak.labels" . | nindent 4 }}
 spec:
