@@ -1,5 +1,5 @@
 {{- $nm := include "cmak.name" . -}}
-{{- $dict := .Values.image | default (dict "tag" .Chart.Version "repository" (printf "%s/eshepelyuk/json2zk" .Values.imageRegistry)) -}}
+{{- $dict := .Values.image | default (dict "tag" .Chart.Version "repository" (printf "%s/eshepelyuk/cmak2zk" .Values.imageRegistry)) -}}
 {{- $image := printf "%s:%s" $dict.repository $dict.tag -}}
 apiVersion: batch/v1
 kind: Job
@@ -22,7 +22,7 @@ spec:
       containers:
         - name: setup
           image: {{ $image | quote }}
-          command: ['python3', './json2zk.py']
+          command: ['python3', './cmak2zk.py']
           args:
             - '{{ .Values.reconcile.overwriteZk | ternary "--" "--no-" }}overwrite-zk'
             - '{{ $nm }}.{{ $.Release.Namespace }}:2181'

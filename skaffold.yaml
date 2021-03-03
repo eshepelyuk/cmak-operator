@@ -4,11 +4,11 @@ metadata:
   name: cmak-operator
 build:
   artifacts:
-  - image: eshepelyuk/json2zk
+  - image: eshepelyuk/cmak2zk
   local:
     push: true
 profiles:
-- name: local
+- name: e2e
   activation:
   - command: run
   - command: dev
@@ -20,21 +20,8 @@ profiles:
         chartPath: .
         wait: true
         valuesFiles:
-        - values-dev.yaml
-        artifactOverrides:
-          image: eshepelyuk/json2zk
-        imageStrategy:
-          helm: {}
-- name: e2e
-  deploy:
-    helm:
-      releases:
-      - name: cmak-operator
-        chartPath: .
-        wait: true
-        valuesFiles:
         - test/e2e/values-e2e.yaml
         artifactOverrides:
-          image: eshepelyuk/json2zk
+          image: eshepelyuk/cmak2zk
         imageStrategy:
           helm: {}

@@ -35,16 +35,14 @@ jobs:
             --config ./k3d.yaml
       - name: build cmak-operator
         run: |
+          set -x
           skaffold config set default-repo "registry.localhost:5000"
           skaffold build
       - name: deploy cmak-operator
         run: |
           set -x
-          set -e
-          skaffold config set default-repo "registry.localhost:5000"
           skaffold run -p e2e
       - name: e2e test
         run: |
           set -x
-          set -e
           helm test cmak-operator --logs

@@ -14,7 +14,7 @@ logging.basicConfig(format=FORMAT, level=logging.INFO)
 @click.argument("zk_url", type=str)
 @click.argument("zk_root", type=str)
 @click.argument('json_dir', type=click.Path(exists=True, dir_okay=True, file_okay=False))
-def json2zk(over_zk, zk_url, zk_root, json_dir):
+def cmak2zk(over_zk, zk_url, zk_root, json_dir):
 
     zk = KazooClient(hosts=zk_url)
     zk.start()
@@ -41,4 +41,4 @@ def json2zk(over_zk, zk_url, zk_root, json_dir):
 
 
 if __name__ == "__main__":
-    json2zk()
+    cmak2zk()
