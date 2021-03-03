@@ -12,9 +12,9 @@ cloud "Kubernetes cluster" {
     }
     frame "Reconciliation" as cronPod <<CronJob>> {
       component script <<Container>> [
-        json2zk
+        cmak2zk
         ====
-        1. compare ConfigMap to ZK
+        1. compare ConfigMap with ZK
         2. optionally update ZK
       ]
       component "Kafka settings" as cm <<ConfigMap>>
@@ -23,7 +23,7 @@ cloud "Kubernetes cluster" {
   }
 
   cron .l.> cronPod : periodically\nschedules
-  script .d.> zk : upserts settings to ZK nodes
+  script .d.> zk : upserts CMAK settings to ZK
 
   ui -r- cmak
 }
