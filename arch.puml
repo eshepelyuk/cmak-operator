@@ -3,27 +3,22 @@ skinparam componentStyle uml2
 
 cloud "Kubernetes cluster" {
   component "CronJob\ncontroller" as cron <<K8S>>
-  () "CMAK UI" as ui <<ServicePort>>
+  () "CMAK UI" as ui <<ServicePort>> #White
   package "CMAK namespace" as ns {
     frame "CMAK" as pod <<Pod>> {
-      component CMAK as cmak <<Container>>
-      component Zookeeper as zk <<Container>>
-      cmak -r(0- zk : CMAK settings\nstored in ZK
+      component "CMAK UI" as cmak <<Container>>
+      component "Zookeeper" as zk <<Container>>
+      cmak -r(0- zk : CMAK clusters settings\nread from ZK
     }
     frame "Reconciliation" as cronPod <<CronJob>> {
-      component script <<Container>> [
-        cmak2zk
-        ====
-        1. compare ConfigMap with ZK
-        2. optionally update ZK
-      ]
+      component cmak2zk <<Container>>
       component "Kafka settings" as cm <<ConfigMap>>
-      script .r.> cm : reads data
+      cmak2zk .r.> cm : 1. compares with ZK
     }
   }
 
   cron .l.> cronPod : periodically\nschedules
-  script .d.> zk : upserts CMAK settings to ZK
+  cmak2zk .d.> zk : <<optional>>\n 2. upserts to ZK
 
   ui -r- cmak
 }
