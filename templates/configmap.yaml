@@ -5,8 +5,6 @@ metadata:
   labels:
     {{- include "cmak.labels" . | nindent 4 }}
 data:
-  {{- range .Values.cmak.clusters }}
-  {{ .name }}.json: |-
-    {{- mergeOverwrite (deepCopy $.Values.cmak.clustersCommon) . | toJson | nindent 4 }}
-  {{- end }}
+  clusters.yaml: |-
+    {{- pick .Values "cmak" | toYaml | nindent 4 }}
 

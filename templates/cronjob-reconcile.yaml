@@ -28,12 +28,11 @@ spec:
           containers:
             - name: setup
               image: {{ $image | quote }}
-              command: ['python3', './cmak2zk.py']
+              command: ['python3', '/app/bin/cmak2zk.py']
               args:
                 - '{{ .Values.reconcile.overwriteZk | ternary "--" "--no-" }}overwrite-zk'
                 - '{{ $nm }}.{{ $.Release.Namespace }}:2181'
-                - '/kafka-manager/configs'
-                - '/opt/clusters'
+                - '/app/etc/clusters.yaml'
               volumeMounts:
                 - name: {{ $nm }}-clusters
-                  mountPath: /opt/clusters
+                  mountPath: /app/etc
