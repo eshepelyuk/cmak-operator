@@ -1,3 +1,6 @@
+reconcile:
+  schedule: "*/2 * * * *"
+
 cmak:
   clusters:
   - name: cluster

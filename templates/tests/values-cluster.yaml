@@ -20,4 +20,14 @@ spec:
       set -x
       set -e
       [ "$(curl -s {{ $uiUrl }} | jq '.clusters.active | length')" -eq 2 ]
-      curl -s {{ $uiUrl }} | jq '.clusters.active[].name'
+
+      zk-shell --run-once 'rm /kafka-manager/configs/cluster-disabled' {{ $nm }}.{{ .Release.Namespace }}:2181
+      [ "$(curl -s {{ $uiUrl }} | jq '.clusters.active | length')" -eq 1 ]
+
+      for i in $(seq 12);do
+        echo "Waiting for CronJob time: $i"
+        [ "$(curl -s {{ $uiUrl }} | jq '.clusters.active | length')" -eq 2 ] && exit 0
+        sleep 20
+      done
+
+      echo "CronJob didnt run !!!" && exit 1
