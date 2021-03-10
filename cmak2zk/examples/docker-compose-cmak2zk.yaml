@@ -25,7 +25,7 @@ services:
     depends_on:
       - "zk"
     volumes:
-      - "${PWD}/clusters.yaml:/app/etc/clusters.yaml"
+      - "${PWD}/clusters.yaml:/app/etc/clusters.yaml:ro"
 
 ###############################################################
 #     This Kafka setup is only for demonstration purpose.     #
