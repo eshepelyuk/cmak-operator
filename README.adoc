@@ -37,21 +37,24 @@ Helm chart is published to public Helm repository, hosted on GitHub itself.
 
 It's recommended to install CMAK operator into a dedicated namespace.
 
+Add Helm repository
+
 [source]
-.Add Helm repository
 ----
 $ helm repo add cmak https://eshepelyuk.github.io/cmak-operator
 $ helm repo update
 ----
 
+Install latest version
+
 [source]
-.Install latest version
 ----
 $ helm install --create-namespace -n cmak-ns mycmak cmak/cmak-operator
 ----
 
+Search for available versions
+
 [source]
-.Seach for available versions
 ----
 $ helm search repo cmak-operator --versions
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
@@ -59,8 +62,9 @@ cmak/cmak-operator      0.2.1           3.0.0.5         CMAK operator for K8S.
 cmak/cmak-operator      0.2.0           3.0.0.5         CMAK operator for K8S.
 ----
 
+Install specific version
+
 [source]
-.Install specific version
 ----
 $ helm install --create-namespace -n cmak-ns --version 0.2.1 mycmak cmak/cmak-operator
 ----
@@ -68,7 +72,6 @@ $ helm install --create-namespace -n cmak-ns --version 0.2.1 mycmak cmak/cmak-op
 === Verify installation
 
 [IMPORTANT]
-.Exposing CMAK UI
 ====
 By default, CMAK operator doesn't create neither `Ingress`
 nor any other K8S resources to expose UI via HTTP.
@@ -92,10 +95,9 @@ https://github.com/yahoo/CMAK/blob/master/conf/application.conf[/cmak/conf/appli
 Every parameter could be overriden via JVM system property, i.e. `-DmyProp=myVal`.
 Properties are passed to CMAK container via `values.yaml`.
 
-For example to enable basic auth add following
+For example to enable basic auth add following to `values.yaml`.
 
 [source,yaml]
-.values.yaml
 ----
 ui:
   extraArgs:
@@ -113,7 +115,8 @@ using https://helm.sh/docs/chart_template_guide/values_files/[Helm values files]
 Check https://artifacthub.io/packages/helm/cmak-operator/cmak-operator?modal=values-schema[CMAK operator values]
 for all available options and their description.
 
-. Minimal values.yaml configuration for adding a several Kafka clusters to CMAK.
+Minimal values.yaml configuration for adding a several Kafka clusters to CMAK.
+
 [source,yaml]
 ----
 cmak:
@@ -128,7 +131,6 @@ cmak:
 
 Connection settings could be configured for all clusters at once or per dedicated cluster.
 
-. Configuring connection settings
 [source,yaml]
 ----
 cmak:
@@ -152,8 +154,7 @@ cmak:
 
 Configuration should be passed to helm via command line during installation or upgrade.
 
-[source]
-[subs="attributes"]
+[source,bash]
 ----
 $ helm install --create-namespace -n cmak-ns -f cmak-values.yaml mycmak cmak/cmak-operator
 ----

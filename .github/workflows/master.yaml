@@ -18,14 +18,16 @@ jobs:
       - uses: azure/setup-helm@v1
         with:
           version: "3.3.4"
+      - uses: artis3n/setup-conftest@v0.1.1
       - name: helm lint
         run: |
           helm lint . --strict
           helm lint . --strict -f test/linter/values-lint.yaml
           helm dep up test/linter/subchart && helm lint test/linter/subchart --strict
-      - uses: volesen/setup-skaffold@v1.1
-        with:
-          version: 'v1.20.0'
+      # - name: conftest
+      #   run: |
+      #     conftest --version
+      #     helm template . | conftest test --policy test/conftest/policy/ test --output table -
       - name: start k8s with k3d
         uses: AbsaOSS/k3d-action@v1.3.1
         with:
@@ -33,6 +35,9 @@ jobs:
           use-default-registry: true
           args: >-
             --config ./test/e2e/k3d.yaml
+      - uses: volesen/setup-skaffold@v1.1
+        with:
+          version: 'v1.20.0'
       - name: build cmak-operator
         run: |
           set -x
