@@ -82,8 +82,6 @@
   "type": "object", "required": ["cmak", "reconcile", "ui", "zk"],
 
   "properties": {
-    "global": { "type": "object", "additionalProperties": true, "title": "placeholder for usage as a subchart" },
-    "image": { "type": "object", "additionalProperties": true, "title": "skaffold compatibility" },
     "imageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for all images of the chart" },
     "reconcile": {
       "type": "object", "additionalProperties": false,
