@@ -5,6 +5,7 @@ metadata:
 build:
   artifacts:
   - image: eshepelyuk/cmak2zk
+    context: ./cmak2zk
   local:
     push: true
 profiles:
