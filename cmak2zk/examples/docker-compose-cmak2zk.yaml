@@ -17,11 +17,9 @@ services:
       ZK_HOSTS: "zk:2181"
 
   cmak2zk:
-    image: eshepelyuk/cmak2zk:1.4.0
+    image: eshepelyuk/cmak2zk:1.4.1
     restart: on-failure
-    entrypoint: ['python3', '/app/bin/cmak2zk.py']
     command:
-      - '--overwrite-zk'
       - 'zk:2181'
       - '/app/etc/clusters.yaml'
     depends_on:

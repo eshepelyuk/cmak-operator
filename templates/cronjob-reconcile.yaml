@@ -28,7 +28,6 @@ spec:
           containers:
             - name: setup
               image: {{ $image | quote }}
-              command: ['python3', '/app/bin/cmak2zk.py']
               args:
                 - '{{ .Values.reconcile.overwriteZk | ternary "--" "--no-" }}overwrite-zk'
                 - '{{ $nm }}.{{ $.Release.Namespace }}:2181'

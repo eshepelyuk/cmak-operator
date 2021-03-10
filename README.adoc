@@ -212,23 +212,16 @@ to use CMAK in declarative configuration or GitOps based flows.
 `cmak2zk` is distributed as docker image
 https://hub.docker.com/repository/docker/eshepelyuk/cmak2zk[available at DockerHub].
 
+To see available options, run the image without parameters.
+
 [source]
 ----
-$ docker run eshepelyuk/cmak2zk:1.4.0 python3 bin/cmak2zk.py --help
+$ docker run eshepelyuk/cmak2zk:1.4.1
 Usage: cmak2zk.py [OPTIONS] ZK_URL YAML_CFG
-
-Options:
-  --overwrite-zk / --no-overwrite-zk
-  --help                          Show this message and exit.
+.....
 ----
 
-* `ZK_URL` is an Zookeepr address used by CMAK (not a Kafka Zookeeper address)
-* `YAML_CFG` is a YAML configuration for Kafka clusters to be managed by ZK.
-  Format of YAML is completely equal to CMAK operator Helm chart values.
-  The only section used is
-  https://artifacthub.io/packages/helm/cmak-operator/cmak-operator?modal=values-schema&path=cmak[cmak].
-
-Example docker compose files are located at `cmak2zk/examples`.
+Example `docker-compose` and Kafka cluster configuration are located at `cmak2zk/examples`.
 One could run them using commands below.
 
 [source]

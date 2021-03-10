@@ -16,10 +16,22 @@ yaml = YAML(typ='safe')
 
 
 @click.command()
-@click.option('--overwrite-zk/--no-overwrite-zk', "over_zk", default=True)
+@click.option('--overwrite-zk/--no-overwrite-zk', "over_zk", default=True, help="should existing ZK data be rewritten on md5 difference")
 @click.argument("zk_url", type=str)
 @click.argument('yaml_cfg', type=click.File())
 def cmak2zk(over_zk, zk_url, yaml_cfg):
+    """
+    Populates Zookeeper at ZK_URL with Kafka cluster configuration
+    in CMAK compatible format from YAML_CFG configuration file.
+
+    ZK_URL - myzk1:2181,myzk2:2181, etc.
+
+    \b
+    YAML_CFG - Format is equal to CMAK operator Helm chart values.
+    The only section used is
+    https://artifacthub.io/packages/helm/cmak-operator/cmak-operator?modal=values-schema&path=cmak.
+
+    """
     cmak_cfg = yaml.load(yaml_cfg)['cmak']
     common_cfg = cmak_cfg['clustersCommon']
 
