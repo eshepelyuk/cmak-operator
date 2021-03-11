@@ -34,3 +34,11 @@ skaffold.yaml
 values-lint.yaml
 node_modules
 README.adoc
+*.sh
+package-lock.json
+*.puml
+.editorconfig
+.dockerignore
+test/
+cmak2zk/
+
