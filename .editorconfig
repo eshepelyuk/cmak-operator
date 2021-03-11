@@ -12,4 +12,4 @@ indent_size=2
 indent_size = 4
 
 [README.adoc]
-max_line_length = 100
+max_line_length = 120

@@ -139,7 +139,7 @@ cmak:
       zkMaxRetry: 100 # <1>
   clusters:
     - name: "cluster-stage"
-      kafkaVersion: "2.5.0" # <2>
+      kafkaVersion: "2.4.0" # <2>
       curatorConfig:
         zkConnect: "kafka01.stage:2181,kafka02.stage:2181"
     - name: "cluster-prod"
@@ -222,7 +222,8 @@ Usage: cmak2zk.py [OPTIONS] ZK_URL YAML_CFG
 .....
 ----
 
-Example `docker-compose` and Kafka cluster configuration are located at `cmak2zk/examples`.
+Example `docker-compose` and Kafka cluster configuration are located at
+https://github.com/eshepelyuk/cmak-operator/tree/master/cmak2zk/examples[cmak2zk/examples] directory.
 One could run them using commands below.
 
 [source]
