@@ -201,7 +201,7 @@ CMAK doesn't configure clusters from Helm values::
 
 == Standalone cmak2zk tool
 
-`cmak2zk` was developed as a part of `CMAK operator` and actively used by the operator itself.
+`cmak2zk` was developed as a part of CMAK operator and actively used by the operator itself.
 But the same time this tool could be used on its own outside of Helm charts and Kubernetes.
 
 Its purpose is to take Kafka cluster configuration for CMAK in YAML format
@@ -212,13 +212,11 @@ to use CMAK in declarative configuration or GitOps based flows.
 `cmak2zk` is distributed as docker image
 https://hub.docker.com/repository/docker/eshepelyuk/cmak2zk[available at DockerHub].
 
-To see available options, run the image without parameters.
+To check out available options, run the image without parameters.
 
 [source]
 ----
 $ docker run eshepelyuk/cmak2zk:1.4.1
-Usage: cmak2zk.py [OPTIONS] ZK_URL YAML_CFG
-.....
 ----
 
 Example `docker-compose` and Kafka cluster configuration are located at
