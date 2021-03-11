@@ -22,13 +22,11 @@ link="https://opensource.org/licenses/MIT", window="_blank"]
 
 toc::[]
 
-CMAK operator is a set of tools packaged as Helm chart, that allows to install
-and configure https://github.com/yahoo/CMAK[CMAK]
-(previously Kafka Manager) into Kubernetes cluster.
+https://github.com/yahoo/CMAK[CMAK] (prev. Kafka Manager)
+is a well-known mature tool for monitoring and managing https://kafka.apache.org/[Apache Kafka] clusters.
 
-https://github.com/yahoo/CMAK[CMAK] (previously Kafka Manager)
-is well-known and mature tool for monitoring and managing
-https://kafka.apache.org/[Apache Kafka] clusters.
+CMAK operator is a Helm chart combining set of tools, that allows to install and configure
+https://github.com/yahoo/CMAK[CMAK] (prev. Kafka Manager) into Kubernetes cluster.
 
 == Installation
 
@@ -45,14 +43,14 @@ $ helm repo add cmak https://eshepelyuk.github.io/cmak-operator
 $ helm repo update
 ----
 
-Install latest version
+Install the latest version
 
 [source]
 ----
 $ helm install --create-namespace -n cmak-ns mycmak cmak/cmak-operator
 ----
 
-Search for available versions
+Search for all available versions
 
 [source]
 ----
@@ -139,7 +137,7 @@ cmak:
       zkMaxRetry: 100 # <1>
   clusters:
     - name: "cluster-stage"
-      kafkaVersion: "2.5.0" # <2>
+      kafkaVersion: "2.4.0" # <2>
       curatorConfig:
         zkConnect: "kafka01.stage:2181,kafka02.stage:2181"
     - name: "cluster-prod"
@@ -193,16 +191,9 @@ TO BE DEFINED.
 
 TO BE DEFINED.
 
-== Troubleshooting
-
-CMAK doesn't configure clusters from Helm values::
-+
-* CMAK settings are not applied immediately, but only after `reconcile.schedule` period had passed.
-* Check logs of cron job to see if there's no connection failure to ZK.
-
 == Standalone cmak2zk tool
 
-`cmak2zk` was developed as a part of `CMAK operator` and actively used by the operator itself.
+`cmak2zk` was developed as a part of CMAK operator and actively used by the operator itself.
 But the same time this tool could be used on its own outside of Helm charts and Kubernetes.
 
 Its purpose is to take Kafka cluster configuration for CMAK in YAML format
@@ -213,16 +204,15 @@ to use CMAK in declarative configuration or GitOps based flows.
 `cmak2zk` is distributed as docker image
 https://hub.docker.com/repository/docker/eshepelyuk/cmak2zk[available at DockerHub].
 
-To see available options, run the image without parameters.
+To check out available options, run the image without parameters.
 
 [source]
 ----
 $ docker run eshepelyuk/cmak2zk:1.4.1
-Usage: cmak2zk.py [OPTIONS] ZK_URL YAML_CFG
-.....
 ----
 
-Example `docker-compose` and Kafka cluster configuration are located at `cmak2zk/examples`.
+Example `docker-compose` and Kafka cluster configuration are located at
+https://github.com/eshepelyuk/cmak-operator/tree/master/cmak2zk/examples[cmak2zk/examples] directory.
 One could run them using commands below.
 
 [source]
@@ -238,4 +228,13 @@ $ docker-compose -f docker-compose-cmak2zk.yaml up
 
 Wait for some time until components are stabilizing, it may take up to 5 mins.
 Then, open your browser at http://localhost:9000.
-There should be two pre configured clusters, pointing to the same Kafka instance, running in Docker.
+There should be two pre-configured clusters, pointing to the same Kafka instance, running in Docker.
+
+////
+== Troubleshooting
+
+CMAK doesn't configure Kafka clusters from Helm values::
++
+* CMAK settings are not applied immediately, but only after `reconcile.schedule` period had passed.
+* Check logs of cron job to see if there's no connection failure to ZK.
+////
