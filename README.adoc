@@ -191,13 +191,6 @@ TO BE DEFINED.
 
 TO BE DEFINED.
 
-== Troubleshooting
-
-CMAK doesn't configure clusters from Helm values::
-+
-* CMAK settings are not applied immediately, but only after `reconcile.schedule` period had passed.
-* Check logs of cron job to see if there's no connection failure to ZK.
-
 == Standalone cmak2zk tool
 
 `cmak2zk` was developed as a part of CMAK operator and actively used by the operator itself.
@@ -235,4 +228,13 @@ $ docker-compose -f docker-compose-cmak2zk.yaml up
 
 Wait for some time until components are stabilizing, it may take up to 5 mins.
 Then, open your browser at http://localhost:9000.
-There should be two pre configured clusters, pointing to the same Kafka instance, running in Docker.
+There should be two pre-configured clusters, pointing to the same Kafka instance, running in Docker.
+
+////
+== Troubleshooting
+
+CMAK doesn't configure Kafka clusters from Helm values::
++
+* CMAK settings are not applied immediately, but only after `reconcile.schedule` period had passed.
+* Check logs of cron job to see if there's no connection failure to ZK.
+////
