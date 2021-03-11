@@ -1,4 +1,4 @@
-= CMAK operator
+= CMAK (prev. Kafka Manager) for Kubernetes
 :toc: macro
 :icons: font
 :toclevels: 1
@@ -229,6 +229,13 @@ $ docker-compose -f docker-compose-cmak2zk.yaml up
 Wait for some time until components are stabilizing, it may take up to 5 mins.
 Then, open your browser at http://localhost:9000.
 There should be two pre-configured clusters, pointing to the same Kafka instance, running in Docker.
+
+== Alternatives
+
+https://akhq.io/[AKHQ] project seems to be the most active open source tool
+for managing and monitoring Kafka clusters.
+It could be missing some functionality from CMAK,
+but their developers are open for feature requests and contributions.
 
 ////
 == Troubleshooting
