@@ -33,3 +33,4 @@ venv
 skaffold.yaml
 values-lint.yaml
 node_modules
+README.adoc

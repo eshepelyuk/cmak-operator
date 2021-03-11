@@ -14,6 +14,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      - run: |
+          gem install asciidoctor
       - name: nodejs 12
         uses: actions/setup-node@v1
         with:
@@ -40,6 +45,13 @@ jobs:
           cat /tmp/cmak.version
           echo "::set-output name=cmakVersion::$(cat /tmp/cmak.version)"
       - uses: azure/setup-helm@v1
+      - run: |
+          asciidoctor -b docbook -a leveloffset=+1 -o README.md.tmp README.adoc
+      - uses: docker://pandoc/ubuntu-core:2.12
+        with:
+          args: --markdown-headings=atx --wrap=preserve -t gfm -f docbook -o README.md README.md.tmp
+      - run: |
+          ./adoc2md.sh
       - run: helm package . --version ${{ steps.cmakVersion.outputs.cmakVersion }}
       - name: upload artifact
         uses: actions/upload-artifact@v2
