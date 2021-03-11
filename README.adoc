@@ -22,12 +22,11 @@ link="https://opensource.org/licenses/MIT", window="_blank"]
 
 toc::[]
 
-CMAK operator is a set of tools packaged as Helm chart, that allows to install
-and configure https://github.com/yahoo/CMAK[CMAK] (previously Kafka Manager) into Kubernetes cluster.
+https://github.com/yahoo/CMAK[CMAK] (prev. Kafka Manager)
+is a well-known mature tool for monitoring and managing https://kafka.apache.org/[Apache Kafka] clusters.
 
-https://github.com/yahoo/CMAK[CMAK] (previously Kafka Manager)
-is well-known and mature tool for monitoring and managing
-https://kafka.apache.org/[Apache Kafka] clusters.
+CMAK operator is a Helm chart combining set of tools, that allows to install and configure
+https://github.com/yahoo/CMAK[CMAK] (prev. Kafka Manager) into Kubernetes cluster.
 
 == Installation
 
@@ -44,14 +43,14 @@ $ helm repo add cmak https://eshepelyuk.github.io/cmak-operator
 $ helm repo update
 ----
 
-Install latest version
+Install the latest version
 
 [source]
 ----
 $ helm install --create-namespace -n cmak-ns mycmak cmak/cmak-operator
 ----
 
-Search for available versions
+Search for all available versions
 
 [source]
 ----
