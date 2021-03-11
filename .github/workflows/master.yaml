@@ -7,6 +7,9 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - 'README.adoc'
+      - 'arch.puml'
 
 jobs:
   ci_job:
