@@ -164,7 +164,7 @@ plantuml::arch.puml[]
 endif::env-github[]
 
 ifdef::env-github[]
-image::http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/eshepelyuk/cmak-operator/master/arch.puml[Component diagram]
+image::https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/eshepelyuk/cmak-operator/master/arch.puml[Component diagram]
 endif::env-github[]
 
 CMAK operator comprises following components:
