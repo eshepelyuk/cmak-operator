@@ -44,15 +44,12 @@ jobs:
           version: 'v1.20.0'
       - name: build cmak-operator
         run: |
-          set -x
           skaffold config set default-repo "registry.localhost:5000"
           skaffold build
       - name: deploy cmak-operator
         run: |
-          set -x
           skaffold run
       - name: e2e test
         run: |
-          set -x
           kubectl get all
           helm test cmak-operator --logs
