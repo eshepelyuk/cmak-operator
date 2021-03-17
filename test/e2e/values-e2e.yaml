@@ -2,11 +2,13 @@ reconcile:
   schedule: "*/2 * * * *"
 
 cmak:
+  clustersCommon:
+    kafkaVersion: "2.4.0"
   clusters:
   - name: cluster
     curatorConfig:
-      zkConnect: kafka1.local
+      zkConnect: kafka-test:2181
   - name: cluster-disabled
     enabled: false
     curatorConfig:
-      zkConnect: kafka2.local
+      zkConnect: kafka-test:2181

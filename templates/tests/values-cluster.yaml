@@ -1,5 +1,5 @@
 {{- $nm := include "cmak.name" . -}}
-{{- $uiUrl := printf "http://%v.%v:%v/api/status/clusters" $nm .Release.Namespace .Values.ui.port -}}
+{{- $uiUrl := printf "http://%v.%v:%v/api/status" $nm .Release.Namespace .Values.ui.port -}}
 {{- $dict := .Values.image | default (dict "tag" .Chart.Version "repository" (printf "%s/eshepelyuk/json2zk" .Values.imageRegistry)) -}}
 {{- $image := printf "%s:%s" $dict.repository $dict.tag -}}
 apiVersion: v1
@@ -20,14 +20,15 @@ spec:
     - |
       set -x
       set -e
-      [ "$(curl -s {{ $uiUrl }} | jq '.clusters.active | length')" -eq 2 ]
+      [ "$(curl -s {{ $uiUrl }}/clusters | jq '.clusters.active | length')" -eq 2 ]
+      [ "$(curl -s {{ $uiUrl }}/cluster/topics | jq '.topics==["__consumer_offsets","test"]')" == "true" ]
 
       zk-shell --run-once 'rm /kafka-manager/configs/cluster-disabled' {{ $nm }}.{{ .Release.Namespace }}:2181
-      [ "$(curl -s {{ $uiUrl }} | jq '.clusters.active | length')" -eq 1 ]
+      [ "$(curl -s {{ $uiUrl }}/clusters | jq '.clusters.active | length')" -eq 1 ]
 
       for i in $(seq 12);do
         echo "Waiting for CronJob time: $i"
-        [ "$(curl -s {{ $uiUrl }} | jq '.clusters.active | length')" -eq 2 ] && exit 0
+        [ "$(curl -s {{ $uiUrl }}/clusters | jq '.clusters.active | length')" -eq 2 ] && exit 0
         sleep 20
       done
 

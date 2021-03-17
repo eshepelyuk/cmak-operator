@@ -37,6 +37,8 @@ jobs:
           use-default-registry: true
           args: >-
             --config ./test/e2e/k3d.yaml
+      - run: |
+          kubectl apply -f test/e2e/kafka.yaml
       - uses: volesen/setup-skaffold@v1.1
         with:
           version: 'v1.20.0'
@@ -52,4 +54,5 @@ jobs:
       - name: e2e test
         run: |
           set -x
+          kubectl get all
           helm test cmak-operator --logs
