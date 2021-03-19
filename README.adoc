@@ -237,6 +237,11 @@ for managing and monitoring Kafka clusters.
 It could be missing some functionality from CMAK,
 but their developers are open for feature requests and contributions.
 
+== Contribution
+
+Your contributions like feature suggesstions, bug reports and pull requests are always welcomed.
+Please check xref:CONTRIBUTING.adoc[] for details.
+
 ////
 == Troubleshooting
 
