@@ -6,8 +6,11 @@ build:
   artifacts:
   - image: eshepelyuk/cmak2zk
     context: ./cmak2zk
+  - image: eshepelyuk/cmak-operator-test
+    context: ./test
   local:
     push: true
+    concurrency: 2
 profiles:
 - name: e2e
   activation:
@@ -24,5 +27,6 @@ profiles:
         - test/e2e/values-e2e.yaml
         artifactOverrides:
           image: eshepelyuk/cmak2zk
+          imageTest: eshepelyuk/cmak-operator-test
         imageStrategy:
           helm: {}
