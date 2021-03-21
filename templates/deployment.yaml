@@ -1,3 +1,4 @@
+{{- $nm := include "cmak.name" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,6 +14,19 @@ spec:
       labels:
         {{- include "cmak.labels" . | nindent 8 }}
     spec:
+      {{- if or .Values.ui.consumerProperties .Values.ui.consumerPropertiesSsl }}
+      volumes:
+      {{- if .Values.ui.consumerProperties }}
+        - name: {{ $nm }}-consumer-properties
+          configMap:
+            name: {{ $nm }}-consumer-properties
+      {{- end -}}
+      {{ if .Values.ui.consumerPropertiesSsl }}
+        - name: {{ $nm }}-ssl
+          secret:
+            secretName: {{ include "cmak.name" . }}-ssl
+      {{- end -}}
+      {{- end }}
       containers:
         - name: zk
           image: {{ printf "%s/zookeeper:%s" .Values.imageRegistry .Values.zk.version | quote }}
@@ -54,6 +68,11 @@ spec:
           {{- range .Values.ui.extraArgs }}
           - {{ . | quote }}
           {{- end }}
+          {{ if .Values.ui.consumerProperties }}
+          env:
+            - name: CONSUMER_PROPERTIES_FILE
+              value:  /conf/consumer.properties
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /api/health
@@ -70,6 +89,18 @@ spec:
             initialDelaySeconds: 45
             timeoutSeconds: 15
             periodSeconds: 30
+          {{- if or .Values.ui.consumerProperties .Values.ui.consumerPropertiesSsl }}
+          volumeMounts:
+          {{- if .Values.ui.consumerProperties }}
+            - name: {{ $nm }}-consumer-properties
+              mountPath: /conf/consumer.properties
+              subPath: consumer.properties
+          {{- end -}}
+          {{ if .Values.ui.consumerPropertiesSsl }}
+            - name: {{ $nm }}-ssl
+              mountPath: "/conf/ssl"
+          {{- end -}}
+          {{- end }}
           {{- if or (.Values.ui.resources.limits | empty | not) (.Values.ui.resources.requests | empty | not) }}
           resources:
             {{- with .Values.ui.resources.requests }}
