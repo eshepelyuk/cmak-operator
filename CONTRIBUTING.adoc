@@ -43,7 +43,7 @@ $ git push -u origin my-branch
 $ git commit -am '.....'
 ----
 
-. Before pushing code to `origin` ensure your branch us rebased onto `upstream/master`.
+. Before pushing code to `origin` ensure your branch us rebased onto `upstream/master`.
 +
 [source,bash]
 ----
