@@ -8,8 +8,8 @@ on:
     branches:
       - master
     paths-ignore:
-      - 'README.adoc'
-      - 'arch.puml'
+      - '*.adoc'
+      - '*.puml'
 
 jobs:
   ci_job:
