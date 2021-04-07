@@ -7,9 +7,9 @@ for creating commit messages.
 
 Please use following _types_ to create your commits:
 
-* feat, for new functionality.
-* fix, for a bug fixe.
-* chore, for other ( CI/CD, docs, etc)
+* `feat`, for a new functionality.
+* `fix`, for a bug fixes.
+* `chore`, for everything else ( CI/CD, docs, etc)
 
 Also, we would like PRs to contain a single commit and be rebased onto main project `master` branch before submitting.
 
