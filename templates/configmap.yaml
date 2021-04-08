@@ -8,3 +8,14 @@ data:
   clusters.yaml: |-
     {{- pick .Values "cmak" | toYaml | nindent 4 }}
 
+{{ if .Values.ui.consumerProperties }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cmak.name" . }}-consumer-properties
+  labels: {{ include "cmak.labels" . | nindent 4 }}
+data:
+  consumer.properties: |-
+  {{- include "cmak.consumerProperties" . | nindent 4 }}
+{{- end }}

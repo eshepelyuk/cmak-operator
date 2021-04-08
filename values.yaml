@@ -66,6 +66,25 @@ ui:
     #   cpu: 100m
     #   memory: 128Mi
 
+  # Cosumer Properties
+  consumerProperties: {}
+    # Key value pairs of values to add into consumer properties.
+    # default values which will be added if not specified here:
+    # key.deserializer: "org.apache.kafka.common.serialization.ByteArrayDeserializer"
+    # value.deserializer: "org.apache.kafka.common.serialization.ByteArrayDeserializer"
+
+  # Consumer SSL configurations
+  consumerPropertiesSsl: {}
+    # keystore:
+    #   type: PKCS
+    #   password: test123
+    #   value: <some base64 encoded keystore>
+    # truststore:
+    #   type: JKS
+    #   password: test123
+    #   value: <some base64 encoded keystore>
+
+
 # various settings for Zookeeper container
 zk:
   version: "3.6.1"

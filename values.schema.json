@@ -76,6 +76,27 @@
       "properties": {
         "secret": { "type": "string", "title": "Secret name to attach to the ingress object" }
       }
+    },
+    "consumerSsl": {
+      "type": "object", "title": "Consumer SSL configuration", "default": null,
+      "properties": {
+        "keystore": {
+          "type": "object", "title": "keystore configuration",
+          "properties": {
+            "type": { "type": "string" },
+            "password": { "type": "string" },
+            "value": { "type": "string", "description": "base64 encoded keystore" }
+          }
+        },
+        "truststore": {
+          "type": "object", "title": "truststore configuration",
+          "properties": {
+            "type": { "type": "string" },
+            "password": { "type": "string" },
+            "value": { "type": "string", "description": "base64 encoded truststore" }
+          }
+        }
+      }
     }
   },
 
@@ -110,14 +131,16 @@
         "clusters": {
           "type": "array", "title": "list of configured clusters",
           "items": { "$ref": "#/definitions/clusterConfig" }
-        }
+        }        
       }
     },
     "ui": {
       "type": "object", "title": "ui container k8s settings",
       "properties": {
         "extraArgs": { "type": "array", "title": "extra cmd line arguments", "items": { "type": "string" }, "default": [] },
-        "resources": { "$ref":  "#/definitions/resources" }
+        "resources": { "$ref":  "#/definitions/resources" },
+        "consumerProperties": { "type": "object", "title": "provide key value base pairs for consumer properties according to java docs", "default": {} },
+        "consumerPropertiesSsl": { "$ref": "#/definitions/consumerSsl" }
       }
     },
     "zk": {
