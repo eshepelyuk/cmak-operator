@@ -1,6 +1,6 @@
 imageRegistry: docker.io
 
-# those settings are mirroring CMAK UI preferences.
+# mirroring CMAK UI preferences for Kafka clusters
 cmak:
   clustersCommon:
     curatorConfig:
@@ -49,7 +49,7 @@ reconcile:
   successfulJobsHistoryLimit: null
   failedJobsHistoryLimit: null
 
-# K8S related settings for CMAK UI container
+# various settings for CMAK UI container and CMAK application
 ui:
   port: 9000
   # additional command line arguments
@@ -66,7 +66,7 @@ ui:
     #   cpu: 100m
     #   memory: 128Mi
 
-# K8S related settings for Zookeeper container
+# various settings for Zookeeper container
 zk:
   version: "3.6.1"
   ## resource requests and limits
