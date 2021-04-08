@@ -23,9 +23,7 @@ jobs:
       - uses: artis3n/setup-conftest@v0.1.1
       - name: helm lint
         run: |
-          helm lint . --strict
-          helm lint . --strict -f test/linter/values-lint.yaml
-          helm dep up test/linter/subchart && helm lint test/linter/subchart --strict
+          ./test/linter/test.sh
       - name: conftest
         run: |
           helm template . > /tmp/cmak.yaml
