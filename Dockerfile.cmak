@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk16:alpine-jre as build
+FROM adoptopenjdk/openjdk16:alpine as build
 
 ARG CMAK_VERSION="3.0.0.5"
 
@@ -10,7 +10,7 @@ RUN curl -L https://github.com/yahoo/CMAK/releases/download/${CMAK_VERSION}/cmak
 
     && rm -rf /tmp/cmak.zip
 
-FROM openjdk:11-jre-slim
+FROM adoptopenjdk/openjdk16:alpine-jre
 
 MAINTAINER Hleb Albau <hleb.albau@gmail.com>
 
@@ -22,4 +22,4 @@ ENV JAVA_OPTS=-XX:MaxRAMPercentage=80
 
 WORKDIR /cmak
 
-ENTRYPOINT ["/cmak/bin/cmak", "-Dpidfile.path=/dev/null", "-Dapplication.home=/cmak", ""]
+ENTRYPOINT ["/cmak/bin/cmak", "-Dpidfile.path=/dev/null", "-Dapplication.home=/cmak"]
