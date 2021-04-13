@@ -2,7 +2,7 @@ FROM adoptopenjdk/openjdk16:alpine as build
 
 ARG CMAK_VERSION="3.0.0.5"
 
-RUN curl -L https://github.com/yahoo/CMAK/releases/download/${CMAK_VERSION}/cmak-${CMAK_VERSION}.zip -o /tmp/cmak.zip \
+RUN apk add curl && curl -L https://github.com/yahoo/CMAK/releases/download/${CMAK_VERSION}/cmak-${CMAK_VERSION}.zip -o /tmp/cmak.zip \
 
     && unzip /tmp/cmak.zip -d / \
 
