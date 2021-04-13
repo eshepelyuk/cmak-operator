@@ -4,6 +4,8 @@ metadata:
   name: cmak-operator
 build:
   artifacts:
+  - image: eshepelyuk/cmak
+
   - image: eshepelyuk/cmak2zk
     context: ./cmak2zk
   - image: eshepelyuk/cmak-operator-test
