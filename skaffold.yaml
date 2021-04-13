@@ -26,6 +26,7 @@ profiles:
         valuesFiles:
         - test/e2e/values-e2e.yaml
         artifactOverrides:
+          imageCmak: eshepelyuk/cmak
           image: eshepelyuk/cmak2zk
           imageTest: eshepelyuk/cmak-operator-test
         imageStrategy:
