@@ -4,6 +4,7 @@ metadata:
   name: cmak-operator
 build:
   artifacts:
+  - image: eshepelyuk/cmak
   - image: eshepelyuk/cmak2zk
     context: ./cmak2zk
   - image: eshepelyuk/cmak-operator-test
@@ -26,6 +27,7 @@ profiles:
         valuesFiles:
         - test/e2e/values-e2e.yaml
         artifactOverrides:
+          imageCmak: eshepelyuk/cmak
           image: eshepelyuk/cmak2zk
           imageTest: eshepelyuk/cmak-operator-test
         imageStrategy:
