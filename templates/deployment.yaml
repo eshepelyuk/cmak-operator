@@ -75,7 +75,7 @@ spec:
           {{- end }}
           readinessProbe:
             httpGet:
-              path: /api/health
+              path: {{ include "cmak.healthUi" . }}
               port: http
             failureThreshold: 7
             initialDelaySeconds: 15
@@ -83,7 +83,7 @@ spec:
             periodSeconds: 15
           livenessProbe:
             httpGet:
-              path: /api/health
+              path: {{ include "cmak.healthUi" . }}
               port: http
             failureThreshold: 7
             initialDelaySeconds: 45

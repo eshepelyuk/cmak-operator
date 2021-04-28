@@ -31,3 +31,13 @@ ssl.keystore.password={{ .keystore.password }}
 {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "cmak.healthUi" -}}
+{{ $httpCtx := "" }}
+{{- range .Values.ui.extraArgs -}}
+{{- if hasPrefix "-Dplay.http.context=" . -}}
+{{- $httpCtx = trimPrefix "-Dplay.http.context=" . -}}
+{{- end -}}
+{{- end -}}
+{{ $httpCtx }}/api/health
+{{- end -}}
