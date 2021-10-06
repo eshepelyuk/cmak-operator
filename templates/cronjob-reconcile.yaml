@@ -26,16 +26,13 @@ spec:
               configMap:
                 name: {{ $nm }}-clusters
           {{- with .Values.nodeSelector }}
-          nodeSelector:
-{{ toYaml . | indent 12 }}
+          nodeSelector: {{  toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.affinity }}
-          affinity:
-{{ toYaml . | indent 12 }}
+          affinity: {{  toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.tolerations }}
-          tolerations:
-{{ toYaml . | indent 12 }}
+          tolerations: {{  toYaml . | nindent 12 }}
           {{- end }}
           containers:
             - name: setup

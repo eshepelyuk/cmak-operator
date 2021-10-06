@@ -13,11 +13,11 @@ imageRegistry: docker.io
 #             - e2e-az2
 
 # node selection configuration
-nodeSelector: {}
-  # Nodepool: stateful
+# nodeSelector:
+#   Nodepool: stateful
 
 # pod tolerations configuration
-tolerations: {}
+# tolerations:
 # - key: "StatefulOnly"
 #   operator: "Equal"
 #   value: "true"
