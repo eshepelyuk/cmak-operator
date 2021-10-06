@@ -1,5 +1,28 @@
 imageRegistry: docker.io
 
+# node affinity configuration
+# affinity: 
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#           - key: kubernetes.io/e2e-az-name
+#             operator: In
+#             values:
+#             - e2e-az1
+#             - e2e-az2
+
+# node selection configuration
+nodeSelector: {}
+  # Nodepool: stateful
+
+# pod tolerations configuration
+tolerations: {}
+# - key: "StatefulOnly"
+#   operator: "Equal"
+#   value: "true"
+#   effect: "NoSchedule"
+
 # mirroring CMAK UI preferences for Kafka clusters
 cmak:
   clustersCommon:
