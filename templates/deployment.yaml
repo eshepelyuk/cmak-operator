@@ -27,6 +27,15 @@ spec:
             secretName: {{ include "cmak.name" . }}-ssl
       {{- end -}}
       {{- end }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector: {{  toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity: {{  toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations: {{  toYaml . | nindent 8 }}
+    {{- end }}
       containers:
         - name: zk
           image: {{ printf "%s/zookeeper:%s" .Values.imageRegistry .Values.zk.version | quote }}

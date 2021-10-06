@@ -1,0 +1,49 @@
+suite: deployment placement
+templates:
+  - deployment.yaml
+tests:
+  - it: should not populate placement by default
+    asserts:
+      - isNull:
+          path: spec.template.spec.nodeSelector
+      - isNull:
+          path: spec.template.spec.affinity
+      - isNull:
+          path: spec.template.spec.tolerations
+  - it: should populate nodeSelector
+    set:
+      nodeSelector:
+        myLbl: myVal
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.nodeSelector
+      - isNotEmpty:
+          path: spec.template.spec.nodeSelector.myLbl
+      - equal:
+          path: spec.template.spec.nodeSelector.myLbl
+          value: myVal
+  - it: should populate affinity
+    set:
+      affinity:
+        someProp: someVal
+    asserts:
+      - isNotEmpty:
+          path: spec.template.spec.affinity
+      - equal:
+          path: spec.template.spec.affinity.someProp
+          value: someVal
+  - it: should populate tolerations
+    set:
+      tolerations:
+        - name: val
+          someProp: someVal
+    asserts:
+      - isNotEmpty:
+          path: spec.template.spec.tolerations
+      - contains:
+          path: spec.template.spec.tolerations
+          content:
+            name: val
+            someProp: someVal
+          count: 1
+          any: false
