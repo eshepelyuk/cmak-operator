@@ -99,11 +99,22 @@
       }
     }
   },
-
   "type": "object", "required": ["cmak", "reconcile", "ui", "zk"],
-
   "properties": {
     "imageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for all images of the chart" },
+    "affinity": {
+      "type": "object", "default": {}, "title": "affinity",
+      "description": "See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity"
+    },
+    "nodeSelector": {
+      "type": "object", "default": {}, "title": "node selector",
+      "description": "See https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/"
+    },
+    "tolerations": {
+      "type": "array", "default": [], "title": "tolerations",
+      "description": "See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/",
+      "items": {"type": "object"}
+    },
     "reconcile": {
       "type": "object", "additionalProperties": false,
       "required": ["schedule"], "title": "reconciliation job config",
@@ -132,7 +143,7 @@
         "clusters": {
           "type": "array", "title": "list of configured clusters",
           "items": { "$ref": "#/definitions/clusterConfig" }
-        }        
+        }
       }
     },
     "ui": {

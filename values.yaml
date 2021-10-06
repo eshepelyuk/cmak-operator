@@ -49,7 +49,7 @@ reconcile:
   successfulJobsHistoryLimit: null
   failedJobsHistoryLimit: null
   # reconcile resource configuration
-  # resources: 
+  # resources:
   #   limits:
   #     cpu: 100m
   #     memory: 128Mi
@@ -124,3 +124,10 @@ ingress: null
   #
   # # optional ingress labels
   # labels: {}
+
+affinity: {}
+
+nodeSelector: {}
+
+tolerations: []
+
