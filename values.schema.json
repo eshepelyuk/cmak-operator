@@ -75,6 +75,20 @@
         }
       ]
     },
+    "matchExpressions": {
+      "type": "array", "title": "Match Expressions", "additionalProperties": false,
+      "items": {
+        "type": "object", "required": ["key","operator","values"], "title": "Match Expression", "additionalProperties": false,
+        "properties": {
+          "key": { "type": "string" },
+          "operator": { "type": "string" },
+          "values": { 
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
     "resources": {
       "type": "object", "title": "resource requests and limits", "additionalProperties": false,
       "required": ["limits", "requests"],
@@ -116,8 +130,48 @@
   "properties": {
     "imageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for all images of the chart" },
     "affinity": {
-      "type": "object", "default": {},"title": "Affinity",
-      "description": "a property of Pods that attracts them to a set of nodes"
+      "type": "object", "default": {}, "title": "Affinity",
+      "description": "a property of Pods that attracts them to a set of nodes",
+      "properties": {
+        "nodeAffinity": {
+          "type": "object", "title": "Node Affinity", "additionalProperties": false,
+          "properties": {
+            "requiredDuringSchedulingIgnoredDuringExecution": {
+              "type": "object", "default": {},"title": "Required During Scheduling Ignored During Execution", "description": "Required pods to be in a set of nodes during scheduling but ignore during execution",
+              "properties": {
+                 "nodeSelectorTerms": {
+                  "type": "array", "default": [], "title": "Node Selector Terms", "additionalProperties": false,
+                  "items": {
+                    "type": "object", "required": ["matchExpressions"], "title": "Node Selector Term",
+                      "allOf": [
+                        { 
+                          "properties": {
+                            "matchExpressions": { "$$ref": "#/definitions/matchExpressions" }
+                          }
+                        }
+                      ]
+                  }
+                 }
+              }
+            },
+            "preferredDuringSchedulingIgnoredDuringExecution": {
+              "type": "array", "default": [],"title": "Preferred During Scheduling Ignored DuringExecution", "description": "Preferred pods to be in a set of nodes during scheduling but ignore during execution",
+              "items": {
+                "type": "object", "required": ["weight", "preference"], "title": "Preferred During Scheduling Ignored DuringExecution Item",
+                "properties": {
+                  "weight": { "type": "number" },
+                  "preference": { 
+                    "type": "object", "required": ["matchExpressions"], "title": "Preference Item",
+                    "properties": {
+                      "matchExpressions": { "$ref": "#/definitions/matchExpressions" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "nodeSelector": { 
       "type": "object", "default": {}, "title": " Node Selector",
