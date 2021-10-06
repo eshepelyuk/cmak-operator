@@ -62,6 +62,19 @@
         }
       ]
     },
+    "tolerationConfig": {
+      "type": "object", "required": ["key", "operator","value","effect"], "title": "Toleration Config",
+      "allOf": [
+        { 
+          "properties": {
+            "key": { "type": "string" },
+            "operator": { "type": "string" },
+            "value": { "type": "string" },
+            "effect": { "type": "string" }
+          }
+        }
+      ]
+    },
     "resources": {
       "type": "object", "title": "resource requests and limits", "additionalProperties": false,
       "required": ["limits", "requests"],
@@ -99,11 +112,22 @@
       }
     }
   },
-
   "type": "object", "required": ["cmak", "reconcile", "ui", "zk"],
-
   "properties": {
     "imageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for all images of the chart" },
+    "affinity": {
+      "type": "object", "default": {},"title": "Affinity",
+      "description": "a property of Pods that attracts them to a set of nodes"
+    },
+    "nodeSelector": { 
+      "type": "object", "default": {}, "title": " Node Selector",
+      "description": "a map of key-value pairs. For the pod to be eligible to run on a node"
+    },
+    "tolerations": {
+      "type": "array", "default": [], "title": "Tolerations", "additionalProperties": false,
+      "description": "Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints",
+      "items": { "$ref": "#/definitions/tolerationConfig" }
+    },
     "reconcile": {
       "type": "object", "additionalProperties": false,
       "required": ["schedule"], "title": "reconciliation job config",
