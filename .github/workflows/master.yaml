@@ -14,7 +14,7 @@ on:
 jobs:
   ci_job:
     name: Continous integration
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -29,7 +29,7 @@ jobs:
           helm template . > /tmp/cmak.yaml
           conftest test /tmp/cmak.yaml -p test/conftest -o table --all-namespaces
       - name: start k8s with k3d
-        uses: AbsaOSS/k3d-action@v1.3.1
+        uses: AbsaOSS/k3d-action@v1.5.0
         with:
           cluster-name: "cmak"
           use-default-registry: true
