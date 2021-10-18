@@ -28,6 +28,15 @@ ui:
       cpu: 100m
       memory: 128Mi
 
+reconcile:
+  resources: 
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
 ingress:
   host: "cmak"
   path: "/"

@@ -119,7 +119,8 @@
         },
         "failedJobsHistoryLimit": {
           "type": ["null", "integer"], "default": null, "title": "number of failed jobs to keep"
-        }
+        },
+        "resources": { "$ref":  "#/definitions/resources" }
       }
     },
     "cmak": {

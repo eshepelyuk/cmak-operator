@@ -48,6 +48,14 @@ reconcile:
   overwriteZk: true
   successfulJobsHistoryLimit: null
   failedJobsHistoryLimit: null
+  # reconcile resource configuration
+  # resources: 
+  #   limits:
+  #     cpu: 100m
+  #     memory: 128Mi
+  #   requests:
+  #     cpu: 100m
+  #     memory: 128Mi
 
 # various settings for CMAK UI container and CMAK application
 ui:
