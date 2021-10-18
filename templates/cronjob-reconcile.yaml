@@ -35,3 +35,6 @@ spec:
               volumeMounts:
                 - name: {{ $nm }}-clusters
                   mountPath: /app/etc
+              {{- with .Values.reconcile.resources }}
+              resources: {{ . | toYaml | nindent 16 }}
+              {{- end }}
