@@ -25,9 +25,9 @@ jobs:
           npm ci
           npx semantic-release
         env:
-          # HELM_EXPERIMENTAL_OCI: 1
-          # REGISTRY_USERNAME: ${{ github.repository_owner }}
-          # REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          HELM_EXPERIMENTAL_OCI: 1
+          REGISTRY_USERNAME: ${{ github.repository_owner }}
+          REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: |
           mkdir /tmp/cmak
