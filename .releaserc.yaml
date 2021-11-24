@@ -17,6 +17,6 @@ plugins:
       failComment: false
   -
     - "@semantic-release/exec"
-    - prepareCmd: "helm package --version ${nextRelease.version}"
+    - prepareCmd: "helm package --version ${nextRelease.version} ."
       publishCmd: "skaffold build -t ${nextRelease.version}"
       successCmd: "gh release upload ${nextRelease.version} cmak-operator-${nextRelease.version}.tgz "
