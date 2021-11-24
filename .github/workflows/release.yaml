@@ -13,6 +13,9 @@ jobs:
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - uses: volesen/setup-skaffold@v1.1
+        with:
+          version: 'v1.33.0'
       - run: npx semantic-release
         env:
           # HELM_EXPERIMENTAL_OCI: 1
