@@ -13,7 +13,6 @@ jobs:
         with:
           ref: gh-pages
           path: gh-pages
-      - uses: bahmutov/npm-install@v1.7.7
       - uses: docker/login-action@v1
         with:
           username: ${{ github.repository_owner }}
