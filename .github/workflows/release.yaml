@@ -22,6 +22,7 @@ jobs:
           version: 'v1.33.0'
       - run: |
           cd master
+          npm ci
           npx semantic-release
         env:
           # HELM_EXPERIMENTAL_OCI: 1
