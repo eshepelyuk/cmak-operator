@@ -1,0 +1,38 @@
+name: Continous integration
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '*.md'
+      - '*.puml'
+jobs:
+  ci_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bahmutov/npm-install@v1.7.7
+      - run: |
+          npx semantic-release -p semantic-release-commitlint
+      - run: ./test/linter/test.sh
+      - run: |
+          helm plugin install https://github.com/quintush/helm-unittest
+          helm unittest -f test/unit/*.yaml -3 .
+      - uses: AbsaOSS/k3d-action@v1.5.0
+        with:
+          cluster-name: "k3d"
+          use-default-registry: true
+          args: >-
+            --config ./test/e2e/k3d.yaml
+      - run: |
+          kubectl apply -f test/e2e/kafka.yaml
+      - uses: volesen/setup-skaffold@v1.1
+        with:
+          version: 'v1.33.0'
+      - run: |
+          skaffold config set default-repo "registry.localhost:5000"
+      - run: skaffold run
+      - run: helm test cmak-operator --logs

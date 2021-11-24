@@ -1,94 +1,44 @@
-name: Release CMAK operator
-
+name: Release
 on:
   workflow_dispatch
-
 jobs:
   build_docker_job:
-    name: Docker image
-    runs-on: ubuntu-latest
-    outputs:
-      cmakVersion: ${{ steps.cmakVersion.outputs.cmakVersion }}
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: nodejs 12
-        uses: actions/setup-node@v1
+      - uses: bahmutov/npm-install@v1.7.7
+      - uses: docker/login-action@v1
         with:
-          node-version: '12.x'
-      - name: cache node_modules
-        id: nodeCache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ./node_modules
-            ./package-lock.json
-          key: node-modules-14-0-2--2.0.0
-      - run: npm install release-it@14.0.2 @release-it/conventional-changelog@2.0.0
-      - name: releaseIt
-        run: |
-          git config user.email "eshepelyuk@github"
-          git config user.name "Ievgenii Shepeliuk"
-          npx release-it --ci
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - run: npx semantic-release
         env:
+          # HELM_EXPERIMENTAL_OCI: 1
+          # REGISTRY_USERNAME: ${{ github.repository_owner }}
+          # REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: cmak version
-        id: cmakVersion
-        run: |
-          cat /tmp/cmak.version
-          echo "::set-output name=cmakVersion::$(cat /tmp/cmak.version)"
-      - uses: azure/setup-helm@v1
-      - run: helm package . --version ${{ steps.cmakVersion.outputs.cmakVersion }}
-      - name: upload artifact
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
           name: "helm"
-          path: "cmak-operator-${{ steps.cmakVersion.outputs.cmakVersion }}.tgz"
-      - name: docker login
-        uses: docker/login-action@v1
-        with:
-          username: eshepelyuk
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: publish docker image
-        uses: hiberbee/github-action-skaffold@1.5.0
-        with:
-          command: build
-          tag: ${{ steps.cmakVersion.outputs.cmakVersion }}
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+          path: "cmak-operator-*.tgz"
 
   publish_chart_job:
-    name: Helm chart
     runs-on: ubuntu-latest
     needs: build_docker_job
     steps:
-      - name: checkout gh-pages
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           ref: gh-pages
-      - name: download artifact
-        uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v2
         id: download
         with:
           name: helm
           path: /tmp/cmak
-      - uses: azure/setup-helm@v1
-      - name: update index
-        run: |
+      - run: |
           helm repo index /tmp/cmak --merge ./index.yaml
           mv -f /tmp/cmak/* .
-      - name: publish
-        uses: actions-js/push@master
+      - uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-      - name: twitter
-        run: |
-          echo "****************************************************"
-          echo ""
-          echo "Released #CMAKOperator ${{ needs.build_docker_job.outputs.cmakVersion }} for #Kubernetes and #Kafka"
-          echo "See changelog https://github.com/eshepelyuk/cmak-operator/releases/tag/${{ needs.build_docker_job.outputs.cmakVersion }}"
-          echo ""
-          echo "****************************************************"

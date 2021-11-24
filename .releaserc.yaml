@@ -1,0 +1,22 @@
+branches:
+  - master
+tagFormat: "${version}"
+plugins:
+  - '@semantic-release/commit-analyzer'
+  - 'semantic-release-commitlint'
+  -
+    - "@semantic-release/release-notes-generator"
+    - preset: "conventionalcommits"
+  -
+    - "@semantic-release/git"
+    - assets: []
+      messsage: false
+  -
+    - "@semantic-release/github"
+    - successComment: false
+      failComment: false
+  -
+    - "@semantic-release/exec"
+    - prepareCmd: "helm package --version ${nextRelease.version}"
+      publishCmd: "skaffold build -t ${nextRelease.version}"
+

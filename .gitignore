@@ -2,8 +2,6 @@ venv
 CHANGELOG.md
 *.tgz
 node_modules
-package-lock.json
-package.json
 .idea
 values-dev.yaml
 __pycache__

@@ -1,3 +1,4 @@
+
 apiVersion: v2
 name: cmak-operator
 description: Manage and vizualize Kafka clusters with CMAK (prev. Kafka Manager).
