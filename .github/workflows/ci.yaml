@@ -9,6 +9,7 @@ on:
     paths-ignore:
       - '*.md'
       - '*.puml'
+      - '.github/workflows/release.yaml'
 jobs:
   ci_job:
     runs-on: ubuntu-latest
