@@ -19,10 +19,6 @@ jobs:
           # REGISTRY_USERNAME: ${{ github.repository_owner }}
           # REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/upload-artifact@v2
-        with:
-          name: "helm"
-          path: "cmak-operator-*.tgz"
 
   publish_chart_job:
     runs-on: ubuntu-latest
