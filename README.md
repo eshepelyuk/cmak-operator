@@ -24,7 +24,6 @@ CMAK operator comprises following components:
 
 ## Installation
 
-CMAK operator could be installed only with [Helm 3](https://helm.sh/docs/).
 
 It's recommended to install CMAK operator into a dedicated namespace.
 
