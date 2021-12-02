@@ -31,7 +31,7 @@ jobs:
           kubectl apply -f test/e2e/kafka.yaml
       - uses: volesen/setup-skaffold@v1.1
         with:
-          version: 'v1.33.0'
+          version: 'v1.35.0'
       - run: |
           skaffold config set default-repo "localhost:5000"
       - run: skaffold run
