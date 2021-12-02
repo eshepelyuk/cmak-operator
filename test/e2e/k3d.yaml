@@ -13,11 +13,6 @@ registries:
       "localhost:5000":
         endpoint:
           - http://k3d-registry:5000
-ports:
-  - port: 80:80
-    nodeFilters: ["loadbalancer"]
-  - port: 9000:9000
-    nodeFilters: ["loadbalancer"]
 options:
   k3d:
     disableLoadbalancer: true
