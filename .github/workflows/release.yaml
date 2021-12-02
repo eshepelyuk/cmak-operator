@@ -19,7 +19,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - uses: volesen/setup-skaffold@v1.1
         with:
-          version: 'v1.33.0'
+          version: 'v1.35.0'
       - run: |
           cd master
           npm ci
