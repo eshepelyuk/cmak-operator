@@ -24,7 +24,7 @@ jobs:
           helm unittest -f 'test/unit/*.yaml' -3 .
       - uses: AbsaOSS/k3d-action@v2
         with:
-          # cluster-name: "k3d"
+          cluster-name: "k3d"
           args: >-
             --config ./test/e2e/k3d.yaml
       - run: |
