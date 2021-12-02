@@ -1,10 +1,27 @@
-apiVersion: k3d.io/v1alpha2
+apiVersion: k3d.io/v1alpha3
 kind: Simple
 name: k3d
+servers: 1
+agents: 0
+registries:
+  create:
+    name: k3d-registry
+    host: "0.0.0.0"
+    hostPort: "5000"
+  config: |
+    mirrors:
+      "localhost:5000":
+        endpoint:
+          - http://k3d-registry:5000
+ports:
+  - port: 80:80
+    nodeFilters: ["loadbalancer"]
+  - port: 9000:9000
+    nodeFilters: ["loadbalancer"]
 options:
   k3d:
-    wait: true
     disableLoadbalancer: true
   k3s:
-    extraServerArgs:
-    - "--disable=metrics-server,servicelb,traefik"
+    extraArgs:
+      - arg: "--disable=metrics-server,servicelb,traefik"
+        nodeFilters: ["all"]
