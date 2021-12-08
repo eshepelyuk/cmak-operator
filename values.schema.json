@@ -147,8 +147,9 @@
       }
     },
     "ui": {
-      "type": "object", "title": "ui container k8s settings",
+      "type": "object", "title": "ui container k8s settings", "additionalProperties": false,
       "properties": {
+        "port": {"type": "integer", "default": 9000},
         "extraArgs": { "type": "array", "title": "extra cmd line arguments", "items": { "type": "string" }, "default": [] },
         "resources": { "$ref":  "#/definitions/resources" },
         "consumerProperties": { "type": "object", "title": "provide key value base pairs for consumer properties according to java docs", "default": {} },
