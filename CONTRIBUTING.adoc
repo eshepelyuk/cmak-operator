@@ -1,7 +1,8 @@
 = Contributing
 
-== Requirements
+== Expected items
 
+=== Commit message format
 This repository uses https://www.conventionalcommits.org/en/v1.0.0/[Conventional Commits]
 for creating commit messages.
 
@@ -13,7 +14,7 @@ Please use following _types_ to create your commits:
 
 Also, we would like PRs to contain a single commit and be rebased onto project `master` branch before submitting.
 
-== Git flow.
+== Development flow.
 
 Although, you could choose your own approach to create branches, develop code
 and provide new PR, we recommend following.
