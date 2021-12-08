@@ -11,7 +11,7 @@ Please use following _types_ to create your commits:
 * `fix`, for a bug fixes.
 * `chore`, for everything else ( CI/CD, docs, etc)
 
-Also, we would like PRs to contain a single commit and be rebased onto main project `master` branch before submitting.
+Also, we would like PRs to contain a single commit and be rebased onto project `master` branch before submitting.
 
 == Git flow.
 
