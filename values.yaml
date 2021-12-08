@@ -93,6 +93,21 @@ ui:
     #   password: test123
     #   value: <some base64 encoded keystore>
 
+  # Additional environment variables (declared as k8s style)
+  # ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  extraEnv: []
+    # - name: GREETING
+    #   value: "Warm greetings to"
+    # - name: SECRET_USERNAME
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: mysecret
+    #       key: username
+    # - name: SPECIAL_LEVEL_KEY
+    #   valueFrom:
+    #     configMapKeyRef:
+    #       name: special-config
+    #       key: SPECIAL_LEVEL
 
 # various settings for Zookeeper container
 zk:
