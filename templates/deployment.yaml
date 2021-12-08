@@ -77,10 +77,13 @@ spec:
           {{- range .Values.ui.extraArgs }}
           - {{ . | quote }}
           {{- end }}
-          {{ if .Values.ui.consumerProperties }}
           env:
-            - name: CONSUMER_PROPERTIES_FILE
-              value:  /conf/consumer.properties
+          {{- if .Values.ui.consumerProperties }}
+          - name: CONSUMER_PROPERTIES_FILE
+            value:  /conf/consumer.properties
+          {{- end }}
+          {{- with .Values.ui.extraEnv -}}
+            {{  toYaml . | nindent 10 }}
           {{- end }}
           readinessProbe:
             httpGet:

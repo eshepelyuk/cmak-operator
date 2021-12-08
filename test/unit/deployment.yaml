@@ -1,0 +1,22 @@
+suite: deployment
+templates:
+  - deployment.yaml
+tests:
+  - it: should emit empty env by default
+    asserts:
+      - isEmpty:
+          path: spec.template.spec.containers[1].env
+  - it: should populate env when passed
+    set:
+      ui:
+        extraEnv:
+          - name: myvar
+            value: myvalue
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[1].env
+          content:
+            name: myvar
+            value: myvalue
+          count: 1
+          any: false
