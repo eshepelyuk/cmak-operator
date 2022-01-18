@@ -1,0 +1,40 @@
+suite: reconcile cronjob annotations
+templates:
+  - cronjob-reconcile.yaml
+  - job-setup.yaml
+tests:
+  - it: should populate job annotations
+    set:
+      reconcile:
+        annotations:
+          istest: yes
+    asserts:
+      - isNotNull:
+          path: spec.jobTemplate.spec.template.metadata.annotations.istest
+        template: cronjob-reconcile.yaml
+      - isNotNull:
+          path: spec.template.metadata.annotations.istest
+        template: job-setup.yaml
+      - isNotEmpty:
+          path: spec.jobTemplate.spec.template.metadata.annotations.istest
+        template: cronjob-reconcile.yaml
+      - isNotEmpty:
+          path: spec.template.metadata.annotations.istest
+        template: job-setup.yaml
+      - equal:
+          path: spec.jobTemplate.spec.template.metadata.annotations.istest
+          value: yes
+        template: cronjob-reconcile.yaml
+      - equal:
+          path: spec.template.metadata.annotations.istest
+          value: yes
+        template: job-setup.yaml
+
+  - it: should not have annotations by default
+    asserts:
+      - isNull:
+          path: spec.jobTemplate.spec.template.metadata
+        template: cronjob-reconcile.yaml
+      - isNull:
+          path: spec.template.metadata
+        template: job-setup.yaml
