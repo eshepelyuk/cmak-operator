@@ -20,10 +20,7 @@ jobs:
       - run: |
           npx semantic-release -p semantic-release-commitlint
       - run: |
-          make test-lint
-      - run: |
-          helm plugin install https://github.com/quintush/helm-unittest
-          helm unittest -f 'test/unit/*.yaml' -3 .
+          make test
       - uses: AbsaOSS/k3d-action@v2
         with:
           cluster-name: "k3d"
