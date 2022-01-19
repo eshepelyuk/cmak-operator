@@ -38,32 +38,36 @@ and provide new PR, we recommend following.
 
 1. Add this project as a new remote named `upstream`.
 
-```sh
-git remote add upstream https://github.com/eshepelyuk/cmak-operator.git
-git fetch upstream
-```
+    ```sh
+    git remote add upstream https://github.com/eshepelyuk/cmak-operator.git
+    git fetch upstream
+    ```
 
 1. Create a new branch, based on `upstream` master and push it to your repository.
-```sh
-git checkout --no-track -b <BRANCH NAME> upstream/master
-git push -u origin <BRANCH NAME>
-```
+
+    ```sh
+    git checkout --no-track -b <BRANCH NAME> upstream/master
+    git push -u origin <BRANCH NAME>
+    ```
 
 1. Develop your code locally, test and commit.
-```sh
-git commit -am '<COMMIT MESSAGE>'
-```
+
+    ```sh
+    git commit -am '<COMMIT MESSAGE>'
+    ```
 
 1. Before pushing code to `origin` ensure your working branch is rebased onto `upstream/master`.
-```sh
-git fetch upstream
-git rebase -i upstream/master
-```
-During rebase, make your PR to be comprised of a single commit,
-unless, you _really_ want to provide multiple commits via single PR.
+
+    ```sh
+    git fetch upstream
+    git rebase -i upstream/master
+    ```
+    During rebase, make your PR to be comprised of a single commit,
+    unless, you _really_ want to provide multiple commits via single PR.
 
 1. Push your branch and create a PR via GitHub UI.
-```sh
-git push -u -f origin <BRANCH NAME>
-```
+
+    ```sh
+    git push -u -f origin <BRANCH NAME>
+    ```
 
