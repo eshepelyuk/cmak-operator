@@ -186,5 +186,5 @@ but their developers are open for feature requests and contributions.
 
 Your contributions like feature suggesstions, bug reports and pull requests are always welcomed.
 
-Please check [CONTRIBUTING](./CONTRIBUTING.md) instructions for details.
+Please check [CONTRIBUTING](./CONTRIBUTING.md) guide for details.
 
