@@ -1,0 +1,31 @@
+suite: ingress
+templates:
+  - ingress.yaml
+tests:
+  - it: should not render by defaul
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should use pathType ImplementaionSpecific by default
+    set:
+      ingress:
+        host: myhost
+        path: /
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.rules[0].http.paths[0].pathType
+          value: ImplementationSpecific
+  - it: should use pathType ImplementaionSpecific by default
+    set:
+      ingress:
+        host: myhost
+        path: /
+        pathType: Prefix
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.rules[0].http.paths[0].pathType
+          value: Prefix

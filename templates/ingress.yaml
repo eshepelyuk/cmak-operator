@@ -24,7 +24,10 @@ spec:
       http:
         paths:
           - path: {{ .Values.ingress.path | quote }}
+            pathType: {{ .Values.ingress.pathType | default "ImplementationSpecific" | quote }}
             backend:
-              serviceName: {{ include "cmak.name" . | quote }}
-              servicePort: {{ .Values.ui.port }}
+              service:
+                name: {{ include "cmak.name" . | quote }}
+                port:
+                  number: {{ .Values.ui.port }}
 {{- end }}

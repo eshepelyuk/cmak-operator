@@ -50,4 +50,8 @@ if [ $? -eq 0 ]; then
   exit 1
 fi
 
+helm lint . --strict --set 'ingress.pathType=true'
+if [ $? -eq 0 ]; then
+  exit 1
+fi
 
