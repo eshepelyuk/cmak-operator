@@ -156,7 +156,8 @@
         "extraArgs": { "type": "array", "title": "extra cmd line arguments", "items": { "type": "string" }, "default": [] },
         "resources": { "$ref":  "#/definitions/resources" },
         "consumerProperties": { "type": "object", "title": "provide key value base pairs for consumer properties according to java docs", "default": {} },
-        "consumerPropertiesSsl": { "$ref": "#/definitions/consumerSsl" }
+        "consumerPropertiesSsl": { "$ref": "#/definitions/consumerSsl" },
+        "extraEnv": { "type": "array", "title": "optional environment variables", "default": {} }
       }
     },
     "zk": {

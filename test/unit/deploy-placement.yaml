@@ -47,3 +47,18 @@ tests:
             someProp: someVal
           count: 1
           any: false
+  - it: should populate ui.extraEnv
+    set:
+      extraEnv:
+        - name: myvar
+          value: myvalue
+    asserts:
+      - isNotEmpty:
+          path: spec.template.spec.containers.ui.env
+      - contains:
+          path: spec.template.spec.containers.ui.env
+          content:
+            name: myvar
+            value: myvalue
+          count: 1
+          any: false
