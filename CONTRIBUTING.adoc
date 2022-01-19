@@ -1,19 +1,30 @@
 = Contributing
 
-== Requirements
+== Expected items
 
-This repository uses https://www.conventionalcommits.org/en/v1.0.0/[Conventional Commits]
-for creating commit messages.
+=== Commit message format
 
-Please use following _types_ to create your commits:
+This repository uses https://www.conventionalcommits.org/en/v1.0.0/[Conventional Commits].
+
+Use only following _types_ to create valid commit messages:
 
 * `feat`, for a new functionality.
 * `fix`, for a bug fixes.
 * `chore`, for everything else ( CI/CD, docs, etc)
 
-Also, we would like PRs to contain a single commit and be rebased onto main project `master` branch before submitting.
+Also, we would like PRs to contain a single commit and be rebased onto project `master` branch before submitting.
 
-== Git flow.
+=== Test coverage
+
+The project is covered by following types of tests
+
+* linter tests - `test/linter`
+* unit tests - `test/unit`
+* e2e tests - `test/e2e`
+
+Every PR should provide appropriate amount of testing, corresponding to its scope.
+
+== Development flow.
 
 Although, you could choose your own approach to create branches, develop code
 and provide new PR, we recommend following.

@@ -131,6 +131,9 @@
         "failedJobsHistoryLimit": {
           "type": ["null", "integer"], "default": null, "title": "number of failed jobs to keep"
         },
+        "annotations": {
+          "type": "object", "title": "optional annotations to apply to the pods spun up via the job", "default": {}
+        },
         "resources": { "$ref":  "#/definitions/resources" }
       }
     },
@@ -147,8 +150,9 @@
       }
     },
     "ui": {
-      "type": "object", "title": "ui container k8s settings",
+      "type": "object", "title": "ui container k8s settings", "additionalProperties": false,
       "properties": {
+        "port": {"type": "integer", "default": 9000},
         "extraArgs": { "type": "array", "title": "extra cmd line arguments", "items": { "type": "string" }, "default": [] },
         "resources": { "$ref":  "#/definitions/resources" },
         "consumerProperties": { "type": "object", "title": "provide key value base pairs for consumer properties according to java docs", "default": {} },

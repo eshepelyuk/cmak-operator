@@ -48,6 +48,7 @@ reconcile:
   overwriteZk: true
   successfulJobsHistoryLimit: null
   failedJobsHistoryLimit: null
+  annotations: {}
   # reconcile resource configuration
   # resources:
   #   limits:
