@@ -8,6 +8,7 @@ on:
       - master
     paths-ignore:
       - '*.md'
+      - '*.adoc'
       - '*.puml'
       - '.github/workflows/release.yaml'
 jobs:
@@ -18,7 +19,8 @@ jobs:
       - uses: bahmutov/npm-install@v1.7.7
       - run: |
           npx semantic-release -p semantic-release-commitlint
-      - run: ./test/linter/test.sh
+      - run: |
+          make test-lint
       - run: |
           helm plugin install https://github.com/quintush/helm-unittest
           helm unittest -f 'test/unit/*.yaml' -3 .
