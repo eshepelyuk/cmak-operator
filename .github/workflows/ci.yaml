@@ -8,7 +8,6 @@ on:
       - master
     paths-ignore:
       - '*.md'
-      - '*.adoc'
       - '*.puml'
       - '.github/workflows/release.yaml'
 jobs:
@@ -16,9 +15,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: bahmutov/npm-install@v1.7.7
+        with:
+          fetch-depth: 0
       - run: |
+          echo '${{ toJSON(github) }}'
+      - uses: bahmutov/npm-install@v1.7.7
+      - name: commitlint master
+        run: |
           npx semantic-release -p semantic-release-commitlint
+        if: ${{ github.event_name == 'push' }}
+      - name: commitlint pr
+        run: |
+          FROM=`git merge-base origin/${{ github.base_ref }} ${{ github.event.after }}`
+          npx commitlint --from $FROM
+        if: ${{ github.event_name == 'pull_request' }}
       - run: |
           make test
       - uses: AbsaOSS/k3d-action@v2
@@ -33,5 +43,8 @@ jobs:
           version: 'v1.35.0'
       - run: |
           skaffold config set default-repo "localhost:5000"
-      - run: skaffold run
-      - run: helm test cmak-operator --logs
+      - run: |
+          skaffold run
+      - run: |
+          helm test cmak-operator --logs
+
