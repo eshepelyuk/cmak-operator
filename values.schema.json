@@ -170,10 +170,11 @@
     "ingress": {
       "type": ["null", "object"], "title": "ingress configuration", "default": null, "additionalProperties": false,
       "description": "If object not null, then Ingress resources will be created.",
-      "required": ["host", "path"],
+      "required": ["host", "path", "pathType"],
       "properties": {
         "host": { "type": "string", "title": "ingress host" },
         "path": { "type": "string", "title": "ingress path" },
+        "pathType": { "type": "string", "title": "ingress pathType" },
         "tls": { "$ref": "#/definitions/tls" },
         "labels": { "type": "object", "title": "optional ingress labels", "default": {} },
         "annotations": { "type": "object", "title": "optional ingress annotations", "default": {} }
