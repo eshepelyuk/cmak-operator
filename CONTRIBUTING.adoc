@@ -22,7 +22,7 @@ The project is covered by following types of tests
 * unit tests - `test/unit`
 * e2e tests - `test/e2e`
 
-Any PR should provide corresponding tests for its scope.
+Every PR should provide appropriate amount of testing, corresponding to its scope.
 
 == Development flow.
 
