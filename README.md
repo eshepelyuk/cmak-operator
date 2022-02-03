@@ -1,3 +1,5 @@
+
+
 # CMAK (prev. Kafka Manager) for Kubernetes
 
 [![Current](https://img.shields.io/github/v/tag/eshepelyuk/cmak-operator?logo=github&sort=semver&style=for-the-badge&label=current)](https://github.com/eshepelyuk/cmak-operator/releases/latest)
