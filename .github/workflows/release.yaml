@@ -21,11 +21,10 @@ jobs:
         with:
           version: 'v1.35.0'
       - run: |
-          cd master
           npm ci
           npx semantic-release
+        working-directory: master
         env:
-          HELM_EXPERIMENTAL_OCI: 1
           REGISTRY_USERNAME: ${{ github.repository_owner }}
           REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -33,9 +32,9 @@ jobs:
           mkdir /tmp/cmak
           cp ./master/cmak-operator-*.tgz /tmp/cmak
       - run: |
-          cd gh-pages
           helm repo index /tmp/cmak --merge ./index.yaml
           mv -f /tmp/cmak/* .
+        working-directory: gh-pages
       - uses: actions-js/push@master
         with:
           directory: gh-pages

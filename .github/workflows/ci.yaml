@@ -16,35 +16,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
-      - run: |
-          echo '${{ toJSON(github) }}'
-      - uses: bahmutov/npm-install@v1.7.7
-      - name: commitlint master
-        run: |
-          npx semantic-release -p semantic-release-commitlint
-        if: ${{ github.event_name == 'push' }}
-      - name: commitlint pr
-        run: |
-          FROM=`git merge-base origin/${{ github.base_ref }} ${{ github.event.after }}`
-          npx commitlint --from $FROM
-        if: ${{ github.event_name == 'pull_request' }}
-      - run: |
-          make test
-      - uses: AbsaOSS/k3d-action@v2
+          fetch-depth: 20
+      - uses: wagoid/commitlint-github-action@v4
         with:
-          cluster-name: "k3d"
-          args: >-
-            --config ./test/e2e/k3d.yaml
-      - run: |
-          kubectl apply -f test/e2e/kafka.yaml
+          configFile: .commitlintrc.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: volesen/setup-skaffold@v1.1
         with:
           version: 'v1.35.0'
+      - uses: extractions/setup-just@v1
       - run: |
-          skaffold config set default-repo "localhost:5000"
+          just test
+      - uses: rinx/setup-k3d@v0.0.4
+        with:
+          skipClusterCreation: true
       - run: |
-          skaffold run
+          just k3d
+          just up
       - run: |
-          helm test cmak-operator --logs
+          just test-e2e
 
