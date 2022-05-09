@@ -23,13 +23,13 @@
 .vscode/
 
 venv
+.venv
 *.tgz
 .github
 *.py
-*.adoc
 *.txt
 .release-it.json
-*.adoc
+*.md
 skaffold.yaml
 values-lint.yaml
 node_modules

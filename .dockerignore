@@ -1,9 +1,11 @@
 venv
+.venv
 *.json
 *.yaml
 .github
 .git
-*.adoc
+*.md
 .editorconfig
 .gitignore
 .helmignore
+justfile

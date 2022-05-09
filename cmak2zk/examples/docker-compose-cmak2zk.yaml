@@ -7,7 +7,7 @@ services:
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
 
   cmak:
-    image: hlebalbau/kafka-manager:stable
+    image: ghcr.io/eshepelyuk/cmak-3.0.0.5:latest
     restart: always
     ports:
       - "9000:9000"

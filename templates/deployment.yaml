@@ -65,7 +65,7 @@ spec:
             {{- end }}
           {{- end }}
         - name: ui
-          image: {{ printf "%s/hlebalbau/kafka-manager:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
+          image: {{ printf "ghcr.io/eshepelyuk/cmak-3.0.0.5:%s" .Chart.AppVersion | quote }}
           imagePullPolicy: IfNotPresent
           ports:
           - name: http

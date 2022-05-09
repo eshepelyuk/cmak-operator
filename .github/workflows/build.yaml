@@ -1,4 +1,4 @@
-name: Continous integration
+name: Build
 on:
   pull_request:
     branches:
@@ -23,7 +23,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: volesen/setup-skaffold@v1.1
         with:
-          version: 'v1.35.0'
+          version: v1.38.0
       - uses: extractions/setup-just@v1
       - run: |
           just test
@@ -32,7 +32,6 @@ jobs:
           skipClusterCreation: true
       - run: |
           just k3d
-          just up
       - run: |
           just test-e2e
 

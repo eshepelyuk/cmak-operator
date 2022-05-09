@@ -1,5 +1,5 @@
 reconcile:
-  schedule: "*/2 * * * *"
+  schedule: "*/1 * * * *"
 
 cmak:
   clustersCommon:
@@ -12,3 +12,10 @@ cmak:
     enabled: false
     curatorConfig:
       zkConnect: kafka-test:2181
+
+ingress:
+  host: localhost
+  path: /
+  pathType: ImplementationSpecific
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure

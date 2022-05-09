@@ -17,15 +17,13 @@ that allows to install and configure CMAK in K8s cluster.
 CMAK operator comprises following components:
 
 * [CMAK](https://github.com/yahoo/CMAK/),
-  powered by [Docker image](https://hub.docker.com/r/hlebalbau/kafka-manager/)
-  from [@hleb-albau](https://github.com/hleb-albau/kafka-manager-docker).
+  powered by [CMAK docker](https://github.com/eshepelyuk/cmak-docker).
 * [Apache ZooKeeper](https://zookeeper.apache.org/),
   powered by [official Docker image](https://hub.docker.com/_/zookeeper/).
 * Custom [cmak2zk tool](https://hub.docker.com/repository/docker/eshepelyuk/cmak2zk),
   used to configure Kafka clusters in CMAK from YAML files.
 
 ## Installation
-
 
 It's recommended to install CMAK operator into a dedicated namespace.
 

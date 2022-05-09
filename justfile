@@ -1,16 +1,16 @@
-@test: test-lint test-unit
+export E2E_TEST := "default"
 
-@test-e2e:
-  helm test cmak-operator --logs
+default:
+    @just --list
 
-@test-lint:
+test-lint:
 	./test/linter/test.sh
 	echo
 	echo =======================
 	echo = LINTER TESTS PASSED =
 	echo =======================
 
-@test-unit:
+test-unit:
 	helm plugin ls | grep unittest || helm plugin install https://github.com/quintush/helm-unittest
 	helm unittest -f 'test/unit/*.yaml' -3 .
 	echo
@@ -18,14 +18,40 @@
 	echo = UNIT TESTS PASSED =
 	echo =====================
 
-@_skaffold-ctx:
-    skaffold config set default-repo localhost:5000
+test: test-lint test-unit
+
+_skaffold-ctx:
+  skaffold config set default-repo localhost:5000
 
 # (re) create local k8s cluster using k3d
-@k3d: && _skaffold-ctx
-    k3d cluster create --config ./test/e2e/k3d.yaml
-    kubectl apply -f test/e2e/kafka.yaml
+k3d: && _skaffold-ctx
+  k3d cluster rm cmak-operator || true
+  k3d cluster create --config ./test/e2e/k3d.yaml
+  sleep 15
 
-# deploy chart to local k8s
-@up: _skaffold-ctx
-    skaffold run
+# install into local k8s
+up: _skaffold-ctx down
+  skaffold run
+
+# remove from local k8s
+down:
+  skaffold delete || true
+
+_chk-py:
+  #!/usr/bin/env bash
+  set -euxo pipefail
+  if [ ! -d .venv ]; then
+    python3 -mvenv .venv
+    pip3 install -r test/e2e/requirements.txt
+  fi
+
+# run only e2e test script
+test-e2e-sh: _chk-py
+  #!/usr/bin/env bash
+  set -euxo pipefail
+  source .venv/bin/activate
+  pytest --capture=tee-sys test/e2e/{{E2E_TEST}}/test.py
+
+# run single e2e test
+test-e2e: up test-e2e-sh
+
