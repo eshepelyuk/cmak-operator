@@ -5,3 +5,5 @@ node_modules
 .idea
 values-dev.yaml
 __pycache__
+.venv
+

@@ -1,23 +1,29 @@
 apiVersion: k3d.io/v1alpha4
 kind: Simple
 metadata:
-  name: k3d
+  name: cmak-operator
 servers: 1
 agents: 0
+volumes:
+  - volume: ${PWD}/test/e2e/kafka.yaml:/var/lib/rancher/k3s/server/manifests/kafka.yaml
+    nodeFilters: ["server:*"]
 registries:
   create:
-    name: k3d-registry
+    name: cmak-operator-registry
     host: "0.0.0.0"
     hostPort: "5000"
   config: |
     mirrors:
       "localhost:5000":
         endpoint:
-          - http://k3d-registry:5000
+          - http://cmak-operator-registry:5000
+ports:
+  - port: 18080:80
+    nodeFilters: ["server:*"]
+  - port: 18443:443
+    nodeFilters: ["server:*"]
 options:
-  k3d:
-    disableLoadbalancer: true
   k3s:
     extraArgs:
-      - arg: "--disable=servicelb,traefik,local-storage,metrics-server"
-        nodeFilters: ["all"]
+      - arg: "--disable=local-storage,metrics-server"
+        nodeFilters: ["server:*"]

@@ -2,15 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kafka-test
-  labels:
-    name: kafka-test
 spec:
   ports:
     - port: 2181
-      name: zk-port
+      name: zk
       protocol: TCP
     - port: 9092
-      name: kafka-port
+      name: kafka
       protocol: TCP
   selector:
     app: kafka-test

@@ -1,8 +1,8 @@
-name: Release
+name: Publish release
 on:
   workflow_dispatch
 jobs:
-  build_docker_job:
+  rel_job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,13 +13,13 @@ jobs:
         with:
           ref: gh-pages
           path: gh-pages
+      - uses: volesen/setup-skaffold@v1.1
+        with:
+          version: v1.38.0
       - uses: docker/login-action@v1
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - uses: volesen/setup-skaffold@v1.1
-        with:
-          version: 'v1.35.0'
       - run: |
           npm ci
           npx semantic-release

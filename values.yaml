@@ -127,7 +127,7 @@ ingress: null
   # # ingress host
   # host: www.cmak.mycompany
   #
-  # # ingress path
+  # # ingress
   # path: /
   # pathType: ImplementationSpecific
   #
