@@ -4,6 +4,7 @@
     "@semantic-release/git": "^10.0.1",
     "semantic-release": "^19.0.2",
     "semantic-release-commitlint": "^1.2.2",
-    "@commitlint/config-conventional": "^16.2.4"
+    "@commitlint/config-conventional": "^16.2.4",
+    "@eshepelyuk/semantic-release-helm-oci": "^1.4.0"
   }
 }

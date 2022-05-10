@@ -25,13 +25,10 @@ jobs:
         with:
           version: v1.38.0
       - uses: extractions/setup-just@v1
-      - run: |
-          just test
+      - run: just test
       - uses: rinx/setup-k3d@v0.0.4
         with:
           skipClusterCreation: true
-      - run: |
-          just k3d
-      - run: |
-          just test-e2e
+      - run: just k3d
+      - run: just test-e2e
 
