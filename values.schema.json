@@ -4,6 +4,14 @@
   "title": "CMAK operator Helm values",
 
   "definitions": {
+    "image": {
+      "type": "object", "title": "docker image configuration", "required": ["repository", "tag"],
+      "properties": {
+        "repository": { "type": "string" },
+        "tag": { "type": "string" },
+        "pullPolicy": { "type": "string", "default": "IfNotPresent" }
+      }
+    },
     "curatorConfigCommon": {
       "type": "object", "title": "curator framework settings for zookeeper",
       "properties": {
@@ -101,7 +109,6 @@
   },
   "type": "object", "required": ["cmak", "reconcile", "ui", "zk"],
   "properties": {
-    "imageRegistry": { "type": "string", "default": "ghcr.r.io", "title": "docker registry for all images of the chart" },
     "affinity": {
       "type": "object", "default": {}, "title": "affinity",
       "description": "See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity"
@@ -117,8 +124,9 @@
     },
     "reconcile": {
       "type": "object", "additionalProperties": false,
-      "required": ["schedule"], "title": "reconciliation job config",
+      "required": ["image", "schedule"], "title": "reconciliation job config",
       "properties": {
+        "image": { "$ref":  "#/definitions/image" },
         "schedule": {
           "type": "string", "default": "*/3 * * * *", "title": "cron expression for periodic reconciliation"
         },
@@ -151,7 +159,9 @@
     },
     "ui": {
       "type": "object", "title": "ui container k8s settings", "additionalProperties": false,
+      "required": ["image"],
       "properties": {
+        "image": {"$ref":  "#/definitions/image"},
         "port": {"type": "integer", "default": 9000},
         "extraArgs": { "type": "array", "title": "extra cmd line arguments", "items": {"type": "string"}, "default": [] },
         "resources": { "$ref":  "#/definitions/resources" },
@@ -162,10 +172,10 @@
     },
     "zk": {
       "type": "object", "title": "zk container k8s settings", "additionalProperties": false,
-      "required": ["version"],
+      "required": ["image"],
       "properties": {
-        "resources": { "$ref":  "#/definitions/resources" },
-        "version": { "type": "string", "title": "zk version", "default": "3.6.1" }
+        "image": { "$ref":  "#/definitions/image" },
+        "resources": { "$ref":  "#/definitions/resources" }
       }
     },
     "ingress": {

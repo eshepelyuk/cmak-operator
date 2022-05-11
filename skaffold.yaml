@@ -22,6 +22,6 @@ deploy:
         upgradeOnChange: false
         skipBuildDependencies: true
         artifactOverrides:
-          image: ghcr.io/eshepelyuk/dckr/cmak2zk
+          reconcile.image: ghcr.io/eshepelyuk/dckr/cmak2zk
         imageStrategy:
           helm: {}

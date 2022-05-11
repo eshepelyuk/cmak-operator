@@ -1,6 +1,4 @@
 {{- $nm := include "cmak.name" . -}}
-{{- $dict := .Values.image | default (dict "tag" .Chart.Version "repository" (printf "%s/eshepelyuk/dckr/cmak2zk" .Values.imageRegistry)) -}}
-{{- $image := printf "%s:%s" $dict.repository $dict.tag -}}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -41,7 +39,8 @@ spec:
           {{- end }}
           containers:
             - name: setup
-              image: {{ $image | quote }}
+              image: "{{ .Values.reconcile.image.repository }}:{{ .Values.reconcile.image.tag }}"
+              imagePullPolicy: "{{ .Values.reconcile.image.pullPolicy }}"
               args:
                 - '{{ .Values.reconcile.overwriteZk | ternary "--" "--no-" }}overwrite-zk'
                 - '{{ $nm }}.{{ $.Release.Namespace }}:2181'
