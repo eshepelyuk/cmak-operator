@@ -101,7 +101,7 @@
   },
   "type": "object", "required": ["cmak", "reconcile", "ui", "zk"],
   "properties": {
-    "imageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for all images of the chart" },
+    "imageRegistry": { "type": "string", "default": "ghcr.r.io", "title": "docker registry for all images of the chart" },
     "affinity": {
       "type": "object", "default": {}, "title": "affinity",
       "description": "See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity"

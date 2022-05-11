@@ -1,3 +1,4 @@
+skaffoldTags := "tags.json"
 export E2E_TEST := "default"
 
 default:
@@ -61,3 +62,14 @@ test-e2e-sh: _chk-py
 # run single e2e test
 test-e2e: up test-e2e-sh
 
+publish version:
+    #!/usr/bin/env bash
+    set -euxo pipefail
+
+    skaffold build -t {{version}} --file-output={{skaffoldTags}}
+
+    LATEST="$(jq -r .builds[0].imageName {{skaffoldTags}}):latest"
+    CURRENT="$(jq -r .builds[0].tag {{skaffoldTags}})"
+
+    docker tag $CURRENT $LATEST
+    docker push $LATEST

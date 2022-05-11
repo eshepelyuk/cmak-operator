@@ -7,7 +7,7 @@ services:
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
 
   cmak:
-    image: ghcr.io/eshepelyuk/cmak-3.0.0.5:latest
+    image: ghcr.io/eshepelyuk/dckr/cmak-3.0.0.5:latest
     restart: always
     ports:
       - "9000:9000"
@@ -17,7 +17,7 @@ services:
       ZK_HOSTS: "zk:2181"
 
   cmak2zk:
-    image: eshepelyuk/cmak2zk:1.4.1
+    image: ghcr.io/eshepelyuk/dckr/cmak2zk:latest
     restart: on-failure
     command:
       - 'zk:2181'

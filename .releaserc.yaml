@@ -19,8 +19,8 @@ plugins:
       failComment: false
   -
     - '@eshepelyuk/semantic-release-helm-oci'
-    - registry: oci://ghcr.io/eshepelyuk
+    - registry: oci://ghcr.io/eshepelyuk/helm
       skipAppVersion: true
   -
     - "@semantic-release/exec"
-    - publishCmd: "skaffold build -t ${nextRelease.version}"
+    - publishCmd: "just publish ${nextRelease.version}"

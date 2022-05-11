@@ -1,4 +1,4 @@
-imageRegistry: docker.io
+imageRegistry: ghcr.io
 
 # mirroring CMAK UI preferences for Kafka clusters
 cmak:

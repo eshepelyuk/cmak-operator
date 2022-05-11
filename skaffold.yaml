@@ -4,7 +4,7 @@ metadata:
   name: cmak-operator
 build:
   artifacts:
-    - image: eshepelyuk/cmak2zk
+    - image: ghcr.io/eshepelyuk/dckr/cmak2zk
       context: ./cmak2zk
   local:
     push: true
@@ -22,6 +22,6 @@ deploy:
         upgradeOnChange: false
         skipBuildDependencies: true
         artifactOverrides:
-          image: eshepelyuk/cmak2zk
+          image: ghcr.io/eshepelyuk/dckr/cmak2zk
         imageStrategy:
           helm: {}

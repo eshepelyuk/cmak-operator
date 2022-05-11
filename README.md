@@ -20,25 +20,12 @@ CMAK operator comprises following components:
   powered by [CMAK docker](https://github.com/eshepelyuk/cmak-docker).
 * [Apache ZooKeeper](https://zookeeper.apache.org/),
   powered by [official Docker image](https://hub.docker.com/_/zookeeper/).
-* Custom [cmak2zk tool](https://hub.docker.com/repository/docker/eshepelyuk/cmak2zk),
+* Custom [cmak2zk tool](https://github.com/users/eshepelyuk/packages/container/package/cmak2zk),
   used to configure Kafka clusters in CMAK from YAML files.
 
 ## Installation
 
 It's recommended to install CMAK operator into a dedicated namespace.
-
-1. Add Helm repository
-
-    ```sh
-    helm repo add cmak https://eshepelyuk.github.io/cmak-operator
-    helm repo update
-    ```
-
-1. Install the latest version
-
-    ```sh
-    helm install --create-namespace -n cmak-ns mycmak cmak/cmak-operator
-    ```
 
 1. Search for all available versions
 
@@ -53,7 +40,8 @@ It's recommended to install CMAK operator into a dedicated namespace.
 1. Install specific version
 
     ```sh
-    helm install --create-namespace -n cmak-ns --version 0.2.1 mycmak cmak/cmak-operator
+    helm upgrade -i --wait --create-namespace -n cmak cmak-operator \
+      oci://ghcr.io/eshepelyuk/helm/cmak-operator --version <VERSION>
     ```
 
 ### Verify installation
@@ -74,7 +62,8 @@ Then, open http://localhost:9000 in a browser.
 Configuration should be passed to helm via command line during installation or upgrade.
 
 ```sh
-helm install --create-namespace -n cmak-ns -f cmak-values.yaml mycmak cmak/cmak-operator
+helm upgrade -i --wait --create-namespace -n cmak cmak-operator \
+  oci://ghcr.io/eshepelyuk/helm/cmak-operator --version <VERSION> -f cmak-values.yaml
 ```
 
 ### CMAK application settings
@@ -149,12 +138,12 @@ and populate CMAK compatible config in Zookeeper.
 This allows to avoid manual configuration of CMAK and provides better possibilities
 to use CMAK in declarative configuration or GitOps based flows.
 
-`cmak2zk` is distributed as [docker image](https://hub.docker.com/repository/docker/eshepelyuk/cmak2zk).
+`cmak2zk` is distributed as [docker image](https://github.com/users/eshepelyuk/packages/container/package/cmak2zk).
 
 To check out available options, run the image without parameters.
 
 ```sh
-docker run eshepelyuk/cmak2zk:1.4.1
+docker run ghcr.io/eshepelyuk/dckr/cmak2zk:latest
 ```
 
 Example `docker-compose` and Kafka cluster configuration are located at
