@@ -20,8 +20,8 @@ CMAK operator comprises following components:
   powered by [CMAK docker](https://github.com/eshepelyuk/cmak-docker).
 * [Apache ZooKeeper](https://zookeeper.apache.org/),
   powered by [official Docker image](https://hub.docker.com/_/zookeeper/).
-* Custom [cmak2zk tool](https://github.com/users/eshepelyuk/packages/container/package/cmak2zk),
-  used to configure Kafka clusters in CMAK from YAML files.
+* Custom [cmak2zk tool](https://github.com/users/eshepelyuk/packages/container/package/dckr%2Fcmak2zk),
+  for configuring Kafka clusters in CMAK from YAML files.
 
 ## Installation
 
