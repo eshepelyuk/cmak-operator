@@ -11,7 +11,7 @@ on:
       - '*.puml'
       - '.github/workflows/release.yaml'
 jobs:
-  ci_job:
+  build_job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

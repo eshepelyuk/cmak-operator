@@ -1,4 +1,4 @@
-kazoo~=2.8
-pytest~=5.4
-requests~=2.25
+kazoo~=2.0
+pytest~=7.0
+requests~=2.0
 

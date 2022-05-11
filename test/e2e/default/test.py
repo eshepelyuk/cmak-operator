@@ -1,7 +1,6 @@
 import requests
 from kazoo.client import KazooClient
 from time import sleep
-import urllib3
 
 def waitUntilClusters(api_url):
     for i in range(12):
@@ -17,8 +16,6 @@ def waitUntilClusters(api_url):
 
 
 def test_clusters(api_url, zk_url):
-    urllib3.disable_warnings()
-
     response = requests.get(f"{api_url}/api/status/clusters", verify=False)
     assert response.status_code == 200
     assert len(response.json()['clusters']['active']) == 2
