@@ -23,24 +23,18 @@ CMAK operator comprises following components:
 
 ## Installation
 
+`cmak-operator` chart is published into OCI compatible registry
+and requires Helm version >= 3.8.
+
 It's recommended to install CMAK operator into a dedicated namespace.
+To install specific `VERSION` use following command.
 
-1. Search for all available versions
+```sh
+helm upgrade -i --wait --create-namespace -n cmak cmak-operator \
+  oci://ghcr.io/eshepelyuk/helm/cmak-operator --version <VERSION>
+```
 
-    ```sh
-    helm search repo cmak-operator --versions
-
-    NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-    cmak/cmak-operator      0.2.1           3.0.0.5         CMAK operator for K8S.
-    cmak/cmak-operator      0.2.0           3.0.0.5         CMAK operator for K8S.
-    ```
-
-1. Install specific version
-
-    ```sh
-    helm upgrade -i --wait --create-namespace -n cmak cmak-operator \
-      oci://ghcr.io/eshepelyuk/helm/cmak-operator --version <VERSION>
-    ```
+To install the latest version - omit `--version` flag from previous command.
 
 ### Verify installation
 
@@ -50,7 +44,7 @@ nor any other K8s resources to expose UI via HTTP.
 The simpliest test is to port forward CMAK UI HTTP port and access it from browser.
 
 ```sh
-kubectl port-forward -n cmak-ns service/cmak 9000:9000
+kubectl port-forward -n cmak service/cmak 9000
 ```
 
 Then, open http://localhost:9000 in a browser.
@@ -61,7 +55,8 @@ Configuration should be passed to helm via command line during installation or u
 
 ```sh
 helm upgrade -i --wait --create-namespace -n cmak cmak-operator \
-  oci://ghcr.io/eshepelyuk/helm/cmak-operator --version <VERSION> -f cmak-values.yaml
+  oci://ghcr.io/eshepelyuk/helm/cmak-operator --version <VERSION> \
+  -f cmak-values.yaml
 ```
 
 ### CMAK application settings
