@@ -1,5 +1,3 @@
-
-
 # CMAK (prev. Kafka Manager) for Kubernetes
 
 [![Current](https://img.shields.io/github/v/tag/eshepelyuk/cmak-operator?logo=github&sort=semver&style=for-the-badge&label=current)](https://github.com/eshepelyuk/cmak-operator/releases/latest)
@@ -127,42 +125,6 @@ cmak:
 1. this setting is applied to both clusters.
 1. applied only to `cluster-stage`.
 1. applied only to `cluster-prod`.
-
-## Standalone cmak2zk tool
-
-`cmak2zk` was developed as a part of CMAK operator and actively used by the operator itself.
-But the same time this tool could be used on its own outside of Helm charts and Kubernetes.
-
-Its purpose is to take Kafka cluster configuration for CMAK in YAML format
-and populate CMAK compatible config in Zookeeper.
-This allows to avoid manual configuration of CMAK and provides better possibilities
-to use CMAK in declarative configuration or GitOps based flows.
-
-`cmak2zk` is distributed as [docker image](https://github.com/users/eshepelyuk/packages/container/package/cmak2zk).
-
-To check out available options, run the image without parameters.
-
-```sh
-docker run ghcr.io/eshepelyuk/dckr/cmak2zk:latest
-```
-
-Example `docker-compose` and Kafka cluster configuration are located at
-[cmak2zk/examples](https://github.com/eshepelyuk/cmak-operator/tree/master/cmak2zk/examples) directory.
-One could run them using commands below.
-
-```sh
-curl -sLo clusters.yaml \
-  https://raw.githubusercontent.com/eshepelyuk/cmak-operator/master/cmak2zk/examples/clusters.yaml
-
-curl -sLo docker-compose-cmak2zk.yaml \
-  https://raw.githubusercontent.com/eshepelyuk/cmak-operator/master/cmak2zk/examples/docker-compose-cmak2zk.yaml
-
-docker-compose -f docker-compose-cmak2zk.yaml up
-```
-
-Wait for some time until components are stabilizing, it may take up to 5 mins.
-Then, open your browser at http://localhost:9000.
-There should be two pre-configured clusters, pointing to the same Kafka instance, running in Docker.
 
 ## Alternatives
 

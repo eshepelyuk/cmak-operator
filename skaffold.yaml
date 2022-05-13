@@ -2,13 +2,6 @@ apiVersion: skaffold/v2beta28
 kind: Config
 metadata:
   name: cmak-operator
-build:
-  artifacts:
-    - image: ghcr.io/eshepelyuk/dckr/cmak2zk
-      context: ./cmak2zk
-  local:
-    push: true
-    useBuildkit: true
 deploy:
   helm:
     releases:
@@ -21,7 +14,3 @@ deploy:
           - "test/e2e/{{.E2E_TEST}}/values.yaml"
         upgradeOnChange: false
         skipBuildDependencies: true
-        artifactOverrides:
-          reconcile.image: ghcr.io/eshepelyuk/dckr/cmak2zk
-        imageStrategy:
-          helm: {}

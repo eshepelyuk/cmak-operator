@@ -44,7 +44,7 @@ cmak:
 reconcile:
   image:
     repository: "ghcr.io/eshepelyuk/dckr/cmak2zk"
-    tag: "" # chart's version
+    tag: "1.0.0"
     pullPolicy: IfNotPresent
   schedule: "*/3 * * * *"
   overwriteZk: true
@@ -64,7 +64,7 @@ reconcile:
 ui:
   image:
     repository: "ghcr.io/eshepelyuk/dckr/cmak-3.0.0.5"
-    tag: "0.1.2"
+    tag: "1.0.0"
     pullPolicy: IfNotPresent
   port: 9000
   # additional command line arguments

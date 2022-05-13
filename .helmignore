@@ -29,16 +29,16 @@ venv
 *.py
 *.txt
 .release-it.json
-*.md
+CONTRIBUTING.md
 skaffold.yaml
 values-lint.yaml
 node_modules
-README.adoc
 *.sh
 package-lock.json
+package.json
 *.puml
 .editorconfig
 .dockerignore
 test/
-cmak2zk/
+justfile
 

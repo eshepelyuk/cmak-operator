@@ -20,7 +20,3 @@ plugins:
   -
     - '@eshepelyuk/semantic-release-helm-oci'
     - registry: oci://ghcr.io/eshepelyuk/helm
-      skipAppVersion: true
-  -
-    - "@semantic-release/exec"
-    - publishCmd: "just publish ${nextRelease.version}"
