@@ -105,6 +105,20 @@
           }
         }
       }
+    },
+    "authentication": {
+      "type": "object", "title": "Basic Authentication settings", "default": {}, "required": ["enabled", "username", "password"],
+      "properties": {
+        "enabled": {
+          "type": "boolean", "description": "Enable/Disable basic authentication", "default": false
+        },
+        "username": {
+          "type": "string", "description": "The username to set for basic authentication", "default": "admin"
+        },
+        "password": {
+          "type": "string", "description": "The password to set for basic authentication", "default": ""
+        }
+      }
     }
   },
   "type": "object", "required": ["cmak", "reconcile", "ui", "zk"],
@@ -167,7 +181,8 @@
         "resources": { "$ref":  "#/definitions/resources" },
         "consumerProperties": { "type": "object", "title": "provide key value base pairs for consumer properties according to java docs", "default": {} },
         "consumerPropertiesSsl": { "$ref": "#/definitions/consumerSsl" },
-        "extraEnv": { "type": "array", "title": "optional environment variables", "items": {"type": "object"}, "default": [] }
+        "extraEnv": { "type": "array", "title": "optional environment variables", "items": {"type": "object"}, "default": [] },
+        "authentication": { "$ref": "#/definitions/authentication" }
       }
     },
     "zk": {

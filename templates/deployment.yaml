@@ -77,13 +77,27 @@ spec:
           {{- range .Values.ui.extraArgs }}
           - {{ . | quote }}
           {{- end }}
-          env:
-          {{- if .Values.ui.consumerProperties }}
-          - name: CONSUMER_PROPERTIES_FILE
-            value:  /conf/consumer.properties
+          {{ if .Values.ui.authentication.enabled }}
+          - "-DbasicAuthentication.enabled=true"
+          - "-DbasicAuthentication.username={{ .Values.ui.authentication.username }}"
+          - "-DbasicAuthentication.password=${AUTHENTICATION_PASSWORD}"
           {{- end }}
-          {{- with .Values.ui.extraEnv -}}
-            {{  toYaml . | nindent 10 }}
+          {{- if or .Values.ui.consumerProperties .Values.ui.authentication.enabled .Values.ui.extraEnv }}
+          env:
+            {{- if .Values.ui.consumerProperties }}
+            - name: CONSUMER_PROPERTIES_FILE
+              value:  /conf/consumer.properties
+            {{- end }}
+            {{- with .Values.ui.extraEnv -}}
+              {{  toYaml . | nindent 10 }}
+            {{- end }}
+            {{- if .Values.ui.authentication.enabled }}
+            - name: AUTHENTICATION_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cmak.name" . }}-auth
+                  key: password
+            {{- end }}
           {{- end }}
           readinessProbe:
             httpGet:

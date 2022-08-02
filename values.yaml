@@ -114,6 +114,12 @@ ui:
     #     configMapKeyRef:
     #       name: special-config
     #       key: SPECIAL_LEVEL
+  # Authentication settings
+  authentication:
+    enabled: false
+    username: admin
+    password: ""
+
 
 # various settings for Zookeeper container
 zk:
