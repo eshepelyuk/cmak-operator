@@ -55,6 +55,16 @@ if [ $? -eq 0 ]; then
   exit 1
 fi
 
+helm lint . --strict --set 'ingress.className={1,2,3}' --set 'ingress.host=google' --set 'ingress.path=/'
+if [ $? -eq 0 ]; then
+  exit 1
+fi
+
+helm lint . --strict --set 'ingress.className=nginx' --set 'ingress.host=google' --set 'ingress.path=/'
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
 helm lint . --strict --set 'ui.extraEnv=false'
 if [ $? -eq 0 ]; then
   exit 1
@@ -69,5 +79,3 @@ helm lint . --strict --set 'ui.extraEnv[0].name=qwe' --set 'ui.extraEnv[0].value
 if [ $? -ne 0 ]; then
   exit -1
 fi
-
-
