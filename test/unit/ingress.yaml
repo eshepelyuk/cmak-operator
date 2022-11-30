@@ -29,3 +29,25 @@ tests:
       - equal:
           path: spec.rules[0].http.paths[0].pathType
           value: Prefix
+  - it: should not render spec.ingressClassName by default
+    set:
+      ingress:
+        host: myhost
+        path: /
+        pathType: Prefix
+    asserts:
+      - isEmpty:
+          path: spec.ingressClassName
+  - it: should render spec.ingressClassName if specified
+    set:
+      ingress:
+        host: myhost
+        path: /
+        pathType: Prefix
+        className: nginx
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.ingressClassName
+          value: nginx

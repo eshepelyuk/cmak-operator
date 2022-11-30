@@ -40,6 +40,6 @@ reconcile:
 ingress:
   host: "cmak"
   path: "/"
+  className: "nginx"
   labels:
     my.label: "my.value"
-

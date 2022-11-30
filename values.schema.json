@@ -187,6 +187,7 @@
         "path": { "type": "string", "title": "ingress path" },
         "pathType": { "type": "string", "title": "ingress pathType", "default": "ImplementationSpecific" },
         "tls": { "$ref": "#/definitions/tls" },
+        "className": { "type": ["null", "string"], "title": "ingress class name", "default": null },
         "labels": { "type": "object", "title": "optional ingress labels", "default": {} },
         "annotations": { "type": "object", "title": "optional ingress annotations", "default": {} }
       }
