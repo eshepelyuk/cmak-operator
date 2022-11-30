@@ -24,10 +24,10 @@ The project is covered by following types of tests
 
 Every PR should provide appropriate amount of testing, corresponding to its scope.
 
-Use `GNU Make` to run test locally:
+Use [just](https://github.com/casey/just) to run test locally:
 
-* `make test-lint` - execute linter tests
-* `make test-unit` - execute unit tests
+* `just test-lint` - execute linter tests
+* `just test-unit` - execute unit tests
 
 ## Development flow.
 
