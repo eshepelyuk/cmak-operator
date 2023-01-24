@@ -64,7 +64,7 @@ reconcile:
 ui:
   image:
     repository: "ghcr.io/eshepelyuk/dckr/cmak-3.0.0.6"
-    tag: "1.1.0"
+    tag: "1.1.1"
     pullPolicy: IfNotPresent
   port: 9000
   # additional command line arguments
