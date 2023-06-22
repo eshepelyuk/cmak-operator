@@ -32,9 +32,9 @@ tests:
 
   - it: should not have annotations by default
     asserts:
-      - isNull:
+      - isNullOrEmpty:
           path: spec.jobTemplate.spec.template.metadata
         template: cronjob-reconcile.yaml
-      - isNull:
+      - isNullOrEmpty:
           path: spec.template.metadata
         template: job-setup.yaml

@@ -36,7 +36,7 @@ tests:
         path: /
         pathType: Prefix
     asserts:
-      - isEmpty:
+      - notExists:
           path: spec.ingressClassName
   - it: should render spec.ingressClassName if specified
     set:
