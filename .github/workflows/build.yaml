@@ -14,17 +14,24 @@ jobs:
   build_job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 20
-      - uses: wagoid/commitlint-github-action@v4
+      - uses: wagoid/commitlint-github-action@v5
         with:
           configFile: .commitlintrc.yml
           token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: volesen/setup-skaffold@v1.1
+      - uses: jaxxstorm/action-install-gh-release@v1
         with:
-          version: v1.38.0
+          repo: GoogleContainerTools/skaffold
+          tag: v1.38.0
+          cache: enable
+          extension-matching: disable
+          rename-to: skaffold
+          chmod: 0755
       - uses: extractions/setup-just@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: just test
       - uses: rinx/setup-k3d@v0.0.4
         with:
