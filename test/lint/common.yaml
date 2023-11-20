@@ -1,0 +1,25 @@
+suite: lint common values
+templates:
+  - fake.yaml
+tests:
+  - it: affinity is not object
+    set:
+      affinity: false
+    asserts:
+      - failedTemplate:
+          errorMessage: |
+            values don't meet the specifications of the schema(s) in the following chart(s):
+            cmak-operator:
+            - affinity: Invalid type. Expected: object, given: boolean
+  - it: ingress is broken
+    set:
+      ingress:
+        pathType: false
+    asserts:
+      - failedTemplate:
+          errorMessage: |
+            values don't meet the specifications of the schema(s) in the following chart(s):
+            cmak-operator:
+            - ingress: host is required
+            - ingress: path is required
+            - ingress.pathType: Invalid type. Expected: string, given: boolean

@@ -3,14 +3,20 @@ export E2E_TEST := "default"
 default:
   @just --list
 
-test-lint:
-	./test/linter/test.sh
+_helm-unittest:
+  helm plugin ls | grep unittest || helm plugin install https://github.com/helm-unittest/helm-unittest.git
 
-test-unit:
-	helm plugin ls | grep unittest || helm plugin install https://github.com/helm-unittest/helm-unittest.git
-	helm unittest -f 'test/unit/*.yaml' .
+# run helm unit tests
+test-helm filter="*": _helm-unittest
+  helm unittest -f 'test/unit/{{filter}}.yaml' .
 
-test: test-lint test-unit
+test: lint test-helm
+
+# helm linter
+lint-helm filter="*": _helm-unittest
+  helm unittest -f 'test/lint/{{filter}}.yaml' .
+
+lint: lint-helm
 
 _skaffold-ctx:
   skaffold config set default-repo localhost:5000

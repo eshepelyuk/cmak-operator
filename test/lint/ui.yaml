@@ -1,0 +1,14 @@
+suite: lint ui
+templates:
+  - fake.yaml
+tests:
+  - it: ui.extraEnv is not list
+    set:
+      ui:
+        extraEnv: false
+    asserts:
+      - failedTemplate:
+          errorMessage: |
+            values don't meet the specifications of the schema(s) in the following chart(s):
+            cmak-operator:
+            - ui.extraEnv: Invalid type. Expected: array, given: boolean
