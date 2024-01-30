@@ -1,7 +1,7 @@
 {{- $nm := include "cmak.name" . -}}
 {{- $dict := .Values.image | default (dict "tag" .Chart.Version "repository" (printf "%s/eshepelyuk/cmak2zk" .Values.imageRegistry)) -}}
 {{- $image := printf "%s:%s" $dict.repository $dict.tag -}}
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: {{ $nm }}-reconcile
